@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : Player {
 	
@@ -24,6 +25,9 @@ public class PlayerController : Player {
 	
 	
 	public override void customStart(){
+		
+		powers = new List<Power>();
+		
 		isPlayerControlled = true;
 		
 		curVel = new Vector3(0,0,0);
@@ -46,8 +50,15 @@ public class PlayerController : Player {
 	}
 	
 	public override void customReset(){
+		clearPowers();
+		//give them a punch
+		GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
+		Power thisPower = powerObject.GetComponent<Power>();
+		thisPower.assignToPlayer(this);
+		
 		//set the pos
-		transform.position = startPos;
+		float spawnX = Random.Range(spawnLeft.transform.position.x, spawnRight.transform.position.x);
+		transform.position = new Vector3(spawnX, spawnLeft.transform.position.y, 0);
 		
 		//clear velocity
 		pushVel = new Vector3(0,0,0);
@@ -57,6 +68,8 @@ public class PlayerController : Player {
 		speed = baseSpeed;
 		fallingGrav = fallingGravBase;
 		numDoubleJumpsUsed = 0;
+		
+		recorder.reset(true);
 	}
 	
 	public override void customUpdate(){
@@ -101,18 +114,23 @@ public class PlayerController : Player {
 		controller.Move(curVel*Time.deltaTime + pushVel*Time.deltaTime);
 		
 		//using powers
+		bool attackPressed = false;
 		if (Input.GetButtonDown(attack1Button)){
+			attackPressed = true;
 			for (int i=0; i<powers.Count; i++){
 				powers[i].use();
 			}
 		}
 		
 		//record for ghosts
-		recorder.record(curVel, facingDir, transform.position);
+		recorder.record(curVel, facingDir, transform.position, attackPressed);
 		
 		
 		
 		//testing
+		if (Input.GetKeyDown(KeyCode.K) && controllerNum==0){
+			changeHealth(-1, null);
+		}
 		if (Input.GetKeyDown(KeyCode.G) && controllerNum==0){
 			makeGhost();
 		}

@@ -59,6 +59,7 @@ public class Power : MonoBehaviour {
 	public void cleanUp(){
 		customCleanUp();
 		Destroy(gameObject);
+		Debug.Log("barf on shit");
 	}
 	public virtual void customCleanUp(){}
 	

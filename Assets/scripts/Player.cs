@@ -27,7 +27,7 @@ public class Player : MonoBehaviour {
 	
 	//powers
 	[System.NonSerialized]
-	public List<Power> powers = new List<Power>();
+	public List<Power> powers;
 	public GameObject punchPowerObject;
 	
 	[System.NonSerializedAttribute]
@@ -57,10 +57,17 @@ public class Player : MonoBehaviour {
 	public float hudShakeTime;
 	float hudShakeTimer;
 	
+	//spawn zone
+	[System.NonSerialized]
+	public GameObject spawnLeft, spawnRight;
+	
 	// Use this for initialization
 	void Start () {
 		avatar.renderer.material.color = myColor;
 		startPos = transform.position;
+		
+		spawnLeft = GameObject.Find("spawnLeft");
+		spawnRight = GameObject.Find("spawnRight");
 		
 		customStart();
 		
@@ -75,13 +82,6 @@ public class Player : MonoBehaviour {
 		health = baseHealth;
 		
 		invincibilityTimer = invincibilityTime;
-		
-		clearPowers();
-		
-		//give them a punch
-		GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
-		Power thisPower = powerObject.GetComponent<Power>();
-		thisPower.assignToPlayer(this);
 		
 		customReset();
 		
@@ -134,15 +134,26 @@ public class Player : MonoBehaviour {
 		
 		//is this fucker dead?
 		if (health == 0){
-			//give the killer a point if they are real
-			if (source != null && source != this){
-				source.addScore(1);
-			}
+			killPlayer(source);
 			
-			//reset the player
-			reset();
 		}
 	}
+	
+	public void killPlayer(Player killer){
+		//give the killer a point if they are real. Do not reward suicide
+		if (killer != null && killer != this){
+			killer.addScore(1);
+		}
+		
+		//spaw a spooky ghost
+		if (isPlayerControlled){
+			makeGhost();
+		}
+		
+		//reset the player
+		reset();
+	}
+		
 	
 	public void addScore(int val){
 		score += val;
@@ -182,7 +193,7 @@ public class Player : MonoBehaviour {
 	
 	public void makeGhost(){
 		GameObject ghostObject = Instantiate(ghostPrefab, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
-		ghostObject.GetComponent<PlayerGhost>().ghostSetup(myColor, recorder);
+		ghostObject.GetComponent<PlayerGhost>().ghostSetup(myColor, recorder, powers);
 	}
 		
 	//setters and getters

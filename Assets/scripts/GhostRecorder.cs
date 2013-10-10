@@ -7,6 +7,7 @@ public struct GhostDataPoint{
 	public Vector3 vel;
 	public int facingDir;
 	public Vector3 pos;
+	public bool attackPressed;
 }
 
 public class GhostRecorder {
@@ -20,6 +21,8 @@ public class GhostRecorder {
 	private Vector3 curVel;
 	private int curFacingDir;
 	private Vector3 curPos;
+	
+	private bool attackPressed;
 
 	public GhostRecorder(){
 		data = new List<GhostDataPoint>();
@@ -42,7 +45,7 @@ public class GhostRecorder {
 		}
 	}
 	
-	public void record(Vector3 vel, int facingDir, Vector3 pos){
+	public void record(Vector3 vel, int facingDir, Vector3 pos, bool attackPressed){
 		timer += Time.deltaTime;
 		
 		//make a data point
@@ -51,6 +54,7 @@ public class GhostRecorder {
 		datum.vel = vel;
 		datum.facingDir = facingDir;
 		datum.pos = pos;
+		datum.attackPressed = attackPressed;
 		
 		//save it!
 		data.Add(datum);
@@ -64,6 +68,9 @@ public class GhostRecorder {
 		//advance the playhead until it is current
 		while ( playHead<data.Count-1 && data[playHead].time < timer){
 			playHead++;
+			if (data[playHead].attackPressed){
+				attackPressed = true;
+			}
 		}
 		
 		curVel = data[playHead].vel;
@@ -71,7 +78,12 @@ public class GhostRecorder {
 		curPos = data[playHead].pos;
 	}
 	
+	public bool checkAttack(){
+		bool returnVal = attackPressed;
+		attackPressed = false;  //always turn this flag off after checking
 	
+		return returnVal;
+	}
 	
 	//getters
 	

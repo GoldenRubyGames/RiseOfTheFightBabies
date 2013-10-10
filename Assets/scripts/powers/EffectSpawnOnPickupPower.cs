@@ -10,6 +10,8 @@ public class EffectSpawnOnPickupPower : Power {
 		spawnedObject = Instantiate( effectObject, owner.transform.position, new Quaternion(0,0,0,0)) as GameObject;
 		spawnedObject.SendMessage("setup", owner);
 		
+		Debug.Log("spawn my ugo dream");
+		
 	}
 	
 	public override void customCleanUp(){

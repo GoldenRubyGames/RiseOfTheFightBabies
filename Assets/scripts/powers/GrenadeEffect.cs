@@ -23,17 +23,7 @@ public class GrenadeEffect : MonoBehaviour {
 		timer = time;
 		
 		Vector3 startForce = new Vector3( startXVel*owner.facingDir, startYVel, 0); 
-		Debug.Log("a brave new horse "+startForce.x);
 		rigidbody.AddForce( startForce);
-		
-		/*
-		pushForce.x *= owner.facingDir;
-		
-		
-		vel = new Vector3( speed*owner.facingDir, 0, 0);
-		vel.x += owner.CurVel.x;
-		transform.position = owner.transform.position + new Vector3(0.5f*owner.facingDir, 0, 0);
-		*/
 	}
 	
 	// Update is called once per frame
