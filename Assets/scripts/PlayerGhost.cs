@@ -19,8 +19,6 @@ public class PlayerGhost : Player {
 		for (int i=0; i<oldPowers.Count; i++){
 			GameObject thisPower = Instantiate(oldPowers[i].gameObject, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
 			thisPower.GetComponent<Power>().assignToPlayer(this);
-			
-			//oldPowers[i].assignToPlayer(this);
 		}
 		
 		Debug.Log("new ghost on frame "+Time.frameCount);

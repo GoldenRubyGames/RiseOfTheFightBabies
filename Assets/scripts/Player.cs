@@ -135,23 +135,32 @@ public class Player : MonoBehaviour {
 		//is this fucker dead?
 		if (health == 0){
 			killPlayer(source);
-			
+			Debug.Log("kill that mother suckler!");
 		}
 	}
 	
 	public void killPlayer(Player killer){
-		//give the killer a point if they are real. Do not reward suicide
-		if (killer != null && killer != this){
-			killer.addScore(1);
-		}
 		
-		//spaw a spooky ghost
+		//if this is a player, do all the normal stuff
 		if (isPlayerControlled){
-			makeGhost();
+			//give the killer a point if they are real. Do not reward suicide
+			if (killer != null && killer != this){
+				killer.addScore(1);
+			}
+			
+			//spaw a spooky ghost
+			if (isPlayerControlled){
+				makeGhost();
+			}
+			
+			//reset the player
+			reset();
 		}
-		
-		//reset the player
-		reset();
+		//ghosts just go away
+		else{
+			clearPowers();
+			Destroy(gameObject);
+		}
 	}
 		
 	
