@@ -18,11 +18,11 @@ public class Bullet : MonoBehaviour {
 		
 		timer = time;
 		
-		pushForce.x *= owner.FacingDir;
+		pushForce.x *= owner.facingDir;
 		
-		vel = new Vector3( speed*owner.FacingDir, 0, 0);
+		vel = new Vector3( speed*owner.facingDir, 0, 0);
 		vel.x += owner.CurVel.x;
-		transform.position = owner.transform.position + new Vector3(0.5f*owner.FacingDir, 0, 0);
+		transform.position = owner.transform.position + new Vector3(0.5f*owner.facingDir, 0, 0);
 	}
 	
 	// Update is called once per frame

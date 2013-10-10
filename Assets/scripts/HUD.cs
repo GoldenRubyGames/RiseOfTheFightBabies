@@ -3,7 +3,7 @@ using System.Collections;
 
 public class HUD : MonoBehaviour {
 	
-	public Player[] players; 
+	public PlayerController[] players; 
 	
 	public GUIStyle textStyle0;
 	public GUIStyle textStyle1;

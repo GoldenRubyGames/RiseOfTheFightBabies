@@ -22,7 +22,7 @@ public class ShieldEffect : MonoBehaviour {
 	
 		//keep it in place
 		Vector3 thisOffset = offsetFromPlayer;
-		thisOffset.x *= owner.FacingDir;
+		thisOffset.x *= owner.facingDir;
 		transform.position = owner.transform.position + thisOffset;
 	}
 	

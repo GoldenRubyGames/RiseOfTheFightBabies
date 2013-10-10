@@ -12,7 +12,7 @@ public class SpawnEffectPower : Power {
 		thisObj.SendMessage("setup", owner);
 		
 		//recoil!
-		owner.push( new Vector3(recoilForce*owner.FacingDir*-1, 0, 0) );
+		owner.push( new Vector3(recoilForce*owner.facingDir*-1, 0, 0) );
 		
 	}
 }

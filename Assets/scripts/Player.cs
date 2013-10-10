@@ -4,49 +4,48 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 	
+	//character controller
 	public CharacterController controller;
-	//getting input;
-	public int controllerNum;
-	string moveAxis, jumpButton, attack1Button, atack2Button; 
 	
 	//showing the player
 	public GameObject avatar;
 	public Color myColor;
 	
-	//general moving
-	Vector3 curVel;
-	Vector3 pushVel;
-	public float pushFric;
-	
-	//moving left and right
-	public float baseSpeed;
-	float speed;
-	private int facingDir;
-	
-	//jumping
-	public float jumpGrav, fallingGrav;
-	public float jumpPower;
-	public float jumpCut;
-	bool isJumping;
-	
-	int numDoubleJumps;
-	int numDoubleJumpsUsed;
+	[System.NonSerialized]
+	public int facingDir;
 	
 	//health
 	public int baseHealth;
-	int health;
+	private int health;
 	
 	//invincibility
 	public float invincibilityTime;
 	float invincibilityTimer;
 	
-	Vector3 startPos;
+	[System.NonSerialized]
+	public Vector3 startPos;
 	
 	//powers
-	List<Power> powers = new List<Power>();
+	[System.NonSerialized]
+	public List<Power> powers = new List<Power>();
 	public GameObject punchPowerObject;
 	
+	[System.NonSerializedAttribute]
+	public int numDoubleJumps;
+	
 	private int score;
+	
+	//general status things that items may need to affect
+	[System.NonSerializedAttribute]
+	public bool isPlayerControlled;
+	[System.NonSerialized]
+	public float fallingGrav;
+	[System.NonSerialized]
+	public float speed;
+	
+	//general movement
+	[System.NonSerialized]
+	public Vector3 curVel;
 	
 	//showing stuff in HUD
 	public float hudShakeTime;
@@ -57,35 +56,16 @@ public class Player : MonoBehaviour {
 		avatar.renderer.material.color = myColor;
 		startPos = transform.position;
 		
+		customStart();
+		
 		reset();
-		curVel = new Vector3(0,0,0);
-		
-		//default to controller
-		moveAxis = "player0Move";
-		jumpButton = "player0Jump";    //X
-		attack1Button = "player0Fire1"; //square
-		atack2Button = "player0Fire2";  //triangle
-		
-		if (controllerNum == 1){
-			moveAxis = "player1Move";
-			jumpButton = "player1Jump";    //X
-			attack1Button = "player1Fire1"; //square
-			atack2Button = "player1Fire2";  //triangle
-			/*
-			moveAxis = "Horizontal";
-			jumpButton = "Jump";    
-			attack1Button = "Fire1"; 
-			atack2Button = "Fire2";  
-			*/
-		}
 		
 		facingDir = 1;
-		
-		
 	}
 	
+	public virtual void customStart(){}
+	
 	void reset(){
-		speed = baseSpeed;
 		health = baseHealth;
 		
 		invincibilityTimer = invincibilityTime;
@@ -97,62 +77,15 @@ public class Player : MonoBehaviour {
 		Power thisPower = powerObject.GetComponent<Power>();
 		thisPower.assignToPlayer(this);
 		
-		//set the pos
-		transform.position = startPos;
+		customReset();
 		
-		//clear velocity
-		pushVel = new Vector3(0,0,0);
-		curVel = new Vector3(0,0,0);
-		
-		numDoubleJumpsUsed = 0;
 	}
+	public virtual void customReset(){}
 	
 	// Update is called once per frame
 	void Update () {
 		
-		//running
-		float curSpeed = speed * Input.GetAxis(moveAxis);
-		curVel.x = curSpeed;
-		
-		if (curSpeed > 0)  facingDir = 1;
-		if (curSpeed < 0)  facingDir = -1;
-		
-		//jumping
-		if (Input.GetButtonDown(jumpButton) && (controller.isGrounded || numDoubleJumpsUsed < numDoubleJumps)){
-			startJump();
-			if (!controller.isGrounded){
-				numDoubleJumpsUsed++;
-			}
-		}
-		if (Input.GetButtonUp(jumpButton)){
-			endJump();
-		}
-		
-		//gravity
-		if (!controller.isGrounded){
-			if (curVel.y>0){
-				curVel.y -= jumpGrav*Time.deltaTime;
-			}else{
-				curVel.y -= fallingGrav*Time.deltaTime;	
-				isJumping = false;
-			}
-		}else if (!isJumping){
-			curVel.y = -1; //need to keep pushing down for it to register as grounded so we can jump
-		}
-		
-		if (controller.isGrounded){
-			numDoubleJumpsUsed = 0;
-		}
-		
-		//friciton if they were pushed
-		pushVel *= Mathf.Pow(pushFric, Time.deltaTime);
-		
-		//actually move this guy
-		controller.Move(curVel*Time.deltaTime + pushVel*Time.deltaTime);
-		
-		if (controllerNum==0){
-			//Debug.Log("ma vel "+curVel);
-		}
+		customUpdate();
 		
 		
 		//check on powers
@@ -160,12 +93,7 @@ public class Player : MonoBehaviour {
 			powers[i].update();
 		}
 		
-		//using powers
-		if (Input.GetButtonDown(attack1Button)){
-			for (int i=0; i<powers.Count; i++){
-				powers[i].use();
-			}
-		}
+		
 		
 		//showing damage taken
 		if (invincibilityTimer >0 ){
@@ -177,21 +105,11 @@ public class Player : MonoBehaviour {
 		}
 		
 		hudShakeTimer -= Time.deltaTime;
-			
 		
 	}
+	public virtual void customUpdate(){}
 	
-	void startJump(){
-		isJumping = true;
-		curVel.y = jumpPower;
-	}
 	
-	void endJump(){
-		if (curVel.y > jumpCut){
-			curVel.y = jumpCut;
-	    }
-	    isJumping = false;
-	}
 	
 	public void changeHealth(int amount, Player source){
 		
@@ -201,7 +119,6 @@ public class Player : MonoBehaviour {
 		}
 		
 		health += amount;
-		Debug.Log("ma health "+health);
 		hudShakeTimer = hudShakeTime;
 		
 		//if they took damage make them invicible
@@ -225,9 +142,7 @@ public class Player : MonoBehaviour {
 		score += val;
 	}
 	
-	public void push(Vector3 power){
-		pushVel += power;
-	}
+	public virtual void push(Vector3 power){} //ghosts cannot be pushed
 	
 	public bool getPower(Power newPower){
 		//do not add this if the player already has it
@@ -240,7 +155,7 @@ public class Player : MonoBehaviour {
 		//add it!
 		powers.Add(newPower);
 		newPower.gameObject.transform.parent = transform;
-		Debug.Log("player "+controllerNum+" just got "+newPower.powerName);
+		//Debug.Log("player "+controllerNum+" just got "+newPower.powerName);
 		
 		//if there was only one power and it was the punch, get rid of it
 		if (newPower.isAnAttack && powers[0].powerName == "Punch"){
@@ -257,9 +172,6 @@ public class Player : MonoBehaviour {
 		}
 		
 		powers.Clear();
-		
-		
-		numDoubleJumps = 0;
 	}
 		
 	//setters and getters
@@ -270,24 +182,6 @@ public class Player : MonoBehaviour {
 		}
 		set {
 			powers = value;
-		}
-	}
-	
-	public int FacingDir {
-		get {
-			return this.facingDir;
-		}
-		set {
-			facingDir = value;
-		}
-	}
-	
-	public Vector3 CurVel {
-		get {
-			return this.curVel;
-		}
-		set {
-			curVel = value;
 		}
 	}
 	
@@ -309,15 +203,23 @@ public class Player : MonoBehaviour {
 		}
 	}
 	
-	public float Speed {
+	public int Score {
 		get {
-			return this.speed;
+			return this.score;
 		}
 		set {
-			speed = value;
+			score = value;
 		}
 	}
 	
+	public Vector3 CurVel {
+		get {
+			return this.curVel;
+		}
+		set {
+			curVel = value;
+		}
+	}
 	
 	public int NumDoubleJumps {
 		get {
@@ -328,12 +230,12 @@ public class Player : MonoBehaviour {
 		}
 	}
 	
-	public int Score {
+	public float Speed {
 		get {
-			return this.score;
+			return this.speed;
 		}
 		set {
-			score = value;
+			speed = value;
 		}
 	}
 }

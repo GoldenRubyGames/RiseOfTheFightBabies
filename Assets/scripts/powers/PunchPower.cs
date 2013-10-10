@@ -17,6 +17,6 @@ public class PunchPower : Power {
 		thisObj.SendMessage("setup", owner);
 		
 		//push the user forward
-		owner.push( new Vector3(dashForce*owner.FacingDir, 0, 0) );
+		owner.push( new Vector3(dashForce*owner.facingDir, 0, 0) );
 	}
 }

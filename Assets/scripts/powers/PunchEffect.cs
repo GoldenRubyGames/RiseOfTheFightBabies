@@ -17,13 +17,13 @@ public class PunchEffect : MonoBehaviour {
 	public void setup(Player _owner){
 		owner = _owner;
 		
-		dir = owner.FacingDir;
+		dir = owner.facingDir;
 		
 		curDist = 0.5f;
 		
 		pushForce.x *= dir;
 		
-		transform.position = owner.transform.position + new Vector3(0.5f*owner.FacingDir, 0, 0);
+		transform.position = owner.transform.position + new Vector3(0.5f*owner.facingDir, 0, 0);
 		
 		renderer.material.color = owner.myColor;
 		
@@ -40,7 +40,7 @@ public class PunchEffect : MonoBehaviour {
 		}
 		
 		//if the owner changes direction, kill it
-		if (dir != owner.FacingDir){
+		if (dir != owner.facingDir){
 			Destroy(gameObject);
 		}
 	}
