@@ -47,6 +47,12 @@ public class Player : MonoBehaviour {
 	[System.NonSerialized]
 	public Vector3 curVel;
 	
+	//recording movement
+	[System.NonSerialized]
+	public GhostRecorder recorder;
+	
+	public GameObject ghostPrefab;
+	
 	//showing stuff in HUD
 	public float hudShakeTime;
 	float hudShakeTimer;
@@ -172,6 +178,11 @@ public class Player : MonoBehaviour {
 		}
 		
 		powers.Clear();
+	}
+	
+	public void makeGhost(){
+		GameObject ghostObject = Instantiate(ghostPrefab, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
+		ghostObject.GetComponent<PlayerGhost>().ghostSetup(myColor, recorder);
 	}
 		
 	//setters and getters

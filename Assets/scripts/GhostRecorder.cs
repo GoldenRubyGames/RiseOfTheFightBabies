@@ -9,9 +9,9 @@ public struct GhostDataPoint{
 	public Vector3 pos;
 }
 
-public class GhostRecorder : MonoBehaviour {
+public class GhostRecorder {
 	
-	private List<GhostDataPoint> data = new List<GhostDataPoint>();
+	private List<GhostDataPoint> data;
 	
 	private float timer;
 	
@@ -21,9 +21,15 @@ public class GhostRecorder : MonoBehaviour {
 	private int curFacingDir;
 	private Vector3 curPos;
 
-	// Use this for initialization
-	void Start () {
+	public GhostRecorder(){
+		data = new List<GhostDataPoint>();
+		reset(true);
+	}
 	
+	public GhostRecorder(GhostRecorder orig){
+		data = new List<GhostDataPoint>(orig.Data);
+		
+		reset(false);
 	}
 	
 	public void reset(bool clearData){
@@ -50,8 +56,10 @@ public class GhostRecorder : MonoBehaviour {
 		data.Add(datum);
 	}
 	
-	public void play(){
-		timer += Time.deltaTime;
+	public void play(bool advanceTime){
+		if (advanceTime){
+			timer += Time.deltaTime;
+		}
 		
 		//advance the playhead until it is current
 		while ( playHead<data.Count-1 && data[playHead].time < timer){
@@ -61,7 +69,6 @@ public class GhostRecorder : MonoBehaviour {
 		curVel = data[playHead].vel;
 		curFacingDir = data[playHead].facingDir;
 		curPos = data[playHead].pos;
-		
 	}
 	
 	
@@ -83,6 +90,12 @@ public class GhostRecorder : MonoBehaviour {
 	public Vector3 CurPos {
 		get {
 			return this.curPos;
+		}
+	}
+		
+	public List<GhostDataPoint> Data {
+		get {
+			return this.data;
 		}
 	}
 }

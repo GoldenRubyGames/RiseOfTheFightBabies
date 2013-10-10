@@ -20,11 +20,7 @@ public class PlayerController : Player {
 	public float jumpCut;
 	bool isJumping;
 	
-	
 	int numDoubleJumpsUsed;
-	
-	
-	
 	
 	
 	public override void customStart(){
@@ -44,6 +40,8 @@ public class PlayerController : Player {
 			attack1Button = "player1Fire1"; //square
 			atack2Button = "player1Fire2";  //triangle
 		}
+		
+		recorder = new GhostRecorder();
 		
 	}
 	
@@ -107,6 +105,16 @@ public class PlayerController : Player {
 			for (int i=0; i<powers.Count; i++){
 				powers[i].use();
 			}
+		}
+		
+		//record for ghosts
+		recorder.record(curVel, facingDir, transform.position);
+		
+		
+		
+		//testing
+		if (Input.GetKeyDown(KeyCode.G) && controllerNum==0){
+			makeGhost();
 		}
 	}
 	
