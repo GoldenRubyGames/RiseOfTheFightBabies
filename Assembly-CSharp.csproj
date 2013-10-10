@@ -46,11 +46,14 @@
   <ItemGroup>
      <Compile Include="Assets\scripts\GameManager.cs" />
      <Compile Include="Assets\scripts\GhostRecorder.cs" />
+     <Compile Include="Assets\scripts\GoombaHitCheck.cs" />
      <Compile Include="Assets\scripts\HUD.cs" />
      <Compile Include="Assets\scripts\Pickup.cs" />
      <Compile Include="Assets\scripts\Player.cs" />
      <Compile Include="Assets\scripts\PlayerController.cs" />
      <Compile Include="Assets\scripts\PlayerGhost.cs" />
+     <Compile Include="Assets\scripts\PlayerGoomba.cs" />
+     <Compile Include="Assets\scripts\PlayerGoon.cs" />
      <Compile Include="Assets\scripts\Power.cs" />
      <Compile Include="Assets\scripts\powers\BatEffect.cs" />
      <Compile Include="Assets\scripts\powers\BatPower.cs" />

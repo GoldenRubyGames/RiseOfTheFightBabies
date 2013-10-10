@@ -85,6 +85,10 @@ public class GhostRecorder {
 		return returnVal;
 	}
 	
+	public bool isFinished(){
+		return playHead >= data.Count-1;
+	}
+	
 	//getters
 	
 	public Vector3 CurVel {

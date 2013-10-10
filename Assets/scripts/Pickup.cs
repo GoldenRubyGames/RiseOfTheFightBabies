@@ -40,12 +40,14 @@ public class Pickup : MonoBehaviour {
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
 			
-			//give them a power up!
-			GameObject thisPower = Instantiate(powerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
-			thisPower.GetComponent<Power>().assignToPlayer(thisPlayer);
-			
-			//get rid of this
-			Destroy(gameObject);
+			if (thisPlayer.canPickupPowers){
+				//give them a power up!
+				GameObject thisPower = Instantiate(powerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
+				thisPower.GetComponent<Power>().assignToPlayer(thisPlayer);
+				
+				//get rid of this
+				Destroy(gameObject);
+			}
 		}
 	}
 }

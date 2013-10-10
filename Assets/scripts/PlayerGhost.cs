@@ -27,6 +27,7 @@ public class PlayerGhost : Player {
 	
 	public override void customStart(){
 		isPlayerControlled = false;
+		canPickupPowers = true;
 	}
 	
 	
@@ -54,6 +55,11 @@ public class PlayerGhost : Player {
 			for (int i=0; i<powers.Count; i++){
 				powers[i].use();
 			}
+		}
+		
+		//if we hit the end, rewind
+		if (recorder.isFinished()){
+			recorder.reset(false);
 		}
 		
 	}

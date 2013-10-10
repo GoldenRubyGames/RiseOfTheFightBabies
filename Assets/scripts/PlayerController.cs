@@ -8,27 +8,13 @@ public class PlayerController : Player {
 	public int controllerNum;
 	string moveAxis, jumpButton, attack1Button, atack2Button; 
 	
-	//general moving
-	Vector3 pushVel;
-	public float pushFric;
-	
-	//moving left and right
-	public float baseSpeed;
-	
-	//jumping
-	public float jumpGrav, fallingGravBase;
-	public float jumpPower;
-	public float jumpCut;
-	bool isJumping;
-	
-	int numDoubleJumpsUsed;
-	
 	
 	public override void customStart(){
 		
 		powers = new List<Power>();
 		
 		isPlayerControlled = true;
+		canPickupPowers = true;
 		
 		curVel = new Vector3(0,0,0);
 		
@@ -126,7 +112,6 @@ public class PlayerController : Player {
 		recorder.record(curVel, facingDir, transform.position, attackPressed);
 		
 		
-		
 		//testing
 		if (Input.GetKeyDown(KeyCode.K) && controllerNum==0){
 			changeHealth(-1, null);
@@ -136,22 +121,6 @@ public class PlayerController : Player {
 		}
 	}
 	
-	
-	void startJump(){
-		isJumping = true;
-		curVel.y = jumpPower;
-	}
-	
-	void endJump(){
-		if (curVel.y > jumpCut){
-			curVel.y = jumpCut;
-	    }
-	    isJumping = false;
-	}
-	
-	public override void push(Vector3 power){
-		pushVel += power;
-	}
 	
 	
 	

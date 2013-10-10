@@ -16,23 +16,42 @@ public class GameManager : MonoBehaviour {
 	//pickup timing
 	public float nextPickupTimeMin, nextPickupTimeMax;
 	float pickupTimer;
+	
+	//goons
+	public GameObject goonPrefab;
+	public float minGoonTime, maxGoonTime;
+	private float goonTimer;
 
 	// Use this for initialization
 	void Start () {
 		
-		//give both players a punch
-		/*
-		for (int i=0; i<players.Length; i++){
-			GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
-			Power thisPower = powerObject.GetComponent<Power>();
-			thisPower.assignToPlayer(players[i]);
+		reset();
+		
+	}
+	
+	void reset(){
+		
+		//kill all existing pickups and goons
+		GameObject[] pickups = GameObject.FindGameObjectsWithTag("pickup");
+		for (int i=0; i<pickups.Length; i++){
+			Destroy(pickups[i]);
 		}
-		*/
+		GameObject[] goons = GameObject.FindGameObjectsWithTag("goon");
+		for (int i=0; i<goons.Length; i++){
+			Destroy(goons[i]);
+		}
 		
 		spawnPickup();
 		
 		pickupTimer = nextPickupTimeMin;
 		
+		if (Time.frameCount > 2){
+			for (int i=0; i<players.Length; i++){
+				players[i].reset();
+			}
+		}
+		
+		goonTimer = minGoonTime;
 	}
 	
 	// Update is called once per frame
@@ -42,10 +61,22 @@ public class GameManager : MonoBehaviour {
 			spawnPickup();
 		}
 		
+		if (Input.GetKeyDown(KeyCode.R)){
+			reset();
+		}
+		
+		//spawn pickups?
 		pickupTimer -= Time.deltaTime;
 		if (pickupTimer <= 0){
 			spawnPickup();
 			pickupTimer = Random.Range(nextPickupTimeMin, nextPickupTimeMax);
+		}
+		
+		//spawn goons?
+		goonTimer -= Time.deltaTime;
+		if (goonTimer <= 0){
+			spawnGoon();
+			goonTimer = Random.Range(minGoonTime, maxGoonTime);
 		}
 		
 	}
@@ -59,5 +90,9 @@ public class GameManager : MonoBehaviour {
 		
 		GameObject newPickupObj = Instantiate(pickupPrefab, pickupSpawnPoints[posNum].transform.position, new Quaternion(0,0,0,0)) as GameObject;
 		newPickupObj.GetComponent<Pickup>().setup( powerObjects[powerID], pickupSpawnPoints[posNum]);
+	}
+	
+	void spawnGoon(){
+		Instantiate(goonPrefab, new Vector3(0,0,0), new Quaternion(0,0,0,0));
 	}
 }

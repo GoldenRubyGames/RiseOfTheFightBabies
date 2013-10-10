@@ -38,6 +38,8 @@ public class Player : MonoBehaviour {
 	//general status things that items may need to affect
 	[System.NonSerializedAttribute]
 	public bool isPlayerControlled;
+	[System.NonSerializedAttribute]
+	public bool canPickupPowers;
 	[System.NonSerialized]
 	public float fallingGrav;
 	[System.NonSerialized]
@@ -46,6 +48,24 @@ public class Player : MonoBehaviour {
 	//general movement
 	[System.NonSerialized]
 	public Vector3 curVel;
+	
+	//moving left and right
+	public float baseSpeed;
+	
+	//jumping
+	public float jumpGrav, fallingGravBase;
+	public float jumpPower;
+	public float jumpCut;
+	[System.NonSerializedAttribute]
+	public bool isJumping;
+	[System.NonSerializedAttribute]
+	public int numDoubleJumpsUsed;
+	
+	//general moving
+	[System.NonSerializedAttribute]
+	public Vector3 pushVel;
+	public float pushFric;
+	
 	
 	//recording movement
 	[System.NonSerialized]
@@ -78,7 +98,7 @@ public class Player : MonoBehaviour {
 	
 	public virtual void customStart(){}
 	
-	void reset(){
+	public void reset(){
 		health = baseHealth;
 		
 		invincibilityTimer = invincibilityTime;
@@ -116,6 +136,22 @@ public class Player : MonoBehaviour {
 	public virtual void customUpdate(){}
 	
 	
+	public void startJump(){
+		isJumping = true;
+		curVel.y = jumpPower;
+	}
+	
+	public void endJump(){
+		if (curVel.y > jumpCut){
+			curVel.y = jumpCut;
+	    }
+	    isJumping = false;
+	}
+	
+	public void push(Vector3 power){
+		pushVel += power;
+	}
+	
 	
 	public void changeHealth(int amount, Player source){
 		
@@ -135,7 +171,6 @@ public class Player : MonoBehaviour {
 		//is this fucker dead?
 		if (health == 0){
 			killPlayer(source);
-			Debug.Log("kill that mother suckler!");
 		}
 	}
 	
@@ -148,7 +183,7 @@ public class Player : MonoBehaviour {
 				killer.addScore(1);
 			}
 			
-			//spaw a spooky ghost
+			//spawn a spooky ghost
 			if (isPlayerControlled){
 				makeGhost();
 			}
@@ -167,8 +202,6 @@ public class Player : MonoBehaviour {
 	public void addScore(int val){
 		score += val;
 	}
-	
-	public virtual void push(Vector3 power){} //ghosts cannot be pushed
 	
 	public bool getPower(Power newPower){
 		//do not add this if the player already has it
