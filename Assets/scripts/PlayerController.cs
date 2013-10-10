@@ -113,12 +113,14 @@ public class PlayerController : Player {
 		
 		
 		//testing
+		/*
 		if (Input.GetKeyDown(KeyCode.K) && controllerNum==0){
 			changeHealth(-1, null);
 		}
 		if (Input.GetKeyDown(KeyCode.G) && controllerNum==0){
 			makeGhost();
 		}
+		*/
 	}
 	
 	

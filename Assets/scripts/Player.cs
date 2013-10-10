@@ -132,6 +132,8 @@ public class Player : MonoBehaviour {
 		
 		hudShakeTimer -= Time.deltaTime;
 		
+		transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+		
 	}
 	public virtual void customUpdate(){}
 	

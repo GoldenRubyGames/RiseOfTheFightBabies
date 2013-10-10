@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour {
 	float pickupTimer;
 	
 	//goons
+	public bool useGoons;
+	public GameObject goonLabelText;
 	public GameObject goonPrefab;
 	public float minGoonTime, maxGoonTime;
 	private float goonTimer;
@@ -26,6 +28,8 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		
 		reset();
+		
+		goonLabelText.SetActive(!useGoons);
 		
 	}
 	
@@ -65,6 +69,11 @@ public class GameManager : MonoBehaviour {
 			reset();
 		}
 		
+		if (Input.GetKeyDown(KeyCode.G)){
+			useGoons = !useGoons;
+			goonLabelText.SetActive(!useGoons);
+		}
+		
 		//spawn pickups?
 		pickupTimer -= Time.deltaTime;
 		if (pickupTimer <= 0){
@@ -73,10 +82,12 @@ public class GameManager : MonoBehaviour {
 		}
 		
 		//spawn goons?
-		goonTimer -= Time.deltaTime;
-		if (goonTimer <= 0){
-			spawnGoon();
-			goonTimer = Random.Range(minGoonTime, maxGoonTime);
+		if (useGoons){
+			goonTimer -= Time.deltaTime;
+			if (goonTimer <= 0){
+				spawnGoon();
+				goonTimer = Random.Range(minGoonTime, maxGoonTime);
+			}
 		}
 		
 	}

@@ -103,21 +103,5 @@ public class PlayerGoomba : Player {
 	}
 	
 	
-	//kill player son touch
-	
-	void OnTriggerEnter(Collider other) {
-		//if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
-			Debug.Log("shave your dad");
-		//}
-	}
-	
-	void OnCollisionEnter(Collision collision) {
-		Debug.Log("toot toot ");
-        foreach (ContactPoint contact in collision.contacts) {
-            Debug.DrawRay(contact.point, contact.normal, Color.white);
-        }
-        if (collision.relativeVelocity.magnitude > 2)
-            audio.Play();
-        
-    }
+
 }
