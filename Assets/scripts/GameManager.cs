@@ -142,7 +142,6 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	public void endGame(int score){
-		Debug.Log("fucking end it");
 		gameOver = true;
 		
 		statusText.showEndGame(score);
