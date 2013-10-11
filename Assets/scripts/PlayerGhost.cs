@@ -69,7 +69,7 @@ public class PlayerGhost : Player {
 		facingDir = recorder.CurFacingDir;
 		
 		bool attackPressed = recorder.checkAttack();
-		if (attackPressed){
+		if (attackPressed && recorder.PlaybackDir == 1){
 			for (int i=0; i<powers.Count; i++){
 				powers[i].use();
 			}

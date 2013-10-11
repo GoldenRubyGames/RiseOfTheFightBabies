@@ -9,6 +9,9 @@ public class Pickup : MonoBehaviour {
 	
 	GameObject spawnPosObject;
 	
+	public float time;
+	private float timer;
+	
 	public void setup(GameObject _powerObject, GameObject _spawnPosObject){
 		spawnPosObject = _spawnPosObject;
 		
@@ -26,12 +29,19 @@ public class Pickup : MonoBehaviour {
 			}
 		}
 		
+		timer = time;
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		//lock z
 		transform.position = new Vector3( transform.position.x, transform.position.y, 0);
+		
+		timer-=Time.deltaTime;
+		if (timer <= 0){
+			Destroy(gameObject);
+		}
 	}
 	
 	
