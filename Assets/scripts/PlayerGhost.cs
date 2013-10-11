@@ -12,6 +12,8 @@ public class PlayerGhost : Player {
 	public float startingStunTime;
 	private float stunTimer;
 	
+	public float rewindSpeed;
+	
 	public void ghostSetup(Color oldColor, GhostRecorder record, List<Power> oldPowers, StarHelm _starHelm){
 		
 		//myColor = oldColor;
@@ -34,7 +36,6 @@ public class PlayerGhost : Player {
 	}
 	
 	public override void customStart(){
-		canPickupPowers = true;
 		
 		stunTimer = 0;
 	}
@@ -75,8 +76,13 @@ public class PlayerGhost : Player {
 		}
 		
 		//if we hit the end, rewind
-		if (recorder.isFinished()){
-			recorder.reset(false);
+		if (recorder.PlaybackDir == 1 && recorder.isAtEnd()){
+			recorder.setPlaybackDir(-1);
+			recorder.setPlaybackSpeed(rewindSpeed);
+		}
+		if (recorder.PlaybackDir == -1 && recorder.isAtStart()){
+			recorder.setPlaybackDir(1);
+			recorder.setPlaybackSpeed(1);
 		}
 		
 	}

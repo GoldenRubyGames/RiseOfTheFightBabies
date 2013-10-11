@@ -30,9 +30,6 @@ public class Player : MonoBehaviour {
 	public List<Power> powers;
 	public GameObject punchPowerObject;
 	
-	[System.NonSerializedAttribute]
-	public int numDoubleJumps;
-	
 	private int score;
 	
 	//general status things that items may need to affect
@@ -60,6 +57,9 @@ public class Player : MonoBehaviour {
 	public bool isJumping;
 	[System.NonSerializedAttribute]
 	public int numDoubleJumpsUsed;
+	[System.NonSerializedAttribute]
+	public int numDoubleJumps;
+	
 	
 	//general moving
 	[System.NonSerializedAttribute]
@@ -228,9 +228,14 @@ public class Player : MonoBehaviour {
 		
 		//reset all ghosts
 		GameObject[] ghosts = GameObject.FindGameObjectsWithTag("ghost");
-		Debug.Log("reset "+ghosts.Length+" ghosts");
 		for (int i=0; i<ghosts.Length; i++){
 			ghosts[i].SendMessage("reset");
+		}
+		
+		//destroy all effect objects
+		GameObject[] effects = GameObject.FindGameObjectsWithTag("powerEffect");
+		for (int i=0; i<effects.Length; i++){
+			Destroy( effects[i] );
 		}
 		
 		//show the text
@@ -265,6 +270,12 @@ public class Player : MonoBehaviour {
 		}
 		
 		powers.Clear();
+		
+		//reset movement info
+		speed = baseSpeed;
+		fallingGrav = fallingGravBase;
+		numDoubleJumpsUsed = 0;
+		numDoubleJumps = 0;
 	}
 	
 	public PlayerGhost makeGhost(){

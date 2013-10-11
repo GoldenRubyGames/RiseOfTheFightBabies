@@ -57,10 +57,6 @@ public class PlayerController : Player {
 		pushVel = new Vector3(0,0,0);
 		curVel = new Vector3(0,0,0);
 		
-		//reset movement info
-		speed = baseSpeed;
-		fallingGrav = fallingGravBase;
-		numDoubleJumpsUsed = 0;
 		
 		recorder.reset(true);
 	}
@@ -153,6 +149,12 @@ public class PlayerController : Player {
 		Power thisPower = powerObject.GetComponent<Power>();
 		thisPower.assignToPlayer(this);
 		
+		//destroy all effect objects
+		GameObject[] effects = GameObject.FindGameObjectsWithTag("powerEffect");
+		for (int i=0; i<effects.Length; i++){
+			Destroy( effects[i] );
+		}
+		
 		livesLeft--;
 		if (livesLeft <= 0){
 			gm.endGame(Score);
@@ -160,6 +162,21 @@ public class PlayerController : Player {
 		else{
 			//show the text
 			GameObject.FindGameObjectWithTag("statusText").SendMessage("showDeathText", livesLeft);
+		}
+	}
+	
+	
+	
+	
+	
+	//setters getters
+	
+	public int LivesLeft {
+		get {
+			return this.livesLeft;
+		}
+		set {
+			livesLeft = value;
 		}
 	}
 	

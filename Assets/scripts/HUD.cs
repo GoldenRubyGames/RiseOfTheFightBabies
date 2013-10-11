@@ -35,12 +35,14 @@ public class HUD : MonoBehaviour {
 			//int dispNum = 
 			string playerName = "";
 			if(i==0){
-				playerName = "Player "+(i+1).ToString()+": ";
-				for (int k=0; k<players[i].Health; k++) playerName+="[-]";
+				playerName = "Player "+(i+1).ToString();
 			}else{	
 				for (int k=0; k<players[i].Health; k++) playerName+="[-]";
 				playerName += ": Player "+(i+1).ToString();
 			}
+			
+			//lives
+			playerName += "\nLives: "+players[i].LivesLeft;
 			
 			//score
 			playerName += "\nScore: "+players[i].Score;

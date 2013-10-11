@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour {
 		starHelm.setChosenOne( GameObject.FindGameObjectWithTag("goon").GetComponent<PlayerGoon>() );
 	}
 	
+	
 	// Update is called once per frame
 	void Update () {
 	

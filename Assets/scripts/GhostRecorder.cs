@@ -23,6 +23,9 @@ public class GhostRecorder {
 	private Vector3 curPos;
 	
 	private bool attackPressed;
+	
+	private int playbackDir;
+	private float playbackSpeed;
 
 	public GhostRecorder(){
 		data = new List<GhostDataPoint>();
@@ -31,7 +34,6 @@ public class GhostRecorder {
 	
 	public GhostRecorder(GhostRecorder orig){
 		data = new List<GhostDataPoint>(orig.Data);
-		
 		reset(false);
 	}
 	
@@ -39,6 +41,9 @@ public class GhostRecorder {
 		timer = 0;
 		
 		playHead = 0;
+		
+		playbackDir = 1;
+		playbackSpeed = 1;
 		
 		if (clearData){
 			data.Clear();
@@ -62,14 +67,23 @@ public class GhostRecorder {
 	
 	public void play(bool advanceTime){
 		if (advanceTime){
-			timer += Time.deltaTime;
+			timer += Time.deltaTime * playbackSpeed * playbackDir;
 		}
 		
 		//advance the playhead until it is current
-		while ( playHead<data.Count-1 && data[playHead].time < timer){
-			playHead++;
-			if (data[playHead].attackPressed){
-				attackPressed = true;
+		if (playbackDir == 1){
+			while ( playHead<data.Count-1 && data[playHead].time < timer){
+				playHead++;
+				if (data[playHead].attackPressed){
+					attackPressed = true;
+				}
+			}
+		}else{
+			while ( playHead>0 && data[playHead].time > timer){
+				playHead--;
+				if (data[playHead].attackPressed){
+					attackPressed = true;
+				}
 			}
 		}
 		
@@ -85,8 +99,30 @@ public class GhostRecorder {
 		return returnVal;
 	}
 	
-	public bool isFinished(){
+	public bool isAtEnd(){
 		return playHead >= data.Count-1;
+	}
+	public bool isAtStart(){
+		return playHead <= 0;
+	}
+	
+	public void setPlaybackDir(int newDir){
+		//make sure the value is 1 or -1
+		if (newDir != 1 && newDir != -1){
+			Debug.Log("SETPLAYBACKDIR MUST RECIEVE A VALUE OF 1 OR -1");
+			return;
+		}
+		
+		playbackDir = newDir;
+	}
+	
+	public void setPlaybackSpeed(float newSpeed){
+		//this must be a possitive value
+		if (newSpeed < 0){
+			Debug.Log("SETPLAYBACKSPEED MUST RECIEVE A POSSITIVE VALUE");
+			return;
+		}
+		playbackSpeed = newSpeed;
 	}
 	
 	//getters
@@ -112,6 +148,12 @@ public class GhostRecorder {
 	public List<GhostDataPoint> Data {
 		get {
 			return this.data;
+		}
+	}
+	
+	public int PlaybackDir {
+		get {
+			return this.playbackDir;
 		}
 	}
 }

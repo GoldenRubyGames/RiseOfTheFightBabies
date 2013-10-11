@@ -48,7 +48,7 @@ public class StatusText : MonoBehaviour {
 	
 	public void showEndGame(int score){
 		setText("GAME OVER!\nSCORE: "+score);
-		isBlinking = false;
+		//isBlinking = false;
 		renderer.enabled = true;
 		displayTimer = 100;
 	}
