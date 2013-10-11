@@ -17,7 +17,6 @@ public class PlayerController : Player {
 		powers = new List<Power>();
 		
 		isPlayerControlled = true;
-		canPickupPowers = true;
 		
 		curVel = new Vector3(0,0,0);
 		

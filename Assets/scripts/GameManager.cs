@@ -31,11 +31,14 @@ public class GameManager : MonoBehaviour {
 	//game status
 	private bool gameOver;
 	
+	private bool paused;
+	
 	//showing text
 	public StatusText statusText;
 
 	// Use this for initialization
 	void Start () {
+		paused = false;
 		
 		reset();
 		
@@ -94,6 +97,12 @@ public class GameManager : MonoBehaviour {
 		}
 		if (Input.GetKeyDown(KeyCode.T)){
 			spawnGoon();
+		}
+		
+		//makeshift pause
+		if (Input.GetButtonUp("pauseButton")){
+			paused = !paused;
+			Time.timeScale = paused ? 0 : 1;
 		}
 		
 		if (!gameOver){

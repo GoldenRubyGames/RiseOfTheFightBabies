@@ -15,8 +15,6 @@ public class PlayerGoon : Player {
 	
 	
 	public override void customStart(){
-		isPlayerControlled = false;
-		canPickupPowers = true;
 		powers = new List<Power>();
 	}
 	

@@ -38,12 +38,12 @@ public class Player : MonoBehaviour {
 	//general status things that items may need to affect
 	[System.NonSerializedAttribute]
 	public bool isPlayerControlled;
-	[System.NonSerializedAttribute]
-	public bool canPickupPowers;
 	[System.NonSerialized]
 	public float fallingGrav;
 	[System.NonSerialized]
 	public float speed;
+	
+	public bool canPickupPowers;
 	
 	//general movement
 	[System.NonSerialized]
@@ -100,6 +100,9 @@ public class Player : MonoBehaviour {
 		if (starHelm == null){
 			starHelm = GameObject.FindWithTag("starHelm").GetComponent<StarHelm>();
 		}
+		
+		//make some assumptions!
+		isPlayerControlled = false;
 		
 		customStart();
 		

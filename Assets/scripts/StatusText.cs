@@ -34,7 +34,7 @@ public class StatusText : MonoBehaviour {
 	}
 	
 	public void showScoreText(int score){
-		setText("HELL YEAH BRO\nSSCORE: "+score.ToString() );
+		setText("HELL YEAH BRO\nSCORE: "+score.ToString() );
 	}
 	
 	public void showDeathText(int livesLeft){

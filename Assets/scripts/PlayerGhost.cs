@@ -17,6 +17,7 @@ public class PlayerGhost : Player {
 		//myColor = oldColor;
 		//myColor.a = alphaVal;
 		
+		
 		recorder = new GhostRecorder(record);
 		
 		powers = new List<Power>();
@@ -33,7 +34,6 @@ public class PlayerGhost : Player {
 	}
 	
 	public override void customStart(){
-		isPlayerControlled = false;
 		canPickupPowers = true;
 		
 		stunTimer = 0;
@@ -44,7 +44,7 @@ public class PlayerGhost : Player {
 		recorder.reset(false);
 		recorder.play(false);
 		
-		Debug.Log("reset ghost on frame "+Time.frameCount);
+		//Debug.Log("reset ghost on frame "+Time.frameCount);
 		
 		//set the pos
 		transform.position = recorder.CurPos;
@@ -82,9 +82,6 @@ public class PlayerGhost : Player {
 	}
 	
 	public override void killPlayerCustom(Player killer){
-		//give it pause time
-		stunTimer = stunTime;
-		
 		//show the text
 		GameObject.FindGameObjectWithTag("statusText").SendMessage("showGhostKill");
 		
@@ -97,5 +94,8 @@ public class PlayerGhost : Player {
 		
 		//reset the ghost
 		reset();
+		
+		//give it pause time
+		stunTimer = stunTime;
 	}
 }
