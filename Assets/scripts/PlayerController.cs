@@ -62,7 +62,23 @@ public class PlayerController : Player {
 	}
 	
 	public override void customUpdate(){
-		float xAxisVal = Input.GetAxis(moveAxis);
+		float xAxisJoy = Input.GetAxis(moveAxis);
+		//assume we'r eusing this value
+		float xAxisVal = xAxisJoy;
+		//player 0 can be keyboard control
+		if (controllerNum == 0){
+			//get the keyboard input
+			float xAxisKey = Input.GetAxis("player0KeyboardMove");
+			
+			//use whichever one is further form 0
+			if ( Mathf.Abs(xAxisJoy) > Mathf.Abs(xAxisKey) ){
+				xAxisVal = xAxisJoy;
+			}else{
+				xAxisVal = xAxisKey;
+			}
+		}
+		
+		
 		//running
 		float curSpeed = speed * xAxisVal;
 		curVel.x = curSpeed;
