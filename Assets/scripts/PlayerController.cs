@@ -62,12 +62,15 @@ public class PlayerController : Player {
 	}
 	
 	public override void customUpdate(){
+		float xAxisVal = Input.GetAxis(moveAxis);
 		//running
-		float curSpeed = speed * Input.GetAxis(moveAxis);
+		float curSpeed = speed * xAxisVal;
 		curVel.x = curSpeed;
 		
-		if (curSpeed > 0)  facingDir = 1;
-		if (curSpeed < 0)  facingDir = -1;
+		
+		float facingThreshold = 0.25f;
+		if (xAxisVal > facingThreshold)  facingDir = 1;
+		if (xAxisVal < -facingThreshold)  facingDir = -1;
 		
 		//jumping
 		if (Input.GetButtonDown(jumpButton) && (controller.isGrounded || numDoubleJumpsUsed < numDoubleJumps)){
@@ -120,11 +123,7 @@ public class PlayerController : Player {
 		if (Input.GetKeyDown(KeyCode.K) && controllerNum==0){
 			changeHealth(-1, null);
 		}
-		/*
-		if (Input.GetKeyDown(KeyCode.G) && controllerNum==0){
-			makeGhost();
-		}
-		*/
+		
 	}
 	
 	
