@@ -21,15 +21,19 @@ public class Bullet : MonoBehaviour {
 		pushForce.x *= owner.facingDir;
 		
 		vel = new Vector3( speed*owner.facingDir, 0, 0);
-		vel.x += owner.CurVel.x;
+		//vel.x += owner.CurVel.x;
 		transform.position = owner.transform.position + new Vector3(0.5f*owner.facingDir, 0, 0);
+		
+		//rigidbody.AddForce(vel);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 		//move it
-		transform.position += vel * Time.deltaTime;
+		
+		rigidbody.velocity = vel;
+		//transform.position += vel * Time.deltaTime;
 		
 		//is it time to die?
 		timer -= Time.deltaTime;
@@ -39,6 +43,7 @@ public class Bullet : MonoBehaviour {
 		
 	}
 	
+	/*
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.layer == LayerMask.NameToLayer("shield") ){
 			ShieldEffect thisShield = other.gameObject.GetComponent<ShieldEffect>();
@@ -57,6 +62,30 @@ public class Bullet : MonoBehaviour {
 		}
 		
 	}
+	*/
+	
+	void OnCollisionEnter(Collision collision) {
+        
+		//ignore player shells
+		if (collision.gameObject.layer == LayerMask.NameToLayer("player")){
+			return;
+		}
+		
+		//did we touch a player?
+		if (collision.gameObject.layer == LayerMask.NameToLayer("playerHitBox")){
+			Player thisPlayer = collision.gameObject.transform.parent.gameObject.GetComponent<Player>();
+			if (thisPlayer != owner){
+				hitPlayer(thisPlayer);
+				Destroy(gameObject);
+			}else{
+				return;
+			}
+		}
+		
+		//destroy this regardless
+		Destroy(gameObject);
+        
+    }
 	
 	void hitPlayer(Player targetPlayer){
 		targetPlayer.push( pushForce );
