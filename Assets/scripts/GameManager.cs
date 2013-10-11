@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour {
 	
 	public Player[] players;
 	
+	
 	//list of powers
 	public GameObject[] powerObjects;
 	public GameObject punchPowerObject;
@@ -23,6 +24,15 @@ public class GameManager : MonoBehaviour {
 	public GameObject goonPrefab;
 	public float minGoonTime, maxGoonTime;
 	private float goonTimer;
+	
+	//the star
+	public StarHelm starHelm;
+	
+	//game status
+	private bool gameOver;
+	
+	//showing text
+	public StatusText statusText;
 
 	// Use this for initialization
 	void Start () {
@@ -31,9 +41,14 @@ public class GameManager : MonoBehaviour {
 		
 		goonLabelText.SetActive(!useGoons);
 		
+		for (int i=0; i<players.Length; i++){
+			players[i].Gm = this;
+		}
+		
 	}
 	
 	void reset(){
+		gameOver = false;
 		
 		//kill all existing pickups and goons
 		GameObject[] pickups = GameObject.FindGameObjectsWithTag("pickup");
@@ -56,6 +71,10 @@ public class GameManager : MonoBehaviour {
 		}
 		
 		goonTimer = minGoonTime;
+		
+		//spawn one goon and give it the star helm
+		spawnGoon();
+		starHelm.setChosenOne( GameObject.FindGameObjectWithTag("goon").GetComponent<PlayerGoon>() );
 	}
 	
 	// Update is called once per frame
@@ -73,20 +92,25 @@ public class GameManager : MonoBehaviour {
 			useGoons = !useGoons;
 			goonLabelText.SetActive(!useGoons);
 		}
-		
-		//spawn pickups?
-		pickupTimer -= Time.deltaTime;
-		if (pickupTimer <= 0){
-			spawnPickup();
-			pickupTimer = Random.Range(nextPickupTimeMin, nextPickupTimeMax);
+		if (Input.GetKeyDown(KeyCode.T)){
+			spawnGoon();
 		}
 		
-		//spawn goons?
-		if (useGoons){
-			goonTimer -= Time.deltaTime;
-			if (goonTimer <= 0){
-				spawnGoon();
-				goonTimer = Random.Range(minGoonTime, maxGoonTime);
+		if (!gameOver){
+			//spawn pickups?
+			pickupTimer -= Time.deltaTime;
+			if (pickupTimer <= 0){
+				spawnPickup();
+				pickupTimer = Random.Range(nextPickupTimeMin, nextPickupTimeMax);
+			}
+			
+			//spawn goons?
+			if (useGoons){
+				goonTimer -= Time.deltaTime;
+				if (goonTimer <= 0){
+					spawnGoon();
+					goonTimer = Random.Range(minGoonTime, maxGoonTime);
+				}
 			}
 		}
 		
@@ -105,5 +129,39 @@ public class GameManager : MonoBehaviour {
 	
 	void spawnGoon(){
 		Instantiate(goonPrefab, new Vector3(0,0,0), new Quaternion(0,0,0,0));
+	}
+	
+	public void endGame(int score){
+		Debug.Log("fucking end it");
+		gameOver = true;
+		
+		statusText.showEndGame(score);
+		
+		//destroy everything!
+		for (int i=0; i<players.Length; i++){
+			players[i].clearPowers();
+			Destroy(players[i].gameObject);
+		}
+		
+		GameObject[] pickups = GameObject.FindGameObjectsWithTag("pickup");
+		for (int i=0; i<pickups.Length; i++){
+			Destroy(pickups[i]);
+		}
+		GameObject[] goons = GameObject.FindGameObjectsWithTag("goon");
+		for (int i=0; i<goons.Length; i++){
+			goons[i].SendMessage("clearPowers");
+			Destroy(goons[i]);
+		}
+		GameObject[] ghosts = GameObject.FindGameObjectsWithTag("ghost");
+		for (int i=0; i<ghosts.Length; i++){
+			ghosts[i].SendMessage("clearPowers");
+			Destroy(ghosts[i]);
+		}
+		
+		GameObject.Find("HUD").SetActive(false);
+		
+		starHelm.gameObject.SetActive(false);
+		
+		
 	}
 }

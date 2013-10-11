@@ -77,9 +77,17 @@ public class Player : MonoBehaviour {
 	public float hudShakeTime;
 	float hudShakeTimer;
 	
+	//all player characters must know where the star helm is
+	[System.NonSerialized]
+	public StarHelm starHelm;
+	
 	//spawn zone
 	[System.NonSerialized]
 	public GameObject spawnLeft, spawnRight;
+	
+	//link to GameManager
+	[System.NonSerialized]
+	public GameManager gm;
 	
 	// Use this for initialization
 	void Start () {
@@ -88,6 +96,10 @@ public class Player : MonoBehaviour {
 		
 		spawnLeft = GameObject.Find("spawnLeft");
 		spawnRight = GameObject.Find("spawnRight");
+		
+		if (starHelm == null){
+			starHelm = GameObject.FindWithTag("starHelm").GetComponent<StarHelm>();
+		}
 		
 		customStart();
 		
@@ -157,6 +169,12 @@ public class Player : MonoBehaviour {
 	
 	public void changeHealth(int amount, Player source){
 		
+		//ghosts can't hurt ghosts!
+		if (!isPlayerControlled && !source.isPlayerControlled){
+			return;
+		}
+		
+		
 		//don't take damage whil invicible
 		if (amount < 0 && invincibilityTimer > 0){
 			return;
@@ -176,33 +194,44 @@ public class Player : MonoBehaviour {
 		}
 	}
 	
+	//by default, just kill the player, but allow child classes to define their own
 	public void killPlayer(Player killer){
+		killPlayerCustom(killer);
 		
-		//if this is a player, do all the normal stuff
-		if (isPlayerControlled){
-			//give the killer a point if they are real. Do not reward suicide
-			if (killer != null && killer != this){
-				killer.addScore(1);
+		//if this had the star helm, have the player spawn a new one
+		if (killer != null && starHelm.ChosenOne == this){
+			if (killer.isPlayerControlled){
+				killer.starHelmScore();
 			}
-			
-			//spawn a spooky ghost
-			if (isPlayerControlled){
-				makeGhost();
-			}
-			
-			//reset the player
-			reset();
-		}
-		//ghosts just go away
-		else{
-			clearPowers();
-			Destroy(gameObject);
 		}
 	}
-		
+	public virtual void killPlayerCustom(Player killer){
+		clearPowers();
+		Destroy(gameObject);
+	}
 	
+		
 	public void addScore(int val){
 		score += val;
+	}
+	
+	public void starHelmScore(){
+		score += starHelm.scoreValue;
+		
+		PlayerGhost newGhost = makeGhost();
+		starHelm.setChosenOne(newGhost);
+		
+		reset();
+		
+		//reset all ghosts
+		GameObject[] ghosts = GameObject.FindGameObjectsWithTag("ghost");
+		Debug.Log("reset "+ghosts.Length+" ghosts");
+		for (int i=0; i<ghosts.Length; i++){
+			ghosts[i].SendMessage("reset");
+		}
+		
+		//show the text
+		GameObject.FindGameObjectWithTag("statusText").SendMessage("showScoreText", score);
 	}
 	
 	public bool getPower(Power newPower){
@@ -235,9 +264,12 @@ public class Player : MonoBehaviour {
 		powers.Clear();
 	}
 	
-	public void makeGhost(){
+	public PlayerGhost makeGhost(){
 		GameObject ghostObject = Instantiate(ghostPrefab, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
-		ghostObject.GetComponent<PlayerGhost>().ghostSetup(myColor, recorder, powers);
+		PlayerGhost newGhost = ghostObject.GetComponent<PlayerGhost>();
+		newGhost.ghostSetup(myColor, recorder, powers, starHelm);
+		
+		return newGhost;
 	}
 		
 	//setters and getters
@@ -302,6 +334,15 @@ public class Player : MonoBehaviour {
 		}
 		set {
 			speed = value;
+		}
+	}
+	
+	public GameManager Gm {
+		get {
+			return this.gm;
+		}
+		set {
+			gm = value;
 		}
 	}
 }

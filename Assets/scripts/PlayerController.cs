@@ -9,6 +9,9 @@ public class PlayerController : Player {
 	string moveAxis, jumpButton, attack1Button, atack2Button; 
 	
 	
+	public int numLives;
+	private int livesLeft;
+	
 	public override void customStart(){
 		
 		powers = new List<Power>();
@@ -17,6 +20,12 @@ public class PlayerController : Player {
 		canPickupPowers = true;
 		
 		curVel = new Vector3(0,0,0);
+		
+		clearPowers();
+		//give them a punch
+		GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
+		Power thisPower = powerObject.GetComponent<Power>();
+		thisPower.assignToPlayer(this);
 		
 		//set the controller
 		moveAxis = "player0Move";
@@ -31,16 +40,15 @@ public class PlayerController : Player {
 			atack2Button = "player1Fire2";  //triangle
 		}
 		
+		livesLeft = numLives;
+		
 		recorder = new GhostRecorder();
+		
 		
 	}
 	
 	public override void customReset(){
-		clearPowers();
-		//give them a punch
-		GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
-		Power thisPower = powerObject.GetComponent<Power>();
-		thisPower.assignToPlayer(this);
+		
 		
 		//set the pos
 		float spawnX = Random.Range(spawnLeft.transform.position.x, spawnRight.transform.position.x);
@@ -113,10 +121,11 @@ public class PlayerController : Player {
 		
 		
 		//testing
-		/*
+		
 		if (Input.GetKeyDown(KeyCode.K) && controllerNum==0){
 			changeHealth(-1, null);
 		}
+		/*
 		if (Input.GetKeyDown(KeyCode.G) && controllerNum==0){
 			makeGhost();
 		}
@@ -124,12 +133,36 @@ public class PlayerController : Player {
 	}
 	
 	
-	
-	
-	///setters and getters
-	
-	
-	
+	public override void killPlayerCustom(Player killer){
+		//give the killer a point if they are real. Do not reward suicide
+		if (killer != null && killer != this){
+			killer.addScore(1);
+		}
+		
+		//spawn a spooky ghost
+		if (isPlayerControlled){
+			makeGhost();
+		}
+		
+		//reset the player
+		reset();
+		
+		//empty out the powers
+		clearPowers();
+		//give them a punch
+		GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
+		Power thisPower = powerObject.GetComponent<Power>();
+		thisPower.assignToPlayer(this);
+		
+		livesLeft--;
+		if (livesLeft <= 0){
+			gm.endGame(Score);
+		}
+		else{
+			//show the text
+			GameObject.FindGameObjectWithTag("statusText").SendMessage("showDeathText", livesLeft);
+		}
+	}
 	
 	
 	
