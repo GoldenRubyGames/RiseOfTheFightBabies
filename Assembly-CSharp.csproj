@@ -74,6 +74,8 @@
      <Compile Include="Assets\scripts\powers\SpawnEffectPower.cs" />
      <Compile Include="Assets\scripts\powers\SpikeShoesEffect.cs" />
      <Compile Include="Assets\scripts\powers\SpikeShoesPower.cs" />
+     <Compile Include="Assets\scripts\powers\SwordBlade.cs" />
+     <Compile Include="Assets\scripts\powers\SwordEffect.cs" />
      <Compile Include="Assets\scripts\powers\speedShoesPower.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

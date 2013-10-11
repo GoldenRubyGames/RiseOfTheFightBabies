@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MeleeStandardPower : Power {
 	
-	public float dashForce;
+	public Vector3 dashForce;
 	
 	private GameObject curObject;
 	
@@ -13,7 +13,7 @@ public class MeleeStandardPower : Power {
 		curObject.SendMessage("setup", owner);
 		
 		//push the user forward
-		owner.push( new Vector3(dashForce*owner.facingDir, 0, 0) );
+		owner.push( new Vector3(dashForce.x*owner.facingDir, dashForce.y, 0) );
 	}
 	
 	public override void customCleanUp (){
