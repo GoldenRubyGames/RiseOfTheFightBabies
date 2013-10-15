@@ -23,6 +23,7 @@ public class RocketEffect : MonoBehaviour {
 		timer = explosionTime;
 		
 		moveForce.x *= owner.facingDir;
+		transform.position = owner.transform.position + new Vector3( owner.facingDir*1, 0, 0);
 		
 	}
 	
@@ -96,6 +97,12 @@ public class RocketEffect : MonoBehaviour {
 				return;
 			}
 		}
+		
+		//did we touch a power effect? If so, ignore this
+		if (collision.gameObject.tag == "powerEffect"){
+			return;
+		}
+		
 		
 		explode();
         

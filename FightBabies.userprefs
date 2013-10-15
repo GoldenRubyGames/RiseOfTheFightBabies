@@ -1,19 +1,20 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/powers/Bullet.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/powers/RocketEffect.cs">
     <Files>
-      <File FileName="Assets/scripts/GameManager.cs" Line="144" Column="33" />
+      <File FileName="Assets/scripts/GameManager.cs" Line="1" Column="1" />
       <File FileName="Assets/scripts/Player.cs" Line="1" Column="1" />
-      <File FileName="Assets/scripts/PlayerGhost.cs" Line="72" Column="49" />
+      <File FileName="Assets/scripts/PlayerGhost.cs" Line="1" Column="1" />
       <File FileName="Assets/scripts/PlayerController.cs" Line="1" Column="1" />
       <File FileName="Assets/scripts/powers/PunchEffect.cs" Line="1" Column="1" />
       <File FileName="Assets/scripts/powers/MeleeStandardPower.cs" Line="1" Column="1" />
       <File FileName="Assets/scripts/Pickup.cs" Line="1" Column="1" />
       <File FileName="Assets/scripts/powers/SpikeShoesEffect.cs" Line="1" Column="1" />
-      <File FileName="Assets/scripts/powers/DeathOrbEffect.cs" Line="26" Column="4" />
-      <File FileName="Assets/scripts/powers/GrenadeEffect.cs" Line="32" Column="19" />
-      <File FileName="Assets/scripts/powers/SpawnEffectPower.cs" Line="7" Column="2" />
-      <File FileName="Assets/scripts/powers/Bullet.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/DeathOrbEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/GrenadeEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/SpawnEffectPower.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/Bullet.cs" Line="88" Column="6" />
+      <File FileName="Assets/scripts/powers/RocketEffect.cs" Line="59" Column="37" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
