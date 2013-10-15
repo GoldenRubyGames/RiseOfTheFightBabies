@@ -10,6 +10,7 @@ public class PlayerGhost : Player {
 	
 	public float stunTime;
 	public float startingStunTime;
+	public float startingStunTimeBonusRange;
 	private float stunTimer;
 	
 	public float rewindSpeed;
@@ -53,12 +54,18 @@ public class PlayerGhost : Player {
 		//clear velocity
 		curVel = recorder.CurVel;
 		
-		stunTimer = startingStunTime;
+		stunTimer = startingStunTime + Random.Range(0,startingStunTimeBonusRange);
 		
 	}
 	
 	public override void customUpdate(){
 		stunTimer -= Time.deltaTime;
+		
+		//if this thing has nothing in the recording, destroy it
+		if (recorder.Data.Count == 0){
+			Debug.Log("GHOST HAS NO RECORDING");
+			Destroy(gameObject);
+		}
 		
 		if (stunTimer <= 0){
 			recorder.play(true);
