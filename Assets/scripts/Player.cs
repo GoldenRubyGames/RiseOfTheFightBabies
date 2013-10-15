@@ -41,7 +41,6 @@ public class Player : MonoBehaviour {
 	public float fallingGrav;
 	[System.NonSerialized]
 	public float speed;
-	
 	public bool canPickupPowers;
 	
 	//general movement
@@ -92,7 +91,7 @@ public class Player : MonoBehaviour {
 	//link to GameManager and camera
 	[System.NonSerialized]
 	public GameManager gm;
-	public CamControl camera;
+	//public CamControl camera;
 	
 	// Use this for initialization
 	void Start () {
@@ -150,7 +149,7 @@ public class Player : MonoBehaviour {
 		
 		
 		//showing damage taken
-		if (invincibilityTimer >0 ){
+		if (invincibilityTimer > 0 ){
 			invincibilityTimer-=Time.deltaTime;
 			bool showPlayer = Time.frameCount%10 < 5;
 			avatar.renderer.enabled = showPlayer;
@@ -184,14 +183,14 @@ public class Player : MonoBehaviour {
 	
 	
 	public void changeHealth(int amount, Player source){
-		
+		Debug.Log("ow mother fucker");
 		//ghosts can't hurt ghosts!
 		if (!isPlayerControlled && !source.isPlayerControlled){
 			return;
 		}
 		
 		
-		//don't take damage whil invicible
+		//don't take damage while invicible
 		if (amount < 0 && invincibilityTimer > 0){
 			return;
 		}
@@ -212,14 +211,24 @@ public class Player : MonoBehaviour {
 	
 	//by default, just kill the player, but allow child classes to define their own
 	public void killPlayer(Player killer){
-		killPlayerCustom(killer);
+		if (gm.DoingKillEffect){
+			Debug.Log("get the fuck out!");
+			return;
+		}
 		
 		//if this had the star helm, have the player spawn a new one
 		if (killer != null && starHelm.ChosenOne == this){
 			if (killer.isPlayerControlled){
 				killer.starHelmScore();
+				
+				gm.startKillEffect(this);
+				return;
 			}
 		}
+		
+		killPlayerCustom(killer);
+		
+		
 	}
 	public virtual void killPlayerCustom(Player killer){
 		clearPowers();
@@ -238,22 +247,17 @@ public class Player : MonoBehaviour {
 	public void starHelmScore(){
 		score += starHelm.scoreValue;
 		
-		PlayerGhost newGhost = makeGhost();
-		starHelm.setChosenOne(newGhost);
 		
+		
+		//gm.startKillEffect(transform.position);
+		
+		//camera.startKillEffect(transform.position);
+		
+		/*
 		reset();
 		
-		//reset all ghosts
-		GameObject[] ghosts = GameObject.FindGameObjectsWithTag("ghost");
-		for (int i=0; i<ghosts.Length; i++){
-			ghosts[i].SendMessage("reset");
-		}
 		
-		//destroy all effect objects
-		GameObject[] effects = GameObject.FindGameObjectsWithTag("powerEffect");
-		for (int i=0; i<effects.Length; i++){
-			Destroy( effects[i] );
-		}
+		*/
 		
 		//show the text
 		GameObject.FindGameObjectWithTag("statusText").SendMessage("showScoreText", score);
@@ -298,9 +302,8 @@ public class Player : MonoBehaviour {
 	public PlayerGhost makeGhost(){
 		GameObject ghostObject = Instantiate(ghostPrefab, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
 		PlayerGhost newGhost = ghostObject.GetComponent<PlayerGhost>();
-		newGhost.ghostSetup(myColor, recorder, powers, starHelm);
+		newGhost.ghostSetup(myColor, recorder, powers, starHelm, gm);
 		
-		gm.Ghosts.Add(newGhost);
 		
 		return newGhost;
 	}

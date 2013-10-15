@@ -15,7 +15,7 @@ public class PlayerGhost : Player {
 	
 	public float rewindSpeed;
 	
-	public void ghostSetup(Color oldColor, GhostRecorder record, List<Power> oldPowers, StarHelm _starHelm){
+	public void ghostSetup(Color oldColor, GhostRecorder record, List<Power> oldPowers, StarHelm _starHelm, GameManager _gm){
 		
 		//myColor = oldColor;
 		//myColor.a = alphaVal;
@@ -26,6 +26,7 @@ public class PlayerGhost : Player {
 		powers = new List<Power>();
 		
 		starHelm = _starHelm;
+		gm = _gm;
 		
 		//set the powers to obey only me!
 		for (int i=0; i<oldPowers.Count; i++){

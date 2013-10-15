@@ -20,6 +20,11 @@ public class StarHelm : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (chosenOne == null){
+			Debug.Log("laugh at god");
+			return;
+		}
+		
 		float newScale = pulseMin + Mathf.Abs(Mathf.Sin( Time.time * pulseSpeed )) * (pulseMax-pulseMin);
 		
 		transform.localScale = new Vector3(newScale, newScale, newScale);

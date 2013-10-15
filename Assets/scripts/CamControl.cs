@@ -9,7 +9,9 @@ public class CamControl : MonoBehaviour {
 	private Vector3 startPos;
 	private float startZoom;
 	
-	public float zoomLerpSpeed, moveLerpSpeed, timeLerpSpeed;
+	public float zoomLerpSpeed, zoomLerpSpeedAfterKill;
+	public float moveLerpSpeed, moveLerpSpeedAfterKill;
+	public float timeLerpSpeed;
 	
 	private Vector3 targetPos;
 	private float targetZoom;
@@ -27,6 +29,7 @@ public class CamControl : MonoBehaviour {
 		startPos = transform.position;
 		startZoom = cam.orthographicSize;
 	
+		hardReset();
 	}
 	
 	public void hardReset(){
@@ -38,7 +41,7 @@ public class CamControl : MonoBehaviour {
 	public void reset(){
 		targetZoom = startZoom;
 		targetPos = startPos;
-		Time.timeScale = 1;
+		targetTimeScale = 1;
 	}
 	
 	// Update is called once per frame
@@ -46,9 +49,12 @@ public class CamControl : MonoBehaviour {
 	
 		if (!gm.Paused){
 			//lerp this som-bitch into place
-			transform.position = Vector3.Lerp(transform.position, targetPos, moveLerpSpeed);
-			cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, zoomLerpSpeed);
+			transform.position = Vector3.Lerp(transform.position, targetPos, gm.DoingKillEffect ? moveLerpSpeed : moveLerpSpeedAfterKill);
+			
+			cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, gm.DoingKillEffect ? zoomLerpSpeed : zoomLerpSpeedAfterKill);
 			Time.timeScale = Mathf.Lerp(Time.timeScale, targetTimeScale, timeLerpSpeed);
+			
+			//Debug.Log("cur time scale: "+Time.timeScale+"  target: "+targetTimeScale);
 		}
 		
 	}
@@ -68,7 +74,7 @@ public class CamControl : MonoBehaviour {
 		setTargetPos(pos);
 		setTargetZoom(killEffectZoom);
 		
-		Time.timeScale = killEffectTimeScale;
+		targetTimeScale = killEffectTimeScale;
 	}
 	
 }

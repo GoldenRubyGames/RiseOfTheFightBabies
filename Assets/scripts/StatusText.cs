@@ -11,6 +11,8 @@ public class StatusText : MonoBehaviour {
 	public TextMesh textMesh;
 	
 	private bool isBlinking;
+	
+	private bool showingScoreText;
 
 	// Use this for initialization
 	void Start () {
@@ -18,23 +20,27 @@ public class StatusText : MonoBehaviour {
 		displayTimer = 0;
 		
 		isBlinking = true;
+		showingScoreText = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 		if (displayTimer > 0){
-			displayTimer -= Time.deltaTime;
+			displayTimer -= Time.deltaTime/Time.timeScale;  //do not elt time scale affect this
 			
 			if (isBlinking){
 				renderer.enabled = displayTimer%blinkTime > blinkTime/2;
 			}
+		}else{
+			showingScoreText = false;
 		}
 		
 	}
 	
 	public void showScoreText(int score){
 		setText("HELL YEAH BRO\nSCORE: "+score.ToString() );
+		showingScoreText = true;
 	}
 	
 	public void showDeathText(int livesLeft){
@@ -42,6 +48,11 @@ public class StatusText : MonoBehaviour {
 	}
 	
 	public void showGhostKill(){
+		//ignore this if the score text is on screen
+		if (showingScoreText){
+			return;
+		}
+		
 		setText("GHOST KILL!");
 		displayTimer *= 0.5f;
 	}

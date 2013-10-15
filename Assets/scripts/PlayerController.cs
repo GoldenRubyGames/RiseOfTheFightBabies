@@ -150,15 +150,24 @@ public class PlayerController : Player {
 	
 	
 	public override void killPlayerCustom(Player killer){
+		if(!gm.DoingKillEffect){
+			gm.startKillEffect(this);
+			//show the text
+			GameObject.FindGameObjectWithTag("statusText").SendMessage("showDeathText", livesLeft);
+			return;
+		}
+		
 		//give the killer a point if they are real. Do not reward suicide
 		if (killer != null && killer != this){
 			killer.addScore(1);
 		}
 		
 		//spawn a spooky ghost
+		/*
 		if (isPlayerControlled){
 			makeGhost();
 		}
+		*/
 		
 		//reset the player
 		reset();
@@ -179,10 +188,6 @@ public class PlayerController : Player {
 		livesLeft--;
 		if (livesLeft <= 0){
 			gm.endGame(Score);
-		}
-		else{
-			//show the text
-			GameObject.FindGameObjectWithTag("statusText").SendMessage("showDeathText", livesLeft);
 		}
 	}
 	

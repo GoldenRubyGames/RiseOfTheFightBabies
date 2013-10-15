@@ -46,18 +46,16 @@ public class PunchEffect : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.layer == LayerMask.NameToLayer("shield") ){
-			ShieldEffect thisShield = other.gameObject.GetComponent<ShieldEffect>();
-			if (thisShield.Owner != owner){
-				Destroy(gameObject);
-			}
-		}
-		
+		Debug.Log("I hit shit");
 		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
+			Debug.Log("i hit player shit");
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
 			if (thisPlayer != owner){
+				Debug.Log("time to die");
 				hitPlayer(thisPlayer);
+			}else{
+				Debug.Log("stop hitting yourself");
 			}
 		}
 	}
