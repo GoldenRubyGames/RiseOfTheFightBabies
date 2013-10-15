@@ -48,6 +48,7 @@
 'Assets/scripts/powers/BatEffect.cs'
 'Assets/scripts/powers/Bullet.cs'
 'Assets/scripts/powers/DeathOrbEffect.cs'
+'Assets/scripts/powers/DefenseOrbEffect.cs'
 'Assets/scripts/powers/DiveKickEffect.cs'
 'Assets/scripts/powers/DoubleJumpPower.cs'
 'Assets/scripts/powers/EffectSpawnOnPickupPower.cs'

@@ -12,6 +12,10 @@ public class Bullet : MonoBehaviour {
 	Vector3 vel;
 	
 	public Vector3 pushForce;
+	
+	public bool canRicochet;
+	public int numRicochets;
+	private int ricochetsLeft;
 
 	public void setup(Player _owner){
 		owner = _owner;
@@ -23,6 +27,8 @@ public class Bullet : MonoBehaviour {
 		vel = new Vector3( speed*owner.facingDir, 0, 0);
 		//vel.x += owner.CurVel.x;
 		transform.position = owner.transform.position + new Vector3(0.5f*owner.facingDir, 0, 0);
+		
+		ricochetsLeft = numRicochets;
 		
 		//rigidbody.AddForce(vel);
 	}
@@ -43,26 +49,6 @@ public class Bullet : MonoBehaviour {
 		
 	}
 	
-	/*
-	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.layer == LayerMask.NameToLayer("shield") ){
-			ShieldEffect thisShield = other.gameObject.GetComponent<ShieldEffect>();
-			if (thisShield.Owner != owner){
-				Destroy(gameObject);
-			}
-		}
-		
-		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
-			//get the player
-			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner){
-				hitPlayer(thisPlayer);
-				Destroy(gameObject);
-			}
-		}
-		
-	}
-	*/
 	
 	void OnCollisionEnter(Collision collision) {
         
@@ -76,20 +62,60 @@ public class Bullet : MonoBehaviour {
 			Player thisPlayer = collision.gameObject.transform.parent.gameObject.GetComponent<Player>();
 			if (thisPlayer != owner){
 				hitPlayer(thisPlayer);
-				Destroy(gameObject);
 			}else{
 				return;
 			}
 		}
 		
-		//destroy this regardless
-		Destroy(gameObject);
-        
+		//destroy or ricochet after hitting something
+		if (!canRicochet){
+			Destroy(gameObject);
+		}else{
+			ricochet();
+		}
     }
 	
 	void hitPlayer(Player targetPlayer){
 		targetPlayer.push( pushForce );
 		targetPlayer.changeHealth(-1, owner);
 		
+	}
+	
+	void ricochet(){
+		numRicochets--;
+		
+		if (numRicochets == 0){
+			Destroy(gameObject);
+		}else{
+			
+			//try random angles until we find one that is not bloack
+			
+			bool goodAngle = false;
+			float distToCheck = 1;
+			
+			int numChecks = 0;
+			int maxNumChecks = 15;
+			
+			while (!goodAngle && numChecks<maxNumChecks){
+				numChecks++;
+				float newAngle = Random.Range(0, Mathf.PI*2);
+				
+				Vector3 testVec = new Vector3( Mathf.Cos(newAngle), Mathf.Sin(newAngle), 0);
+				
+				if (Physics.Raycast(transform.position, testVec, distToCheck)){
+					goodAngle = false;
+				}else{
+					goodAngle = true;
+					vel = new Vector3( Mathf.Cos(newAngle)*speed, Mathf.Sin(newAngle)*speed, 0);
+				}
+			}
+			
+			//if we're spending too much time trying to find a safe new angle, just kill this thing
+			if (numChecks >= maxNumChecks){
+				Destroy(gameObject);
+			}
+			
+			
+		}
 	}
 }
