@@ -128,4 +128,11 @@ public class PlayerGoon : Player {
 		}
 		
 	}
+	
+	public override void killPlayerCustom(Player killer){
+		gm.Goons.Remove(this);
+		
+		clearPowers();
+		Destroy(gameObject);
+	}
 }

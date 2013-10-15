@@ -12,6 +12,9 @@ public class Pickup : MonoBehaviour {
 	public float time;
 	private float timer;
 	
+	public float flashTime;
+	public float flashSpeed;
+	
 	public void setup(GameObject _powerObject, GameObject _spawnPosObject){
 		spawnPosObject = _spawnPosObject;
 		
@@ -41,6 +44,11 @@ public class Pickup : MonoBehaviour {
 		timer-=Time.deltaTime;
 		if (timer <= 0){
 			Destroy(gameObject);
+		}
+		
+		//should we be flahsing?
+		if (timer <= flashTime){
+			renderer.enabled = (timer%flashSpeed) < flashSpeed/2;
 		}
 	}
 	

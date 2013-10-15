@@ -19,7 +19,6 @@ public class DefenseOrbEffect : MonoBehaviour {
 		
 		//figure out how many other dense orbs this player has
 		GameObject[] otherOrbs = GameObject.FindGameObjectsWithTag("defenseOrb");
-		Debug.Log(otherOrbs.Length + " other orbs");
 		for (int i=0; i<otherOrbs.Length; i++){
 			DefenseOrbEffect otherOrb = otherOrbs[i].GetComponent<DefenseOrbEffect>();
 			if (otherOrb.Owner == owner && otherOrb != this){

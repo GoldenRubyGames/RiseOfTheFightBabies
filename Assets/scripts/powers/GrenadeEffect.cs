@@ -62,7 +62,6 @@ public class GrenadeEffect : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		//Debug.Log("hit something");
 		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
-			Debug.Log("hit YOUUUUUU");
 			//get the player
 			//THIS CAN HIT THE OWNER BECAUSE IT'S A GODDAMN EXPLOSION
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();

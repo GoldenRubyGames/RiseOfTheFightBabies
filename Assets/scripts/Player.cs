@@ -89,9 +89,10 @@ public class Player : MonoBehaviour {
 	[System.NonSerialized]
 	public GameObject spawnLeft, spawnRight;
 	
-	//link to GameManager
+	//link to GameManager and camera
 	[System.NonSerialized]
 	public GameManager gm;
+	public CamControl camera;
 	
 	// Use this for initialization
 	void Start () {

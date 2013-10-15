@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour {
 	
 	public Player[] players;
 	private List<PlayerGhost> ghosts = new List<PlayerGhost>();
-	
+	private List<PlayerGoon> goons = new List<PlayerGoon>();
 	
 	//list of powers
 	public GameObject[] powerObjects;
@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		Debug.Log("goons: "+goons.Count);
 		if (Input.GetKeyDown(KeyCode.V)){
 			spawnPickup();
 		}
@@ -140,7 +140,10 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	void spawnGoon(){
-		Instantiate(goonPrefab, new Vector3(0,0,0), new Quaternion(0,0,0,0));
+		GameObject goonSpawnObj = Instantiate(goonPrefab, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
+		PlayerGoon goonSpawn = goonSpawnObj.GetComponent<PlayerGoon>();
+		goonSpawn.gm = this;
+		goons.Add(goonSpawn);
 	}
 	
 	public void endGame(int score){
@@ -186,6 +189,24 @@ public class GameManager : MonoBehaviour {
 		}
 		set {
 			ghosts = value;
+		}
+	}
+	
+	public List<PlayerGoon> Goons {
+		get {
+			return this.goons;
+		}
+		set {
+			goons = value;
+		}
+	}
+	
+	public bool Paused {
+		get {
+			return this.paused;
+		}
+		set {
+			paused = value;
 		}
 	}
 }
