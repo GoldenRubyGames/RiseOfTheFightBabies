@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 	
 	public Player[] players;
+	private List<PlayerGhost> ghosts = new List<PlayerGhost>();
 	
 	
 	//list of powers
@@ -83,7 +85,7 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 		if (Input.GetKeyDown(KeyCode.V)){
 			spawnPickup();
 		}
@@ -172,5 +174,18 @@ public class GameManager : MonoBehaviour {
 		starHelm.gameObject.SetActive(false);
 		
 		
+	}
+	
+	
+	
+	//setters getters
+	
+	public List<PlayerGhost> Ghosts {
+		get {
+			return this.ghosts;
+		}
+		set {
+			ghosts = value;
+		}
 	}
 }

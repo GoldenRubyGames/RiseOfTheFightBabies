@@ -57,6 +57,12 @@ public class PlayerController : Player {
 		pushVel = new Vector3(0,0,0);
 		curVel = new Vector3(0,0,0);
 		
+		clearPowers();
+		//give them a punch
+		GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
+		Power thisPower = powerObject.GetComponent<Power>();
+		thisPower.assignToPlayer(this);
+		
 		
 		recorder.reset(true);
 	}

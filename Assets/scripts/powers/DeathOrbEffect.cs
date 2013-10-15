@@ -30,13 +30,11 @@ public class DeathOrbEffect : MonoBehaviour {
 	
 	
 	void OnTriggerEnter(Collider other) {
-		//does not give a fuck about shields
-		
 		
 		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner || timer != time){
+			if (thisPlayer != owner){
 				thisPlayer.changeHealth(-1, owner);
 			}
 		}

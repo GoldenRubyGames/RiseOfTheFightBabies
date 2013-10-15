@@ -299,6 +299,8 @@ public class Player : MonoBehaviour {
 		PlayerGhost newGhost = ghostObject.GetComponent<PlayerGhost>();
 		newGhost.ghostSetup(myColor, recorder, powers, starHelm);
 		
+		gm.Ghosts.Add(newGhost);
+		
 		return newGhost;
 	}
 		
