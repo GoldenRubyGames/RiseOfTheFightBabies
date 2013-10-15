@@ -36,7 +36,7 @@ public class PlayerGhost : Player {
 	}
 	
 	public override void customStart(){
-		
+		isGhost = true;
 		stunTimer = 0;
 	}
 	

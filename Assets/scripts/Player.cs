@@ -35,6 +35,8 @@ public class Player : MonoBehaviour {
 	//general status things that items may need to affect
 	[System.NonSerializedAttribute]
 	public bool isPlayerControlled;
+	[System.NonSerializedAttribute]
+	public bool isGhost;
 	[System.NonSerialized]
 	public float fallingGrav;
 	[System.NonSerialized]
@@ -66,6 +68,8 @@ public class Player : MonoBehaviour {
 	public Vector3 pushVel;
 	public float pushFric;
 	
+	//being frozen
+	private float freezeTimer;
 	
 	//recording movement
 	[System.NonSerialized]
@@ -103,6 +107,7 @@ public class Player : MonoBehaviour {
 		
 		//make some assumptions!
 		isPlayerControlled = false;
+		isGhost = true;
 		
 		customStart();
 		
@@ -118,6 +123,8 @@ public class Player : MonoBehaviour {
 		
 		invincibilityTimer = invincibilityTime;
 		
+		freezeTimer = 0;
+		
 		customReset();
 		
 	}
@@ -125,6 +132,11 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
+		if (freezeTimer > 0){
+			freezeTimer-=Time.deltaTime;
+			return;
+		}
 		
 		customUpdate();
 		
@@ -211,6 +223,10 @@ public class Player : MonoBehaviour {
 	public virtual void killPlayerCustom(Player killer){
 		clearPowers();
 		Destroy(gameObject);
+	}
+	
+	public void freeze(float freezeTime){
+		freezeTimer = freezeTime;
 	}
 	
 		

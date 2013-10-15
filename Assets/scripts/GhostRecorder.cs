@@ -87,6 +87,14 @@ public class GhostRecorder {
 			}
 		}
 		
+		//testing
+		if (playHead < 0){
+			Debug.Log("why is playhead "+playHead);
+		}
+		if (playHead >= data.Count){
+			Debug.Log("why is playhead "+playHead+"  when data is "+data.Count);
+		}
+		
 		curVel = data[playHead].vel;
 		curFacingDir = data[playHead].facingDir;
 		curPos = data[playHead].pos;
