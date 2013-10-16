@@ -15,6 +15,8 @@ public class SwordEffect : MonoBehaviour {
 	private float curAngle;
 	private float endAngle;
 	
+	public tk2dSprite sprite;
+	
 
 	public void setup(Player _owner){
 		owner = _owner;
@@ -25,6 +27,10 @@ public class SwordEffect : MonoBehaviour {
 		endAngle = -curAngle;
 		
 		transform.position = owner.transform.position;
+		
+		if (angleDir == 1){
+			sprite.FlipX = true;
+		}
 		
 		//transform.localScale = new Vector3(size, transform.localScale.y, transform.localScale.z);
 		
