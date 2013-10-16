@@ -97,6 +97,7 @@ public class Player : MonoBehaviour {
 	//animating
 	private tk2dSpriteAnimationClip animStandingClip, animWalkingClip, animDyingClip;
 	private float velForWalkAnim = 1;
+	public GunSprite gunSprite;
 	
 	//dying
 	public GameObject deadPlayerPrefab;
@@ -147,6 +148,8 @@ public class Player : MonoBehaviour {
 		
 		isHidingSprite = false;
 		avatar.gameObject.SetActive(true);
+		
+		gunSprite.gameObject.SetActive(false);
 		
 		customReset();
 		
@@ -319,6 +322,11 @@ public class Player : MonoBehaviour {
 		powers.Add(newPower);
 		newPower.gameObject.transform.parent = transform;
 		//Debug.Log("player "+controllerNum+" just got "+newPower.powerName);
+		
+		//does this new power want us to show the gun?
+		if (!gunSprite.gameObject.active && newPower.showGun){
+			gunSprite.gameObject.SetActive(true);
+		}
 		
 		//if there was only one power and it was the punch, get rid of it
 		if (newPower.isAnAttack && powers[0].powerName == "Punch"){

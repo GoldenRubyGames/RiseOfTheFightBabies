@@ -10,6 +10,8 @@ public class RocketEffect : MonoBehaviour {
 	
 	public Vector3 moveForce;
 	
+	public tk2dSprite sprite;
+	
 	//exploding
 	public Color explosionColor;
 	private bool isExploding;
@@ -24,6 +26,10 @@ public class RocketEffect : MonoBehaviour {
 		
 		moveForce.x *= owner.facingDir;
 		transform.position = owner.transform.position + new Vector3( owner.facingDir*1, 0, 0);
+		
+		if (owner.facingDir == -1){
+			sprite.FlipX = true;
+		}
 		
 	}
 	
@@ -52,8 +58,10 @@ public class RocketEffect : MonoBehaviour {
 		
 		rigidbody.isKinematic = true;
 		
-		renderer.enabled = true;     //make sure it wasn't off from blinking
+		renderer.enabled = true;   
 		renderer.material.color = explosionColor;
+		
+		sprite.gameObject.SetActive(false);
 		
 		transform.localScale = new Vector3(1,1,1);
 		

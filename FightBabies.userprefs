@@ -1,12 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/Player.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/powers/RocketEffect.cs">
     <Files>
       <File FileName="Assets/scripts/GameManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/scripts/Player.cs" Line="204" Column="2" />
+      <File FileName="Assets/scripts/Player.cs" Line="1" Column="1" />
       <File FileName="Assets/scripts/PlayerGhost.cs" Line="1" Column="1" />
-      <File FileName="Assets/scripts/PlayerController.cs" Line="152" Column="42" />
-      <File FileName="Assets/scripts/PlayerGoon.cs" Line="127" Column="42" />
+      <File FileName="Assets/scripts/PlayerController.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/PlayerGoon.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/DeadPlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/Bullet.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/RocketEffect.cs" Line="64" Column="38" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -10,6 +10,8 @@ public class Power : MonoBehaviour {
 	public bool isAnAttack;
 	public bool canStack;
 	
+	public bool showGun;
+	
 	[System.NonSerialized]
 	public Player owner;
 	
