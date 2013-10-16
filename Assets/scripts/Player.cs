@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
 	public CharacterController controller;
 	
 	//showing the player
-	public GameObject avatar;
+	public tk2dSprite avatar;
 	public Color myColor;
 	
 	[System.NonSerialized]
@@ -95,7 +95,7 @@ public class Player : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		avatar.renderer.material.color = myColor;
+		//avatar.renderer.material.color = myColor;
 		startPos = transform.position;
 		
 		spawnLeft = GameObject.Find("spawnLeft");
@@ -147,20 +147,23 @@ public class Player : MonoBehaviour {
 			powers[i].update();
 		}
 		
-		
-		
 		//showing damage taken
 		if (invincibilityTimer > 0 ){
 			invincibilityTimer-=Time.deltaTime;
 			bool showPlayer = Time.frameCount%10 < 5;
-			avatar.renderer.enabled = showPlayer;
-		}else if (avatar.renderer.enabled == false){
-			avatar.renderer.enabled = true;
+			avatar.gameObject.SetActive( showPlayer);
+			//avatar.renderer.enabled = showPlayer;
+		}else if (avatar.gameObject.active == false){
+			//avatar.renderer.enabled = true;
+			avatar.gameObject.SetActive(true);
 		}
 		
 		hudShakeTimer -= Time.deltaTime;
 		
 		transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+		
+		//flip the sprite to afce the right way
+		avatar.FlipX = facingDir==-1;
 		
 	}
 	public virtual void customUpdate(){}

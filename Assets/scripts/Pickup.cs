@@ -6,6 +6,7 @@ public class Pickup : MonoBehaviour {
 	GameObject powerObject;
 	
 	public TextMesh textObject;
+	public tk2dSprite sprite;
 	
 	GameObject spawnPosObject;
 	
@@ -48,7 +49,9 @@ public class Pickup : MonoBehaviour {
 		
 		//should we be flahsing?
 		if (timer <= flashTime){
-			renderer.enabled = (timer%flashSpeed) < flashSpeed/2;
+			bool isOn = (timer%flashSpeed) < flashSpeed/2;
+			sprite.gameObject.SetActive(isOn);
+			textObject.gameObject.SetActive(isOn);
 		}
 	}
 	
