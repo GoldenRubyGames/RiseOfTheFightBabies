@@ -5,6 +5,8 @@ public class GrenadeEffect : MonoBehaviour {
 	
 	Player owner;
 	
+	public tk2dSprite sprite;
+	
 	public float time;
 	private float timer;
 	
@@ -32,7 +34,7 @@ public class GrenadeEffect : MonoBehaviour {
 		//when not exploding, blink
 		if (timer < 1f){
 			float blinkTime = 0.1f;
-			renderer.enabled = (Time.time % blinkTime) < blinkTime*0.5f;
+			sprite.gameObject.SetActive( (Time.time % blinkTime) < blinkTime*0.5f );
 		}
 		
 	}
