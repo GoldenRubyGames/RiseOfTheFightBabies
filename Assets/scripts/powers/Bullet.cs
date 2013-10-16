@@ -16,6 +16,8 @@ public class Bullet : MonoBehaviour {
 	public bool canRicochet;
 	public int numRicochets;
 	private int ricochetsLeft;
+	
+	public tk2dSprite sprite;
 
 	public void setup(Player _owner){
 		owner = _owner;
@@ -25,6 +27,10 @@ public class Bullet : MonoBehaviour {
 		pushForce.x *= owner.facingDir;
 		
 		vel = new Vector3( speed*owner.facingDir, 0, 0);
+		
+		float spriteAngle = Mathf.Atan2( vel.y, vel.x);
+		sprite.gameObject.transform.localEulerAngles = new Vector3(0,0,  spriteAngle*Mathf.Rad2Deg);
+		
 		//vel.x += owner.CurVel.x;
 		transform.position = owner.transform.position + new Vector3(0.5f*owner.facingDir, 0, 0);
 		
@@ -114,8 +120,9 @@ public class Bullet : MonoBehaviour {
 			if (numChecks >= maxNumChecks){
 				Destroy(gameObject);
 			}
-			
-			
 		}
+		
+		float spriteAngle = Mathf.Atan2( vel.y, vel.x);
+		sprite.gameObject.transform.localEulerAngles = new Vector3(0,0,  spriteAngle*Mathf.Rad2Deg);
 	}
 }
