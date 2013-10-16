@@ -6,7 +6,6 @@ public class SwordBlade : MonoBehaviour {
 	public SwordEffect parent;
 
 	void OnTriggerEnter(Collider other) {
-		//this thing goes through shields!
 		
 		//hit player
 		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){

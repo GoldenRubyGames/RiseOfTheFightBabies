@@ -46,13 +46,7 @@ public class DiveKickEffect : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.layer == LayerMask.NameToLayer("shield") ){
-			ShieldEffect thisShield = other.gameObject.GetComponent<ShieldEffect>();
-			if (thisShield.Owner != owner){
-				Destroy(gameObject);
-			}
-		}
-		
+	
 		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
