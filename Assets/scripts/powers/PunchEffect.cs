@@ -14,6 +14,8 @@ public class PunchEffect : MonoBehaviour {
 	int dir;
 	float curDist;
 	
+	public tk2dSprite sprite;
+	
 	public void setup(Player _owner){
 		owner = _owner;
 		
@@ -26,7 +28,8 @@ public class PunchEffect : MonoBehaviour {
 		transform.position = owner.transform.position + new Vector3(0.5f*owner.facingDir, 0, 0);
 		
 		renderer.material.color = owner.myColor;
-		
+		sprite.color = owner.myColor;
+		sprite.FlipX = owner.facingDir == -1;
 	}
 
 	
