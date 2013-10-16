@@ -153,7 +153,7 @@ public class PlayerController : Player {
 		if(!gm.DoingKillEffect){
 			gm.startKillEffect(this);
 			//show the text
-			GameObject.FindGameObjectWithTag("statusText").SendMessage("showDeathText", livesLeft);
+			GameObject.FindGameObjectWithTag("statusText").SendMessage("showDeathText", livesLeft-1);
 			return;
 		}
 		

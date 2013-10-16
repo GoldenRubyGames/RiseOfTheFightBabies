@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour {
 	private List<PlayerGhost> ghosts = new List<PlayerGhost>();
 	private List<PlayerGoon> goons = new List<PlayerGoon>();
 	
+	//the level
+	public GameObject levelObject;
+	
 	//list of powers
 	public GameObject[] powerObjects;
 	public GameObject punchPowerObject;
@@ -41,6 +44,8 @@ public class GameManager : MonoBehaviour {
 	
 	//showing text
 	public StatusText statusText;
+	public GameOverScreen gameOverScreen;
+	public HUD hud;
 	
 	//kill effect
 	private bool doingKillEffect;
@@ -52,7 +57,7 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		paused = false;
 		
-		reset();
+		resetGame();
 		
 		goonLabelText.SetActive(!useGoons);
 		
@@ -62,8 +67,12 @@ public class GameManager : MonoBehaviour {
 		
 	}
 	
-	void reset(){
+	void resetGame(){
 		gameOver = false;
+		gameOverScreen.turnOff();
+		
+		starHelm.gameObject.SetActive(true);
+		hud.gameObject.SetActive(true);
 		
 		//kill all existing pickups, goons and ghosts
 		GameObject[] pickups = GameObject.FindGameObjectsWithTag("pickup");
@@ -72,10 +81,12 @@ public class GameManager : MonoBehaviour {
 		}
 		
 		for (int i=0; i<goons.Count; i++){
+			goons[i].clearPowers();
 			Destroy(goons[i].gameObject);
 		}
 		goons.Clear();
 		for (int i=0; i<ghosts.Count; i++){
+			ghosts[i].clearPowers();
 			Destroy(ghosts[i].gameObject);
 		}
 		ghosts.Clear();
@@ -87,6 +98,8 @@ public class GameManager : MonoBehaviour {
 		//reset the players
 		if (Time.frameCount > 2){
 			for (int i=0; i<players.Length; i++){
+				players[i].gameObject.SetActive(true);
+				players[i].clearPowers();
 				//players[i].reset();
 				players[i].Score = 0;
 				players[i].LivesLeft = players[i].numLives;
@@ -140,7 +153,7 @@ public class GameManager : MonoBehaviour {
 		}
 		
 		if (Input.GetKeyDown(KeyCode.R)){
-			reset();
+			resetGame();
 		}
 		
 		if (Input.GetKeyDown(KeyCode.G)){
@@ -241,30 +254,33 @@ public class GameManager : MonoBehaviour {
 	public void endGame(int score){
 		gameOver = true;
 		
-		statusText.showEndGame(score);
+		statusText.turnOff();
+		gameOverScreen.turnOn(players[0].Score);
+		//statusText.showEndGame(score);
 		
 		//destroy everything!
 		for (int i=0; i<players.Length; i++){
 			players[i].clearPowers();
-			Destroy(players[i].gameObject);
+			players[i].gameObject.SetActive(false);
 		}
 		
 		GameObject[] pickups = GameObject.FindGameObjectsWithTag("pickup");
 		for (int i=0; i<pickups.Length; i++){
 			Destroy(pickups[i]);
 		}
-		GameObject[] goons = GameObject.FindGameObjectsWithTag("goon");
-		for (int i=0; i<goons.Length; i++){
-			goons[i].SendMessage("clearPowers");
-			Destroy(goons[i]);
+		for (int i=0; i<goons.Count; i++){
+			goons[i].clearPowers();
+			Destroy(goons[i].gameObject);
 		}
-		GameObject[] ghosts = GameObject.FindGameObjectsWithTag("ghost");
-		for (int i=0; i<ghosts.Length; i++){
-			ghosts[i].SendMessage("clearPowers");
-			Destroy(ghosts[i]);
-		}
+		goons.Clear();
 		
-		GameObject.Find("HUD").SetActive(false);
+		for (int i=0; i<ghosts.Count; i++){
+			ghosts[i].clearPowers();
+			Destroy(ghosts[i].gameObject);
+		}
+		ghosts.Clear();
+		
+		hud.gameObject.SetActive(false);
 		
 		starHelm.gameObject.SetActive(false);
 		

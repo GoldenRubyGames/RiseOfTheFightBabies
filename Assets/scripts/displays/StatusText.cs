@@ -70,5 +70,21 @@ public class StatusText : MonoBehaviour {
 		
 	}
 	
+	public void turnOff(){
+		renderer.enabled = false;
+		DisplayTimer = 0;
+	}
+	
+	
+	//setters getters
+	
+	public float DisplayTimer {
+		get {
+			return this.displayTimer;
+		}
+		set {
+			displayTimer = value;
+		}
+	}
 	
 }
