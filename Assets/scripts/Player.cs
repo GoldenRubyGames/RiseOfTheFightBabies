@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 	
 	//showing the player
 	public tk2dSprite avatar;
+	public tk2dSpriteAnimator avatarAnimation;
 	public Color myColor;
 	
 	[System.NonSerialized]
@@ -93,6 +94,10 @@ public class Player : MonoBehaviour {
 	public GameManager gm;
 	//public CamControl camera;
 	
+	//animating
+	private tk2dSpriteAnimationClip animStandingClip, animWalkingClip, animDyingClip;
+	private float velForWalkAnim = 1;
+	
 	// Use this for initialization
 	void Start () {
 		//avatar.renderer.material.color = myColor;
@@ -104,6 +109,11 @@ public class Player : MonoBehaviour {
 		if (starHelm == null){
 			starHelm = GameObject.FindWithTag("starHelm").GetComponent<StarHelm>();
 		}
+		
+		//cache the animation IDs
+		animStandingClip = avatarAnimation.GetClipByName("standing");
+		animWalkingClip = avatarAnimation.GetClipByName("walking");
+		animDyingClip = avatarAnimation.GetClipByName("dying");
 		
 		//make some assumptions!
 		isPlayerControlled = false;
@@ -170,6 +180,16 @@ public class Player : MonoBehaviour {
 		
 		//flip the sprite to afce the right way
 		avatar.FlipX = facingDir==-1;
+		
+		
+		//set the animation
+		if (Mathf.Abs(curVel.x) > velForWalkAnim){
+			if (avatarAnimation.CurrentClip != animWalkingClip){
+				avatarAnimation.Play(animWalkingClip);
+			}
+		}else{
+			avatarAnimation.Play(animStandingClip);
+		}
 		
 	}
 	public virtual void customUpdate(){}

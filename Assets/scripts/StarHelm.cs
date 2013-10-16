@@ -27,10 +27,10 @@ public class StarHelm : MonoBehaviour {
 		
 		float newScale = pulseMin + Mathf.Abs(Mathf.Sin( Time.time * pulseSpeed )) * (pulseMax-pulseMin);
 		
-		transform.localScale = new Vector3(newScale, newScale, newScale);
+		//transform.localScale = new Vector3(newScale, newScale, newScale);
 		transform.position = chosenOne.transform.position + offset;
 		
-		transform.localEulerAngles = new Vector3( Time.time*rotationSpeed.x, Time.time*rotationSpeed.y, Time.time*rotationSpeed.z);
+		//transform.localEulerAngles = new Vector3( Time.time*rotationSpeed.x, Time.time*rotationSpeed.y, Time.time*rotationSpeed.z);
 	}
 	
 	public void setChosenOne(Player _chosenOne){
