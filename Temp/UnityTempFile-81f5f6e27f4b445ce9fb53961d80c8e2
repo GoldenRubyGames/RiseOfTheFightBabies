@@ -2,8 +2,7 @@
 -target:library
 -nowarn:0169
 -out:'Temp/Assembly-CSharp.dll'
--r:'/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll'
--r:'/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll'
+-r:'/Applications/Unity/Unity.app/Contents/PlaybackEngines/WebPlayer/Managed/UnityEngine.dll'
 -define:UNITY_WEBPLAYER
 -define:WEBPLUG
 -define:ENABLE_MICROPHONE
@@ -25,8 +24,6 @@
 -define:ENABLE_DUCK_TYPING
 -define:UNITY_4_1_5
 -define:UNITY_4_1
--define:ENABLE_PROFILER
--define:UNITY_EDITOR
 'Assets/TK2DROOT/tk2d/Code/Camera/tk2dCamera.cs'
 'Assets/TK2DROOT/tk2d/Code/Camera/tk2dCameraAnchor.cs'
 'Assets/TK2DROOT/tk2d/Code/Camera/tk2dCameraUtil.cs'
@@ -130,6 +127,7 @@
 'Assets/scripts/powers/DiveKickEffect.cs'
 'Assets/scripts/powers/DoubleJumpPower.cs'
 'Assets/scripts/powers/EffectSpawnOnPickupPower.cs'
+'Assets/scripts/powers/Explosion.cs'
 'Assets/scripts/powers/FreezeRayEffect.cs'
 'Assets/scripts/powers/GrenadeEffect.cs'
 'Assets/scripts/powers/GrenadePower.cs'
