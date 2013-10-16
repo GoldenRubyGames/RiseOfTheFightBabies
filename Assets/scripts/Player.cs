@@ -98,6 +98,10 @@ public class Player : MonoBehaviour {
 	private tk2dSpriteAnimationClip animStandingClip, animWalkingClip, animDyingClip;
 	private float velForWalkAnim = 1;
 	
+	//dying
+	public GameObject deadPlayerPrefab;
+	private bool isHidingSprite;
+	
 	// Use this for initialization
 	void Start () {
 		//avatar.renderer.material.color = myColor;
@@ -141,6 +145,9 @@ public class Player : MonoBehaviour {
 			spawnRight = GameObject.Find("spawnRight");
 		}
 		
+		isHidingSprite = false;
+		avatar.gameObject.SetActive(true);
+		
 		customReset();
 		
 	}
@@ -154,6 +161,8 @@ public class Player : MonoBehaviour {
 			controller.Move( new Vector3(0,0,0));//for some reaosn, I need to do this for the player to be able to be hurt
 			return;
 		}
+		
+		
 		
 		customUpdate();
 		
@@ -245,6 +254,11 @@ public class Player : MonoBehaviour {
 			return;
 		}
 		
+		//instantiate a dead player object to take the fall
+		GameObject deadPlayerObj = Instantiate(deadPlayerPrefab, transform.position, new Quaternion(0,0,0,0)) as GameObject;
+		DeadPlayer deadPlayer = deadPlayerObj.GetComponent<DeadPlayer>();
+		deadPlayer.setup( avatarAnimation.Library, killer );
+		
 		//if this had the star helm, have the player spawn a new one
 		if (killer != null && starHelm.ChosenOne == this){
 			if (killer.isPlayerControlled){
@@ -255,10 +269,11 @@ public class Player : MonoBehaviour {
 			}
 		}
 		
+		
 		killPlayerCustom(killer);
-		
-		
 	}
+	
+	
 	public virtual void killPlayerCustom(Player killer){
 		clearPowers();
 		Destroy(gameObject);
@@ -335,6 +350,11 @@ public class Player : MonoBehaviour {
 		
 		
 		return newGhost;
+	}
+	
+	public void hideSprite(){
+		isHidingSprite = true;
+		avatar.gameObject.SetActive(false);
 	}
 		
 	//setters and getters

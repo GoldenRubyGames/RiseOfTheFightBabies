@@ -220,6 +220,7 @@ public class GameManager : MonoBehaviour {
 		killEffectTimer = killEffectTime;
 		
 		killEffectFoe = freshlyKilled;
+		killEffectFoe.hideSprite();
 		
 		//stun everybody!
 		for (int i=0; i<players.Length; i++){
