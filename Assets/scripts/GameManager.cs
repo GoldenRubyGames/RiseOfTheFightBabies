@@ -118,7 +118,8 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	void resetRound(){
-	
+		Debug.Log("----------");
+		Debug.Log("new round");
 		//reset players
 		for (int i=0; i<players.Length; i++){
 			players[i].reset();

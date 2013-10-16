@@ -122,7 +122,7 @@ public class Player : MonoBehaviour {
 		
 		//make some assumptions!
 		isPlayerControlled = false;
-		isGhost = true;
+		isGhost = false;
 		
 		customStart();
 		
@@ -149,9 +149,17 @@ public class Player : MonoBehaviour {
 		isHidingSprite = false;
 		avatar.gameObject.SetActive(true);
 		
-		gunSprite.gameObject.SetActive(false);
-		
+		//do the custome reset for this type of player
 		customReset();
+		
+		//go througn powers and turn the gun sprite on or off depending on if they have a gun power
+		bool gunActiveState = false;
+		for (int i=0; i<powers.Count; i++){
+			if (powers[i].showGun){
+				gunActiveState = true;
+			}
+		}
+		gunSprite.gameObject.SetActive(gunActiveState);
 		
 	}
 	public virtual void customReset(){}
@@ -321,7 +329,6 @@ public class Player : MonoBehaviour {
 		//add it!
 		powers.Add(newPower);
 		newPower.gameObject.transform.parent = transform;
-		//Debug.Log("player "+controllerNum+" just got "+newPower.powerName);
 		
 		//does this new power want us to show the gun?
 		if (!gunSprite.gameObject.active && newPower.showGun){
