@@ -92,11 +92,6 @@ public class PlayerGoon : Player {
 				numDoubleJumpsUsed++;
 			}
 		}
-		/*
-		if (Input.GetButtonUp(jumpButton)){
-			endJump();
-		}
-		*/
 		
 		//gravity
 		if (!controller.isGrounded){

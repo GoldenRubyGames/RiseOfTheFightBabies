@@ -135,6 +135,7 @@ public class Player : MonoBehaviour {
 		
 		if (freezeTimer > 0){
 			freezeTimer-=Time.deltaTime;
+			controller.Move( new Vector3(0,0,0));//for some reaosn, I need to do this for the player to be able to be hurt
 			return;
 		}
 		
