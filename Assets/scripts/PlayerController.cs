@@ -14,8 +14,6 @@ public class PlayerController : Player {
 	
 	public override void customStart(){
 		
-		powers = new List<Power>();
-		
 		isPlayerControlled = true;
 		
 		curVel = new Vector3(0,0,0);
@@ -41,13 +39,13 @@ public class PlayerController : Player {
 		
 		livesLeft = numLives;
 		
-		recorder = new GhostRecorder();
-		
+		if (recorder == null){
+			recorder = new GhostRecorder();
+		}
 		
 	}
 	
 	public override void customReset(){
-		
 		
 		//set the pos
 		float spawnX = Random.Range(spawnLeft.transform.position.x, spawnRight.transform.position.x);
@@ -63,7 +61,9 @@ public class PlayerController : Player {
 		Power thisPower = powerObject.GetComponent<Power>();
 		thisPower.assignToPlayer(this);
 		
-		
+		if (recorder == null){
+			recorder = new GhostRecorder();
+		}
 		recorder.reset(true);
 	}
 	

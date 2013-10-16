@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour {
 	public CamControl camera;
 	
 	//players
-	public Player[] players;
+	public PlayerController[] players;
 	private List<PlayerGhost> ghosts = new List<PlayerGhost>();
 	private List<PlayerGoon> goons = new List<PlayerGoon>();
 	
@@ -65,33 +65,43 @@ public class GameManager : MonoBehaviour {
 	void reset(){
 		gameOver = false;
 		
-		//kill all existing pickups and goons
+		//kill all existing pickups, goons and ghosts
 		GameObject[] pickups = GameObject.FindGameObjectsWithTag("pickup");
 		for (int i=0; i<pickups.Length; i++){
 			Destroy(pickups[i]);
 		}
-		GameObject[] goons = GameObject.FindGameObjectsWithTag("goon");
-		for (int i=0; i<goons.Length; i++){
-			Destroy(goons[i]);
+		
+		for (int i=0; i<goons.Count; i++){
+			Destroy(goons[i].gameObject);
 		}
+		goons.Clear();
+		for (int i=0; i<ghosts.Count; i++){
+			Destroy(ghosts[i].gameObject);
+		}
+		ghosts.Clear();
 		
+		//give us a starting pickup
 		spawnPickup();
-		
 		pickupTimer = nextPickupTimeMin;
 		
+		//reset the players
 		if (Time.frameCount > 2){
 			for (int i=0; i<players.Length; i++){
-				players[i].reset();
+				//players[i].reset();
+				players[i].Score = 0;
+				players[i].LivesLeft = players[i].numLives;
 			}
 		}
 		
-		goonTimer = minGoonTime;
 		
 		//spawn one goon and give it the star helm
 		spawnGoon();
-		starHelm.setChosenOne( GameObject.FindGameObjectWithTag("goon").GetComponent<PlayerGoon>() );
+		goonTimer = minGoonTime;
+		starHelm.setChosenOne( goons[0] );
 		
 		doingKillEffect = false;
+		
+		resetRound();
 	}
 	
 	void resetRound(){

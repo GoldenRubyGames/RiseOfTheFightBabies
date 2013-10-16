@@ -23,8 +23,6 @@ public class PlayerGhost : Player {
 		
 		recorder = new GhostRecorder(record);
 		
-		powers = new List<Power>();
-		
 		starHelm = _starHelm;
 		gm = _gm;
 		

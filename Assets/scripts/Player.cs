@@ -27,7 +27,7 @@ public class Player : MonoBehaviour {
 	
 	//powers
 	[System.NonSerialized]
-	public List<Power> powers;
+	public List<Power> powers = new List<Power>();
 	public GameObject punchPowerObject;
 	
 	private int score;
@@ -125,6 +125,12 @@ public class Player : MonoBehaviour {
 		
 		freezeTimer = 0;
 		
+		//find the spawns if they haven't been located yet
+		if (spawnLeft == null){
+			spawnLeft = GameObject.Find("spawnLeft");
+			spawnRight = GameObject.Find("spawnRight");
+		}
+		
 		customReset();
 		
 	}
@@ -187,7 +193,6 @@ public class Player : MonoBehaviour {
 	
 	
 	public void changeHealth(int amount, Player source){
-		Debug.Log("ow mother fucker");
 		//ghosts can't hurt ghosts!
 		if (!isPlayerControlled && !source.isPlayerControlled){
 			return;
