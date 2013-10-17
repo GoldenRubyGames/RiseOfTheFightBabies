@@ -274,14 +274,14 @@ public class Player : MonoBehaviour {
 		//instantiate a dead player object to take the fall
 		GameObject deadPlayerObj = Instantiate(deadPlayerPrefab, transform.position, new Quaternion(0,0,0,0)) as GameObject;
 		DeadPlayer deadPlayer = deadPlayerObj.GetComponent<DeadPlayer>();
-		deadPlayer.setup( avatarAnimation.Library, killer );
+		deadPlayer.setup( avatarAnimation.Library, killer, gunSprite.active );
 		
 		//if this had the star helm, have the player spawn a new one
 		if (killer != null && starHelm.ChosenOne == this){
 			if (killer.isPlayerControlled){
 				killer.starHelmScore();
 				
-				gm.startKillEffect(this);
+				gm.startKillEffect(this, killer);
 				return;
 			}
 		}
@@ -317,17 +317,6 @@ public class Player : MonoBehaviour {
 	public void starHelmScore(){
 		score += starHelm.scoreValue;
 		
-		
-		
-		//gm.startKillEffect(transform.position);
-		
-		//camera.startKillEffect(transform.position);
-		
-		/*
-		reset();
-		
-		
-		*/
 		
 		//show the text
 		GameObject.FindGameObjectWithTag("statusText").SendMessage("showScoreText", score);
@@ -385,6 +374,7 @@ public class Player : MonoBehaviour {
 	public void hideSprite(){
 		isHidingSprite = true;
 		avatar.gameObject.SetActive(false);
+		gunSprite.gameObject.SetActive(false);
 	}
 		
 	//setters and getters

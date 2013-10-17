@@ -18,12 +18,15 @@ public class DeadPlayer : MonoBehaviour {
 	
 	public float friction;
 	
-	public void setup(tk2dSpriteAnimation animationLibrary, Player killer){
+	//delaing with the gun if they had one
+	public DeadGun gun;
+	
+	public void setup(tk2dSpriteAnimation animationLibrary, Player killer, bool showGun){
 		anim.Library = animationLibrary;
 		
 		deathTimer = deathTime;
 		
-		//set the vel base don the angle to the killer
+		//set the vel based on the angle to the killer
 		float angleToKiller = Mathf.Atan2( transform.position.y-killer.transform.position.y, transform.position.x-killer.transform.position.x);
 		vel = new Vector3(Mathf.Cos(angleToKiller) * flySpeed, Mathf.Sin(angleToKiller) * flySpeed,0);
 		
@@ -35,6 +38,11 @@ public class DeadPlayer : MonoBehaviour {
 		}
 		
 		anim.Play("dying");
+		
+		if (showGun){
+			gun.gameObject.SetActive(true);
+			gun.setup(angleToKiller);
+		}
 		
 	}
 	

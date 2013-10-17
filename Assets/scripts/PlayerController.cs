@@ -151,7 +151,7 @@ public class PlayerController : Player {
 	
 	public override void killPlayerCustom(Player killer){
 		if(!gm.DoingKillEffect){
-			gm.startKillEffect(this);
+			gm.startKillEffect(this, killer);
 			//show the text
 			GameObject.FindGameObjectWithTag("statusText").SendMessage("showDeathText", livesLeft-1);
 			return;

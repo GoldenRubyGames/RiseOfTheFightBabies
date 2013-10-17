@@ -49,13 +49,11 @@ public class BatEffect : MonoBehaviour {
 			goingBack = true;
 		}
 		if (goingBack && curDist <= startDist){
-			Debug.Log("fuck you");
 			Destroy(gameObject);
 		}
 		
 		//if the owner changes direction, kill it
 		if (dir != owner.facingDir){
-			Debug.Log("fuck you other");
 			Destroy(gameObject);
 		}
 	}

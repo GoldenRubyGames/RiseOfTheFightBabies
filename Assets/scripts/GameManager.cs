@@ -118,8 +118,6 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	void resetRound(){
-		Debug.Log("----------");
-		Debug.Log("new round");
 		//reset players
 		for (int i=0; i<players.Length; i++){
 			players[i].reset();
@@ -214,7 +212,7 @@ public class GameManager : MonoBehaviour {
 		
 	}
 	
-	public void startKillEffect(Player freshlyKilled){
+	public void startKillEffect(Player freshlyKilled, Player killer){
 		camera.startKillEffect(freshlyKilled.transform.position);
 		
 		doingKillEffect = true;
@@ -222,6 +220,10 @@ public class GameManager : MonoBehaviour {
 		
 		killEffectFoe = freshlyKilled;
 		killEffectFoe.hideSprite();
+		
+		if (starHelm.ChosenOne == freshlyKilled){
+			starHelm.startKillEffect(killer);
+		}
 		
 		//stun everybody!
 		for (int i=0; i<players.Length; i++){

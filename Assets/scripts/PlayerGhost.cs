@@ -27,7 +27,6 @@ public class PlayerGhost : Player {
 		//set the powers to obey only me!
 		for (int i=0; i<oldPowers.Count; i++){
 			GameObject thisPower = Instantiate(oldPowers[i].gameObject, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
-			Debug.Log("ghost add "+thisPower.GetComponent<Power>().name);
 			thisPower.GetComponent<Power>().assignToPlayer(this);
 			
 		}
