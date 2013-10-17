@@ -66,11 +66,13 @@ public class GameManager : MonoBehaviour {
 			pickupSpots[i] = pickupSpotObjects[i].GetComponent<PickupSpot>();
 		}
 		
-		resetGame();
-		
 		for (int i=0; i<players.Length; i++){
 			players[i].Gm = this;
 		}
+		
+		resetGame();
+		
+		
 		
 	}
 	
