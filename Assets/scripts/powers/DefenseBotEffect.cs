@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class DefenseOrbEffect : MonoBehaviour {
+public class DefenseBotEffect : MonoBehaviour {
 	
 	Player owner;
 	
@@ -18,9 +18,9 @@ public class DefenseOrbEffect : MonoBehaviour {
 		angle = 0;
 		
 		//figure out how many other dense orbs this player has
-		GameObject[] otherOrbs = GameObject.FindGameObjectsWithTag("defenseOrb");
+		GameObject[] otherOrbs = GameObject.FindGameObjectsWithTag("defenseBot");
 		for (int i=0; i<otherOrbs.Length; i++){
-			DefenseOrbEffect otherOrb = otherOrbs[i].GetComponent<DefenseOrbEffect>();
+			DefenseBotEffect otherOrb = otherOrbs[i].GetComponent<DefenseBotEffect>();
 			if (otherOrb.Owner == owner && otherOrb != this){
 				angle = otherOrb.Angle + (Mathf.PI*2)/maxNumOrbs;
 			}
