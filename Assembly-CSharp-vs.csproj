@@ -123,6 +123,8 @@
      <Compile Include="Assets\notUsing\FireFeetPower.cs" />
      <Compile Include="Assets\notUsing\HealthPackPower.cs" />
      <Compile Include="Assets\notUsing\ShieldEffect.cs" />
+     <Compile Include="Assets\notUsing\SpikeShoesEffect.cs" />
+     <Compile Include="Assets\notUsing\SpikeShoesPower.cs" />
      <Compile Include="Assets\notUsing\flame.cs" />
      <Compile Include="Assets\scripts\CamControl.cs" />
      <Compile Include="Assets\scripts\DeadPlayer.cs" />
@@ -156,8 +158,6 @@
      <Compile Include="Assets\scripts\powers\PunchEffect.cs" />
      <Compile Include="Assets\scripts\powers\RocketEffect.cs" />
      <Compile Include="Assets\scripts\powers\SpawnEffectPower.cs" />
-     <Compile Include="Assets\scripts\powers\SpikeShoesEffect.cs" />
-     <Compile Include="Assets\scripts\powers\SpikeShoesPower.cs" />
      <Compile Include="Assets\scripts\powers\SwordBlade.cs" />
      <Compile Include="Assets\scripts\powers\SwordEffect.cs" />
      <Compile Include="Assets\scripts\powers\speedShoesPower.cs" />

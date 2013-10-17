@@ -95,9 +95,10 @@ public class Player : MonoBehaviour {
 	//public CamControl camera;
 	
 	//animating
-	private tk2dSpriteAnimationClip animStandingClip, animWalkingClip, animDyingClip;
+	private tk2dSpriteAnimationClip animStandingClip, animWalkingClip, animDyingClip, animKickingClip;
 	private float velForWalkAnim = 1;
 	public GunSprite gunSprite;
+	private bool isKicking;
 	
 	//dying
 	public GameObject deadPlayerPrefab;
@@ -119,6 +120,7 @@ public class Player : MonoBehaviour {
 		animStandingClip = avatarAnimation.GetClipByName("standing");
 		animWalkingClip = avatarAnimation.GetClipByName("walking");
 		animDyingClip = avatarAnimation.GetClipByName("dying");
+		animKickingClip = avatarAnimation.GetClipByName("kicking");
 		
 		//make some assumptions!
 		isPlayerControlled = false;
@@ -148,6 +150,7 @@ public class Player : MonoBehaviour {
 		
 		isHidingSprite = false;
 		avatar.gameObject.SetActive(true);
+		endKickAnimation();
 		
 		//do the custome reset for this type of player
 		customReset();
@@ -172,7 +175,6 @@ public class Player : MonoBehaviour {
 			controller.Move( new Vector3(0,0,0));//for some reaosn, I need to do this for the player to be able to be hurt
 			return;
 		}
-		
 		
 		
 		customUpdate();
@@ -209,6 +211,10 @@ public class Player : MonoBehaviour {
 			}
 		}else{
 			avatarAnimation.Play(animStandingClip);
+		}
+		
+		if (isKicking){
+			avatarAnimation.Play(animKickingClip);
 		}
 		
 	}
@@ -282,6 +288,15 @@ public class Player : MonoBehaviour {
 		
 		
 		killPlayerCustom(killer);
+	}
+	
+	public void startKickAnimation(float angle){
+		isKicking = true;
+		avatar.gameObject.transform.localEulerAngles = new Vector3(0,0, angle);
+	}
+	public void endKickAnimation(){
+		isKicking = false;
+		avatar.gameObject.transform.localEulerAngles = new Vector3(0,0, 0);
 	}
 	
 	

@@ -13,8 +13,11 @@ public class DiveKickEffect : MonoBehaviour {
 	
 	Player owner;
 	
+	public float playerRotation;
+	
 	public void setup(Player _owner){
 		owner = _owner;
+		owner.startKickAnimation( playerRotation*owner.facingDir);
 		
 		timer = time;
 		
@@ -41,6 +44,7 @@ public class DiveKickEffect : MonoBehaviour {
 		
 		timer -= Time.deltaTime;
 		if (timer <= 0){
+			owner.endKickAnimation();
 			Destroy(gameObject);
 		}
 	}
