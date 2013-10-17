@@ -5,18 +5,24 @@ public class LightningEffect : MonoBehaviour {
 	
 	Player owner;
 	
-	public Vector3 pushForce;
-	
-	public float growSpeed;
+	public Vector3 moveSpeed;
 	
 	public float killTime;
 	private float timer;
 	
-	public void setup(Player _owner){
+	public tk2dSprite sprite;
+	
+	public float flipTime;
+	
+	public void setup(Player _owner, bool goUp){
 		owner = _owner;
 		timer = 0;
 		
-		owner.push( pushForce );
+		if (!goUp){
+			moveSpeed.y *= -1;
+		}
+		
+		
 	}
 	
 	// Update is called once per frame
@@ -27,8 +33,11 @@ public class LightningEffect : MonoBehaviour {
 			Destroy(gameObject);
 		}
 		
-		//keep making it bigger
-		transform.localScale += new Vector3(0, growSpeed*Time.deltaTime, 0);
+		//move it!
+		transform.position += moveSpeed * Time.deltaTime;
+		
+		//flip the sprite over time
+		sprite.FlipX = timer%flipTime > flipTime/2;
 		
 	}
 	
@@ -38,14 +47,9 @@ public class LightningEffect : MonoBehaviour {
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
 			if (thisPlayer != owner){
-				hitPlayer(thisPlayer);
+				thisPlayer.changeHealth(-1, owner);
 			}
 		}
 	}
 	
-	void hitPlayer(Player targetPlayer){
-		targetPlayer.push( pushForce );
-		targetPlayer.changeHealth(-1, owner);
-		
-	}
 }

@@ -53,7 +53,7 @@ public class StatusText : MonoBehaviour {
 			return;
 		}
 		
-		setText("GHOST KILL!");
+		setText("CLONE KILL!");
 		displayTimer *= 0.5f;
 	}
 	
