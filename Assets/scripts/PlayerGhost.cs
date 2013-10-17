@@ -108,5 +108,6 @@ public class PlayerGhost : Player {
 		
 		//give it pause time
 		stunTimer = stunTime;
+		InvincibilityTimer = stunTime;
 	}
 }

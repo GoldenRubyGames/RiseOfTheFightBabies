@@ -234,6 +234,8 @@ public class GameManager : MonoBehaviour {
 		//stun everybody!
 		for (int i=0; i<players.Length; i++){
 			players[i].freeze(killEffectTime);
+			//make sure the players are visible
+			players[i].avatar.gameObject.SetActive(true);
 		}
 		for (int i=0; i<ghosts.Count; i++){
 			ghosts[i].freeze(killEffectTime);

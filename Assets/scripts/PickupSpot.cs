@@ -31,10 +31,6 @@ public class PickupSpot : MonoBehaviour {
 		//cache the animations
 		openClip = doorSprite.GetClipByName("pickupDoorOpen");
 		closeClip = doorSprite.GetClipByName("pickupDoorClose");
-		
-		Debug.Log("clip "+doorSprite.GetClipIdByName("pickupDoorOpen") );
-		Debug.Log("clip "+doorSprite.GetClipIdByName("pickupDoorClose") );
-	
 	}
 	
 	public void activate(GameObject _powerObject){

@@ -190,9 +190,7 @@ public class Player : MonoBehaviour {
 			invincibilityTimer-=Time.deltaTime;
 			bool showPlayer = Time.frameCount%10 < 5;
 			avatar.gameObject.SetActive( showPlayer);
-			//avatar.renderer.enabled = showPlayer;
 		}else if (avatar.gameObject.active == false){
-			//avatar.renderer.enabled = true;
 			avatar.gameObject.SetActive(true);
 		}
 		
@@ -448,6 +446,15 @@ public class Player : MonoBehaviour {
 		}
 		set {
 			gm = value;
+		}
+	}
+	
+	public float InvincibilityTimer {
+		get {
+			return this.invincibilityTimer;
+		}
+		set {
+			invincibilityTimer = value;
 		}
 	}
 }
