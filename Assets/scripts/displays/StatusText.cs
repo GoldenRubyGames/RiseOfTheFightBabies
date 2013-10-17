@@ -39,7 +39,7 @@ public class StatusText : MonoBehaviour {
 	}
 	
 	public void showScoreText(int score){
-		setText("HELL YEAH BRO\nSCORE: "+score.ToString() );
+		setText("ROUND OVER\nSCORE: "+score.ToString() );
 		showingScoreText = true;
 	}
 	

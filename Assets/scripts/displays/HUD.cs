@@ -5,10 +5,9 @@ public class HUD : MonoBehaviour {
 	
 	public PlayerController player; 
 	
-	public GUIStyle textStyle;
+	public Vector2 boxSize;
 	
-	public GameObject anchor;
-	public tk2dSlicedSprite spriteBackground;
+	public GUIStyle textStyle;
 		
 
 	// Use this for initialization
@@ -16,15 +15,15 @@ public class HUD : MonoBehaviour {
 	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		spriteBackground.gameObject.transform.position = anchor.transform.position;
-	}
-	
 	void OnGUI(){
 		
-		float xPos = 5;
-		float yPos = 7;
+		//draw the background
+		//GUI.DrawTexture( new Rect(0,0, 350, 85), boxImage, textStyle);
+		
+		//imgStyle.Draw(new Rect(0,0,35,85), null, 0);
+		
+		float xPos = 2;
+		float yPos = 2;
 		
 		if (player.HudShakeTimer > 0){
 			float shakeRange = 5;
@@ -32,7 +31,7 @@ public class HUD : MonoBehaviour {
 			yPos += Random.Range(-shakeRange, shakeRange);
 		}
 		
-		Rect textPos = new Rect(xPos,yPos,150,300);
+		Rect textPos = new Rect(xPos,yPos,boxSize.x,boxSize.y);
 		
 		//int dispNum = 
 		string topText = "";
