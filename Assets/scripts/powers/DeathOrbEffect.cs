@@ -11,6 +11,9 @@ public class DeathOrbEffect : MonoBehaviour {
 	public float startSize;
 	public float growSpeed;
 	
+	public tk2dSprite sprite;
+	public float rotateSpeed;
+	
 	public void setup(Player _owner){
 		owner = _owner;
 		
@@ -26,6 +29,8 @@ public class DeathOrbEffect : MonoBehaviour {
 		}
 		
 		transform.localScale += new Vector3(growSpeed*Time.deltaTime, growSpeed*Time.deltaTime, growSpeed*Time.deltaTime);
+		
+		sprite.gameObject.transform.localEulerAngles += new Vector3(0,0, rotateSpeed*Time.deltaTime);
 	}
 	
 	
