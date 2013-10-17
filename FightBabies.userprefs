@@ -1,14 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/DeadPlayer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/PickupSpot.cs">
     <Files>
-      <File FileName="Assets/scripts/GameManager.cs" Line="120" Column="20" />
-      <File FileName="Assets/scripts/Player.cs" Line="275" Column="21" />
-      <File FileName="Assets/scripts/PlayerGhost.cs" Line="30" Column="4" />
-      <File FileName="Assets/scripts/PlayerController.cs" Line="154" Column="35" />
-      <File FileName="Assets/scripts/StarHelm.cs" Line="37" Column="32" />
-      <File FileName="Assets/scripts/DeadPlayer.cs" Line="42" Column="15" />
-      <File FileName="Assets/scripts/powers/BatEffect.cs" Line="41" Column="18" />
+      <File FileName="Assets/scripts/GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/Player.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/PlayerGhost.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/PlayerController.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/StarHelm.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/DeadPlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/DeadGun.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/Pickup.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/PickupSpot.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -20,8 +20,9 @@ public class GameManager : MonoBehaviour {
 	public GameObject punchPowerObject;
 	
 	//pickup object
-	public GameObject pickupPrefab;
-	public GameObject[] pickupSpawnPoints;
+	private PickupSpot[] pickupSpots;
+	//public GameObject pickupPrefab;
+	//public GameObject[] pickupSpawnPoints;
 	
 	//pickup timing
 	public float nextPickupTimeMin, nextPickupTimeMax;
@@ -29,7 +30,6 @@ public class GameManager : MonoBehaviour {
 	
 	//goons
 	public bool useGoons;
-	public GameObject goonLabelText;
 	public GameObject goonPrefab;
 	public float minGoonTime, maxGoonTime;
 	private float goonTimer;
@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour {
 	//game status
 	private bool gameOver;
 	
+	//pausing
+	public GameObject pauseScreen;
 	private bool paused;
 	
 	//showing text
@@ -57,9 +59,14 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		paused = false;
 		
-		resetGame();
+		//find all of the pickup spots
+		GameObject[] pickupSpotObjects = GameObject.FindGameObjectsWithTag("pickupSpot");
+		pickupSpots = new  PickupSpot[pickupSpotObjects.Length];
+		for (int i=0; i<pickupSpotObjects.Length; i++){
+			pickupSpots[i] = pickupSpotObjects[i].GetComponent<PickupSpot>();
+		}
 		
-		goonLabelText.SetActive(!useGoons);
+		resetGame();
 		
 		for (int i=0; i<players.Length; i++){
 			players[i].Gm = this;
@@ -75,9 +82,8 @@ public class GameManager : MonoBehaviour {
 		hud.gameObject.SetActive(true);
 		
 		//kill all existing pickups, goons and ghosts
-		GameObject[] pickups = GameObject.FindGameObjectsWithTag("pickup");
-		for (int i=0; i<pickups.Length; i++){
-			Destroy(pickups[i]);
+		for (int i=0; i<pickupSpots.Length; i++){
+			pickupSpots[i].deactivate();
 		}
 		
 		for (int i=0; i<goons.Count; i++){
@@ -157,7 +163,6 @@ public class GameManager : MonoBehaviour {
 		
 		if (Input.GetKeyDown(KeyCode.G)){
 			useGoons = !useGoons;
-			goonLabelText.SetActive(!useGoons);
 		}
 		if (Input.GetKeyDown(KeyCode.T)){
 			spawnGoon();
@@ -166,6 +171,7 @@ public class GameManager : MonoBehaviour {
 		//makeshift pause
 		if (Input.GetButtonUp("pauseButton")){
 			paused = !paused;
+			pauseScreen.SetActive(paused);
 			Time.timeScale = paused ? 0 : 1;
 		}
 		
@@ -240,12 +246,13 @@ public class GameManager : MonoBehaviour {
 	void spawnPickup(){
 		//select a power
 		int powerID = (int)Random.Range(0, powerObjects.Length);
-		//powerID = powerObjects.Length-1;   //testing
 		//select a point
-		int posNum = (int)Random.Range(0,pickupSpawnPoints.Length);
+		int posNum = (int)Random.Range(0, pickupSpots.Length);
 		
-		GameObject newPickupObj = Instantiate(pickupPrefab, pickupSpawnPoints[posNum].transform.position, new Quaternion(0,0,0,0)) as GameObject;
-		newPickupObj.GetComponent<Pickup>().setup( powerObjects[powerID], pickupSpawnPoints[posNum]);
+		if (!pickupSpots[posNum].IsActive){
+			pickupSpots[posNum].activate( powerObjects[powerID] );
+		}
+		
 	}
 	
 	void spawnGoon(){
@@ -268,10 +275,10 @@ public class GameManager : MonoBehaviour {
 			players[i].gameObject.SetActive(false);
 		}
 		
-		GameObject[] pickups = GameObject.FindGameObjectsWithTag("pickup");
-		for (int i=0; i<pickups.Length; i++){
-			Destroy(pickups[i]);
+		for (int i=0; i<pickupSpots.Length; i++){
+			pickupSpots[i].deactivate();
 		}
+		
 		for (int i=0; i<goons.Count; i++){
 			goons[i].clearPowers();
 			Destroy(goons[i].gameObject);

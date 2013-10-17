@@ -359,7 +359,7 @@ public class Player : MonoBehaviour {
 		speed = baseSpeed;
 		fallingGrav = fallingGravBase;
 		numDoubleJumpsUsed = 0;
-		numDoubleJumps = 0;
+		numDoubleJumps = 1;//testing
 	}
 	
 	public PlayerGhost makeGhost(){
