@@ -8,7 +8,6 @@ public class PlayerGhost : Player {
 	
 	public float alphaVal;
 	
-	public float stunTime;
 	public float startingStunTime;
 	public float startingStunTimeBonusRange;
 	private float stunTimer;
@@ -53,6 +52,11 @@ public class PlayerGhost : Player {
 		curVel = recorder.CurVel;
 		
 		stunTimer = startingStunTime + Random.Range(0,startingStunTimeBonusRange);
+		
+		
+		//give it pause time
+		InvincibilityTimer = stunTimer;
+		Debug.Log("dear mother fucker: "+InvincibilityTimer);
 		
 	}
 	
@@ -106,8 +110,5 @@ public class PlayerGhost : Player {
 		//reset the ghost
 		reset();
 		
-		//give it pause time
-		stunTimer = stunTime;
-		InvincibilityTimer = stunTime;
 	}
 }
