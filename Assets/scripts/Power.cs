@@ -27,13 +27,16 @@ public class Power : MonoBehaviour {
 	
 	}
 	
-	public void assignToPlayer(Player player){
+	public bool assignToPlayer(Player player){
 		owner = player;
 		if (owner.getPower(this)){
 			reset();
+			return true;
 		}else{
 			Destroy(gameObject);
 		}
+		
+		return false;
 	}
 	
 	public void reset(){

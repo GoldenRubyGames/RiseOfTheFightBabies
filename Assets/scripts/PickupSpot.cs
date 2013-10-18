@@ -22,6 +22,8 @@ public class PickupSpot : MonoBehaviour {
 	
 	//text
 	public TextMesh textObject;
+	
+	private HUD hud;
 
 	// Use this for initialization
 	void Awake () {
@@ -31,6 +33,9 @@ public class PickupSpot : MonoBehaviour {
 		//cache the animations
 		openClip = doorSprite.GetClipByName("pickupDoorOpen");
 		closeClip = doorSprite.GetClipByName("pickupDoorClose");
+		
+		//find the HUd
+		hud = GameObject.Find("HUD").GetComponent<HUD>();
 	}
 	
 	public void activate(GameObject _powerObject){
@@ -93,7 +98,10 @@ public class PickupSpot : MonoBehaviour {
 				if (thisPlayer.canPickupPowers){
 					//give them a power up!
 					GameObject thisPower = Instantiate(powerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
-					thisPower.GetComponent<Power>().assignToPlayer(thisPlayer);
+					Power powerToAssign = thisPower.GetComponent<Power>();
+					if (powerToAssign.assignToPlayer(thisPlayer)){
+						hud.addIcon(powerToAssign);
+					}
 					
 					//close the doors
 					deactivate();

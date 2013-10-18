@@ -145,6 +145,9 @@ public class GameManager : MonoBehaviour {
 			Destroy( effects[i] );
 		}
 		
+		//reset HUD
+		hud.reset();
+		
 		//put the camera back
 		camera.reset();
 		
