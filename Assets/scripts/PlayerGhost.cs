@@ -56,7 +56,6 @@ public class PlayerGhost : Player {
 		
 		//give it pause time
 		InvincibilityTimer = stunTimer;
-		Debug.Log("dear mother fucker: "+InvincibilityTimer);
 		
 	}
 	

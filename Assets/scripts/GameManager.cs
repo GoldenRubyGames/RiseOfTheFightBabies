@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
 	private bool gameOver;
 	
 	//pausing
-	public GameObject pauseScreen;
+	public PauseScreen pauseScreen;
 	private bool paused;
 	
 	//showing text
@@ -156,29 +156,37 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.V)){
-			spawnPickup();
-		}
 		
-		if (Input.GetKeyDown(KeyCode.R)){
-			resetGame();
-		}
-		
-		if (Input.GetKeyDown(KeyCode.G)){
-			useGoons = !useGoons;
-		}
-		if (Input.GetKeyDown(KeyCode.T)){
-			spawnGoon();
-		}
-		
-		//makeshift pause
-		if (Input.GetButtonUp("pauseButton")){
-			setPause(!paused);
+		//don't allow any input while title screen is up
+		if (!pauseScreen.ShowingTitle){
+			if (Input.GetKeyDown(KeyCode.V)){
+				spawnPickup();
+			}
+			
+			if (Input.GetKeyDown(KeyCode.R)){
+				resetGame();
+			}
+			
+			if (Input.GetKeyDown(KeyCode.G)){
+				useGoons = !useGoons;
+			}
+			if (Input.GetKeyDown(KeyCode.T)){
+				spawnGoon();
+			}
+			
+			//makeshift pause
+			if (Input.GetButtonUp("pauseButton")){
+				setPause(!paused, false);
+			}
+			if (Input.GetKeyDown(KeyCode.H)){
+				setPause(true, true);
+			}
 		}
 		
 		//pause the game when it starts for now
 		if (Time.frameCount == 2){
-			setPause(true);
+			setPause(true, true);
+			pauseScreen.showTitle();
 		}
 		
 		if (!gameOver && !doingKillEffect){
@@ -224,9 +232,13 @@ public class GameManager : MonoBehaviour {
 		
 	}
 	
-	public void setPause(bool pauseGame){
+	public void setPause(bool pauseGame, bool showHowTo){
 		paused = pauseGame;
-		pauseScreen.SetActive(paused);
+		if (paused){
+			pauseScreen.activate( showHowTo );
+		}else{
+			pauseScreen.deactivate();
+		}
 		Time.timeScale = paused ? 0 : 1;
 	}
 	

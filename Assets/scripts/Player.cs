@@ -309,11 +309,11 @@ public class Player : MonoBehaviour {
 	
 		
 	public void addScore(int val){
-		score += val;
+		score += val + powers.Count;
 	}
 	
 	public void starHelmScore(){
-		score += starHelm.scoreValue;
+		score += starHelm.scoreValue + powers.Count;
 		
 		
 		//show the text

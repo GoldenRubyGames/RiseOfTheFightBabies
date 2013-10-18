@@ -6,6 +6,8 @@ public class HUD : MonoBehaviour {
 	
 	public PlayerController player; 
 	
+	public GameManager gm;
+	
 	public Vector2 boxPos;
 	public Vector2 boxSize;
 	
@@ -63,6 +65,10 @@ public class HUD : MonoBehaviour {
 	
 	void OnGUI(){
 		
+		//don't do anything when paused
+		if (gm.Paused){
+			return;
+		}
 		
 		float xPos = boxPos.x;
 		float yPos = boxPos.y;
