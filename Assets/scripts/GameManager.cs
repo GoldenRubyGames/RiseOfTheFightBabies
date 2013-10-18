@@ -178,13 +178,18 @@ public class GameManager : MonoBehaviour {
 			if (Input.GetButtonUp("pauseButton")){
 				setPause(!paused, false);
 			}
+			//fire button can be used to unpause
+			if (paused && Input.GetButtonUp("player0Fire1")){
+				setPause(false, false);
+			}
+			//h calls up the rules
 			if (Input.GetKeyDown(KeyCode.H)){
 				setPause(true, true);
 			}
 		}
 		
 		//pause the game when it starts for now
-		if (Time.frameCount == 2){
+		if (Time.frameCount == 2 && !pauseScreen.debugSkipTitle){
 			setPause(true, true);
 			pauseScreen.showTitle();
 		}

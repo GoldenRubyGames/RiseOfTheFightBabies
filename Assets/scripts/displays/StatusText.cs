@@ -8,19 +8,28 @@ public class StatusText : MonoBehaviour {
 	
 	public float blinkTime;
 	
-	public TextMesh textMesh;
+	//public GameObject textObject;
+	public tk2dTextMesh textMesh;
 	
 	private bool isBlinking;
 	
 	private bool showingScoreText;
+	
+	public Color deathColor;
+	public Color scoreColor;
+	
+	public float alpha;
 
 	// Use this for initialization
 	void Start () {
-		renderer.enabled = false;
+		textMesh.gameObject.SetActive(false);
 		displayTimer = 0;
 		
 		isBlinking = true;
 		showingScoreText = false;
+		
+		deathColor.a = alpha;
+		scoreColor.a = alpha;
 	}
 	
 	// Update is called once per frame
@@ -30,7 +39,7 @@ public class StatusText : MonoBehaviour {
 			displayTimer -= Time.deltaTime/Time.timeScale;  //do not elt time scale affect this
 			
 			if (isBlinking){
-				renderer.enabled = displayTimer%blinkTime > blinkTime/2;
+				textMesh.gameObject.SetActive( displayTimer%blinkTime > blinkTime/2 );
 			}
 		}else{
 			showingScoreText = false;
@@ -39,12 +48,14 @@ public class StatusText : MonoBehaviour {
 	}
 	
 	public void showScoreText(int score){
+		textMesh.color = scoreColor;
 		setText("ROUND OVER\nSCORE: "+score.ToString() );
 		showingScoreText = true;
 	}
 	
 	public void showDeathText(int livesLeft){
-		setText("YOU DIED\n"+livesLeft.ToString()+" LIVES LEFT");
+		textMesh.color = deathColor;
+		setText("YOU DIED\n"+livesLeft.ToString()+" LIVES LEFT");	
 	}
 	
 	public void showGhostKill(){
@@ -53,25 +64,20 @@ public class StatusText : MonoBehaviour {
 			return;
 		}
 		
+		textMesh.color = scoreColor;
 		setText("CLONE KILL!");
 		displayTimer *= 0.5f;
 	}
 	
-	public void showEndGame(int score){
-		setText("GAME OVER!\nSCORE: "+score);
-		//isBlinking = false;
-		renderer.enabled = true;
-		displayTimer = 100;
-	}
-	
 	void setText(string curText){
 		textMesh.text = curText;
+		textMesh.Commit();
 		displayTimer = displayTime;
 		
 	}
 	
 	public void turnOff(){
-		renderer.enabled = false;
+		textMesh.gameObject.SetActive(false);
 		DisplayTimer = 0;
 	}
 	

@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PauseScreen : MonoBehaviour {
 	
+	public bool debugSkipTitle;
+	
 	public tk2dSprite mainSprite;
 	
 	public GameObject centerAnchor;
@@ -25,6 +27,7 @@ public class PauseScreen : MonoBehaviour {
 	}
 	
 	public void showTitle(){
+		
 		gameObject.SetActive(true);
 		mainSprite.SetSprite("titleCard");
 		showingTitle = true;

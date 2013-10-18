@@ -265,7 +265,6 @@ public class Player : MonoBehaviour {
 	//by default, just kill the player, but allow child classes to define their own
 	public void killPlayer(Player killer){
 		if (gm.DoingKillEffect){
-			Debug.Log("get the fuck out!");
 			return;
 		}
 		
