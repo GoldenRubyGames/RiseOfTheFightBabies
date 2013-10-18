@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CamControl : MonoBehaviour {
 	
-	public Camera cam;
+	public tk2dCamera cam;
 	public GameManager gm;
 
 	private Vector3 startPos;
@@ -27,7 +27,7 @@ public class CamControl : MonoBehaviour {
 	void Start () {
 		
 		startPos = transform.position;
-		startZoom = cam.orthographicSize;
+		startZoom = cam.ZoomFactor;
 	
 		hardReset();
 	}
@@ -35,7 +35,7 @@ public class CamControl : MonoBehaviour {
 	public void hardReset(){
 		reset();
 		transform.position = startPos;
-		cam.orthographicSize = startZoom;
+		cam.ZoomFactor = startZoom;
 		Time.timeScale = 1;
 	}
 	public void reset(){
@@ -51,7 +51,7 @@ public class CamControl : MonoBehaviour {
 			//lerp this som-bitch into place
 			transform.position = Vector3.Lerp(transform.position, targetPos, gm.DoingKillEffect ? moveLerpSpeed : moveLerpSpeedAfterKill);
 			
-			cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, gm.DoingKillEffect ? zoomLerpSpeed : zoomLerpSpeedAfterKill);
+			cam.ZoomFactor = Mathf.Lerp(cam.ZoomFactor, targetZoom, gm.DoingKillEffect ? zoomLerpSpeed : zoomLerpSpeedAfterKill);
 			Time.timeScale = Mathf.Lerp(Time.timeScale, targetTimeScale, timeLerpSpeed);
 			
 			//Debug.Log("cur time scale: "+Time.timeScale+"  target: "+targetTimeScale);
