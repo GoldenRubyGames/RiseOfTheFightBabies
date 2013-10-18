@@ -72,8 +72,6 @@ public class GameManager : MonoBehaviour {
 		
 		resetGame();
 		
-		
-		
 	}
 	
 	void resetGame(){
@@ -172,9 +170,12 @@ public class GameManager : MonoBehaviour {
 		
 		//makeshift pause
 		if (Input.GetButtonUp("pauseButton")){
-			paused = !paused;
-			pauseScreen.SetActive(paused);
-			Time.timeScale = paused ? 0 : 1;
+			setPause(!paused);
+		}
+		
+		//pause the game when it starts for now
+		if (Time.frameCount == 2){
+			setPause(true);
 		}
 		
 		if (!gameOver && !doingKillEffect){
@@ -218,6 +219,12 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 		
+	}
+	
+	public void setPause(bool pauseGame){
+		paused = pauseGame;
+		pauseScreen.SetActive(paused);
+		Time.timeScale = paused ? 0 : 1;
 	}
 	
 	public void startKillEffect(Player freshlyKilled, Player killer){
