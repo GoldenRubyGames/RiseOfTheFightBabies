@@ -6,6 +6,7 @@ public class HUD : MonoBehaviour {
 	
 	public PlayerController player; 
 	
+	public Vector2 boxPos;
 	public Vector2 boxSize;
 	
 	public GUIStyle textStyle;
@@ -63,8 +64,8 @@ public class HUD : MonoBehaviour {
 	void OnGUI(){
 		
 		
-		float xPos = 2;
-		float yPos = 2;
+		float xPos = boxPos.x;
+		float yPos = boxPos.y;
 		
 		if (player.HudShakeTimer > 0){
 			float shakeRange = 5;
