@@ -11,6 +11,8 @@ public class PlayerController : Player {
 	public float airMoveLerp, airMoveLerpSlow;
 	public float groundPush;
 	
+	public float headBumpJumpLoss;
+	
 	public float timeBeforeNotGrounded;
 	private float notGroundedTimer;
 	private bool isGrounded;
@@ -102,7 +104,7 @@ public class PlayerController : Player {
 			}
 		}
 		
-		Debug.Log("crack head "+isGrounded);
+		
 		//running
 		float curSpeed = speed * xAxisVal;
 		//on gournd just do it, in the air be floaty
@@ -129,6 +131,11 @@ public class PlayerController : Player {
 		}
 		if (Input.GetButtonUp(jumpButton)){
 			endJump();
+		}
+		
+		//bump your head, end the jump
+		if ( (controller.collisionFlags & CollisionFlags.Above) != 0 ){
+			curVel.y *= Mathf.Pow(headBumpJumpLoss, Time.deltaTime);
 		}
 		
 		//gravity
