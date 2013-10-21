@@ -13,7 +13,9 @@ public class GameManager : MonoBehaviour {
 	private List<PlayerGoon> goons = new List<PlayerGoon>();
 	
 	//the level
-	public GameObject levelObject;
+	public int startingLevel;
+	public GameObject[] levelObjects;
+	private GameObject levelObject;
 	
 	//list of powers
 	public GameObject[] powerObjects;
@@ -59,12 +61,7 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		paused = false;
 		
-		//find all of the pickup spots
-		GameObject[] pickupSpotObjects = GameObject.FindGameObjectsWithTag("pickupSpot");
-		pickupSpots = new  PickupSpot[pickupSpotObjects.Length];
-		for (int i=0; i<pickupSpotObjects.Length; i++){
-			pickupSpots[i] = pickupSpotObjects[i].GetComponent<PickupSpot>();
-		}
+		setLevel(startingLevel);
 		
 		for (int i=0; i<players.Length; i++){
 			players[i].Gm = this;
@@ -174,6 +171,16 @@ public class GameManager : MonoBehaviour {
 				spawnGoon();
 			}
 			
+			//switching levels
+			if (Input.GetKeyDown(KeyCode.Alpha1)){
+				setLevel(0);
+				resetGame();
+			}
+			if (Input.GetKeyDown(KeyCode.Alpha2)){
+				setLevel(1);
+				resetGame();
+			}
+			
 			//makeshift pause
 			if (Input.GetButtonUp("pauseButton")){
 				setPause(!paused, false);
@@ -281,6 +288,26 @@ public class GameManager : MonoBehaviour {
 				freshlyKilled.Powers[i].customCleanUp();
 			}
 		}
+	}
+	
+	void setLevel(int num){
+		//destroy the current level if there is one
+		if (levelObject != null){
+			Destroy(levelObject);
+		}
+		
+		//load the selected one
+		levelObject = Instantiate(levelObjects[num], new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
+		
+		//find all of the pickup spots
+		GameObject[] pickupSpotObjects = GameObject.FindGameObjectsWithTag("pickupSpot");
+		pickupSpots = new  PickupSpot[pickupSpotObjects.Length];
+		for (int i=0; i<pickupSpotObjects.Length; i++){
+			pickupSpots[i] = pickupSpotObjects[i].GetComponent<PickupSpot>();
+		}
+		
+		Debug.Log("we got "+pickupSpots.Length+" spots");
+		
 	}
 	
 	void spawnPickup(){

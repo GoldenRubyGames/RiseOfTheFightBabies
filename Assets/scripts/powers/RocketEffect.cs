@@ -42,7 +42,7 @@ public class RocketEffect : MonoBehaviour {
         
 		//ignore player shells
 		if (collision.gameObject.layer == LayerMask.NameToLayer("player")){
-			explode();;
+			explode();
 		}
 		
 		//did we touch a player?
