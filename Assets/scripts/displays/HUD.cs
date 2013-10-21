@@ -43,9 +43,8 @@ public class HUD : MonoBehaviour {
 		iconIds.Add("Speed Shoes", sampleSprite.GetSpriteIdByName("pickupIconSpeedShoes"));
 		iconIds.Add("Sword", sampleSprite.GetSpriteIdByName("pickupIconSword"));
 		
-		//need icons
-		iconIds.Add("Uppercut", sampleSprite.GetSpriteIdByName("pickupIconSword"));
-		iconIds.Add("Spike Ball", sampleSprite.GetSpriteIdByName("pickupIconSword"));
+		iconIds.Add("Uppercut", sampleSprite.GetSpriteIdByName("pickupIconUppercut"));
+		iconIds.Add("Spike Ball", sampleSprite.GetSpriteIdByName("pickupIconSpikeBarrel"));
 		
 	}
 	
