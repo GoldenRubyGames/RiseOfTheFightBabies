@@ -274,6 +274,13 @@ public class GameManager : MonoBehaviour {
 		for (int i=0; i<goons.Count; i++){
 			goons[i].freeze(killEffectTime);
 		}
+		
+		//is the dead player doing any attacks that look bad during kill effect?
+		for (int i=0; i<freshlyKilled.Powers.Count; i++){
+			if (freshlyKilled.Powers[i].destroyOnDeath){
+				freshlyKilled.Powers[i].customCleanUp();
+			}
+		}
 	}
 	
 	void spawnPickup(){

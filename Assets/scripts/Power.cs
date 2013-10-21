@@ -22,6 +22,8 @@ public class Power : MonoBehaviour {
 	[System.NonSerialized]
 	public bool canUse;
 	
+	public bool destroyOnDeath;  //things like the uppercut should not stick around during kill effect
+	
 	// Use this for initialization
 	void Start () {
 	
