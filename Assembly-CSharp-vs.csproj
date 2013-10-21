@@ -164,6 +164,7 @@
      <Compile Include="Assets\scripts\powers\SpawnEffectPower.cs" />
      <Compile Include="Assets\scripts\powers\SwordBlade.cs" />
      <Compile Include="Assets\scripts\powers\SwordEffect.cs" />
+     <Compile Include="Assets\scripts\powers\UpperCutEffect.cs" />
      <Compile Include="Assets\scripts\powers\speedShoesPower.cs" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitSolidVertexColor.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Goodies\TexturePacker\Exporter\2dtoolkit\exporter.xml" />
