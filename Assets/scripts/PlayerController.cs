@@ -79,7 +79,6 @@ public class PlayerController : Player {
 	}
 	
 	public override void customUpdate(){
-		Debug.Log("dub jum "+numDoubleJumpsUsed);
 		//figure out if we count as grounded
 		if (!controller.isGrounded){
 			notGroundedTimer += Time.deltaTime;
@@ -126,7 +125,6 @@ public class PlayerController : Player {
 		if (Input.GetButtonDown(jumpButton) && (isGrounded || numDoubleJumpsUsed < numDoubleJumps)){
 			startJump();
 			if (!isGrounded){
-				Debug.Log("pump it");
 				numDoubleJumpsUsed++;
 			}
 		}
@@ -152,7 +150,6 @@ public class PlayerController : Player {
 		}
 		
 		if (isGrounded){
-			Debug.Log("shut it");
 			numDoubleJumpsUsed = 0;
 		}
 		

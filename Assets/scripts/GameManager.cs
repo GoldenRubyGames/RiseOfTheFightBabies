@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject punchPowerObject;
 	
 	//pickup object
-	private PickupSpot[] pickupSpots;
+	private List<PickupSpot> pickupSpots = new List<PickupSpot>();
 	//public GameObject pickupPrefab;
 	//public GameObject[] pickupSpawnPoints;
 	
@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour {
 		hud.gameObject.SetActive(true);
 		
 		//kill all existing pickups, goons and ghosts
-		for (int i=0; i<pickupSpots.Length; i++){
+		for (int i=0; i<pickupSpots.Count; i++){
 			pickupSpots[i].deactivate();
 		}
 		
@@ -300,13 +300,19 @@ public class GameManager : MonoBehaviour {
 		levelObject = Instantiate(levelObjects[num], new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
 		
 		//find all of the pickup spots
+		//levelObject.transform.chil
 		GameObject[] pickupSpotObjects = GameObject.FindGameObjectsWithTag("pickupSpot");
-		pickupSpots = new  PickupSpot[pickupSpotObjects.Length];
+		pickupSpots.Clear();
 		for (int i=0; i<pickupSpotObjects.Length; i++){
-			pickupSpots[i] = pickupSpotObjects[i].GetComponent<PickupSpot>();
+			//the game objects array will also have pickup spots from the level we just removed, so we need ot only take ones we want
+			if (pickupSpotObjects[i].transform.parent == levelObject.transform){
+				pickupSpots.Add( pickupSpotObjects[i].GetComponent<PickupSpot>() );
+			}
+			
+			
 		}
 		
-		Debug.Log("we got "+pickupSpots.Length+" spots");
+		Debug.Log("we got "+pickupSpots.Count+" spots");
 		
 	}
 	
@@ -314,7 +320,7 @@ public class GameManager : MonoBehaviour {
 		//select a power
 		int powerID = (int)Random.Range(0, powerObjects.Length);
 		//select a point
-		int posNum = (int)Random.Range(0, pickupSpots.Length);
+		int posNum = (int)Random.Range(0, pickupSpots.Count);
 		
 		if (!pickupSpots[posNum].IsActive){
 			pickupSpots[posNum].activate( powerObjects[powerID] );
@@ -342,7 +348,7 @@ public class GameManager : MonoBehaviour {
 			players[i].gameObject.SetActive(false);
 		}
 		
-		for (int i=0; i<pickupSpots.Length; i++){
+		for (int i=0; i<pickupSpots.Count; i++){
 			pickupSpots[i].deactivate();
 		}
 		
