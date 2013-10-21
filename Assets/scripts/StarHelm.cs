@@ -54,7 +54,6 @@ public class StarHelm : MonoBehaviour {
 	
 	public void startKillEffect(Player killer){
 		doingKillEffect = true;
-		Debug.Log("star helm go away");
 		//set the vel based on the angle to the killer
 		float angleToKiller = Mathf.Atan2( transform.position.y-killer.transform.position.y, transform.position.x-killer.transform.position.x);
 		deathEffectVel = new Vector3(Mathf.Cos(angleToKiller) * flySpeed, Mathf.Sin(angleToKiller) * flySpeed,0);

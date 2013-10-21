@@ -198,7 +198,7 @@ public class Player : MonoBehaviour {
 		
 		transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 		
-		//flip the sprite to afce the right way
+		//flip the sprite to face the right way
 		avatar.FlipX = facingDir==-1;
 		
 		
@@ -356,7 +356,7 @@ public class Player : MonoBehaviour {
 		speed = baseSpeed;
 		fallingGrav = fallingGravBase;
 		numDoubleJumpsUsed = 0;
-		numDoubleJumps = 1;//testing
+		numDoubleJumps = 0;
 	}
 	
 	public PlayerGhost makeGhost(){

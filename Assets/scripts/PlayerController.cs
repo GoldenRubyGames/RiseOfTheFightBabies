@@ -8,6 +8,12 @@ public class PlayerController : Player {
 	public int controllerNum;
 	string moveAxis, jumpButton, attack1Button, atack2Button; 
 	
+	public float airMoveLerp, airMoveLerpSlow;
+	public float groundPush;
+	
+	public float timeBeforeNotGrounded;
+	private float notGroundedTimer;
+	private bool isGrounded;
 	
 	public int numLives;
 	private int livesLeft;
@@ -65,9 +71,21 @@ public class PlayerController : Player {
 			recorder = new GhostRecorder();
 		}
 		recorder.reset(true);
+		
+		isGrounded = false;
+		notGroundedTimer = timeBeforeNotGrounded;
 	}
 	
 	public override void customUpdate(){
+		
+		//figure out if we count as grounded
+		if (!controller.isGrounded){
+			notGroundedTimer += Time.deltaTime;
+		}else{
+			notGroundedTimer = 0;
+		}
+		isGrounded = (notGroundedTimer < timeBeforeNotGrounded);
+		
 		float xAxisJoy = Input.GetAxis(moveAxis);
 		//assume we'r eusing this value
 		float xAxisVal = xAxisJoy;
@@ -84,20 +102,28 @@ public class PlayerController : Player {
 			}
 		}
 		
-		
+		Debug.Log("crack head "+isGrounded);
 		//running
 		float curSpeed = speed * xAxisVal;
-		curVel.x = curSpeed;
-		
+		//on gournd just do it, in the air be floaty
+		if (isGrounded){
+			curVel.x = curSpeed;
+		}else{
+			float lerpSpeed = airMoveLerp;
+			if ( Mathf.Abs(curSpeed) < Mathf.Abs(curVel.x) ){
+				lerpSpeed = airMoveLerpSlow;
+			}
+			curVel.x = Mathf.Lerp(curVel.x, curSpeed, lerpSpeed);
+		}
 		
 		float facingThreshold = 0.25f;
 		if (xAxisVal > facingThreshold)  facingDir = 1;
 		if (xAxisVal < -facingThreshold)  facingDir = -1;
 		
 		//jumping
-		if (Input.GetButtonDown(jumpButton) && (controller.isGrounded || numDoubleJumpsUsed < numDoubleJumps)){
+		if (Input.GetButtonDown(jumpButton) && (isGrounded || numDoubleJumpsUsed < numDoubleJumps)){
 			startJump();
-			if (!controller.isGrounded){
+			if (isGrounded){
 				numDoubleJumpsUsed++;
 			}
 		}
@@ -106,7 +132,7 @@ public class PlayerController : Player {
 		}
 		
 		//gravity
-		if (!controller.isGrounded){
+		if (!controller.isGrounded){//using the character controller isGrounded val here because it gets weird otherwise
 			if (curVel.y>0){
 				curVel.y -= jumpGrav*Time.deltaTime;
 			}else{
@@ -114,10 +140,10 @@ public class PlayerController : Player {
 				isJumping = false;
 			}
 		}else if (!isJumping){
-			curVel.y = -1; //need to keep pushing down for it to register as grounded so we can jump
+			curVel.y = -groundPush; //need to keep pushing down for it to register as grounded so we can jump
 		}
 		
-		if (controller.isGrounded){
+		if (isGrounded){
 			numDoubleJumpsUsed = 0;
 		}
 		
@@ -141,7 +167,6 @@ public class PlayerController : Player {
 		
 		
 		//testing
-		
 		if (Input.GetKeyDown(KeyCode.K) && controllerNum==0){
 			changeHealth(-1, null);
 		}
