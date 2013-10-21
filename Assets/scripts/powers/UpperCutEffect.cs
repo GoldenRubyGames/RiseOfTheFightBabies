@@ -38,9 +38,10 @@ public class UpperCutEffect : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		owner.push(vel);
-		
-		vel *= Mathf.Pow(velFriction, Time.deltaTime);
+		if (!owner.gm.Paused){
+			owner.push(vel);
+			vel *= Mathf.Pow(velFriction, Time.deltaTime);
+		}
 		
 		transform.position = owner.transform.position + offset;
 		
