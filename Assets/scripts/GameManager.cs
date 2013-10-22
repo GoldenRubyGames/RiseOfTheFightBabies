@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour {
 	
 	//game status
 	private bool gameOver;
+	private string gameState;
 	
 	//pausing
 	public PauseScreen pauseScreen;
@@ -56,20 +57,31 @@ public class GameManager : MonoBehaviour {
 	public float killEffectTime;
 	private float killEffectTimer;
 	private Player killEffectFoe;
+	
+	//other screens
+	public LevelSelectScreen levelSelectScreen;
 
 	// Use this for initialization
 	void Start () {
-		paused = false;
-		
+		gameState = "levelSelect";
+		levelSelectScreen.reset();
+			
 		for (int i=0; i<players.Length; i++){
 			players[i].Gm = this;
 		}
 		
-		setLevel(startingLevel);
+		/*
+		paused = false;
 		
+		
+		
+		setLevel(startingLevel);
+		*/
 	}
 	
 	void resetGame(){
+		gameState = "game";
+		
 		gameOver = false;
 		gameOverScreen.turnOff();
 		
@@ -115,6 +127,8 @@ public class GameManager : MonoBehaviour {
 		
 		doingKillEffect = false;
 		
+		hud.gameObject.SetActive(true);
+		
 		resetRound();
 	}
 	
@@ -152,95 +166,97 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		//don't allow any input while title screen is up
-		if (!pauseScreen.ShowingTitle){
-			if (Input.GetKeyDown(KeyCode.V)){
-				spawnPickup();
-			}
-			
-			if (Input.GetKeyDown(KeyCode.R)){
-				resetGame();
-			}
-			
-			if (Input.GetKeyDown(KeyCode.G)){
-				useGoons = !useGoons;
-			}
-			if (Input.GetKeyDown(KeyCode.T)){
-				spawnGoon();
-			}
-			
-			//switching levels
-			if (Input.GetKeyDown(KeyCode.Alpha1)){
-				setLevel(0);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha2)){
-				setLevel(1);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha3)){
-				setLevel(2);
-			}
-			
-			//makeshift pause
-			if (Input.GetButtonUp("pauseButton")){
-				setPause(!paused, false);
-			}
-			//fire button can be used to unpause
-			if (paused && Input.GetButtonUp("player0Fire1")){
-				setPause(false, false);
-			}
-			//h calls up the rules
-			if (Input.GetKeyDown(KeyCode.H)){
-				setPause(true, true);
-			}
-		}
 		
-		//pause the game when it starts for now
-		if (Time.frameCount == 2 && !pauseScreen.debugSkipTitle){
-			setPause(true, true);
-			pauseScreen.showTitle();
-		}
-		
-		if (!gameOver && !doingKillEffect){
-			//spawn pickups?
-			pickupTimer -= Time.deltaTime;
-			if (pickupTimer <= 0){
-				spawnPickup();
-				pickupTimer = Random.Range(nextPickupTimeMin, nextPickupTimeMax);
-			}
-			
-			//spawn goons?
-			if (useGoons){
-				goonTimer -= Time.deltaTime;
-				if (goonTimer <= 0){
+		if (gameState == "game"){
+			//don't allow any input while title screen is up
+			if (!pauseScreen.ShowingTitle){
+				if (Input.GetKeyDown(KeyCode.V)){
+					spawnPickup();
+				}
+				
+				if (Input.GetKeyDown(KeyCode.R)){
+					resetGame();
+				}
+				
+				if (Input.GetKeyDown(KeyCode.G)){
+					useGoons = !useGoons;
+				}
+				if (Input.GetKeyDown(KeyCode.T)){
 					spawnGoon();
-					goonTimer = Random.Range(minGoonTime, maxGoonTime);
+				}
+				
+				//switching levels
+				if (Input.GetKeyDown(KeyCode.Alpha1)){
+					setLevel(0);
+				}
+				if (Input.GetKeyDown(KeyCode.Alpha2)){
+					setLevel(1);
+				}
+				if (Input.GetKeyDown(KeyCode.Alpha3)){
+					setLevel(2);
+				}
+				
+				//makeshift pause
+				if (Input.GetButtonUp("pauseButton")){
+					setPause(!paused, false);
+				}
+				//fire button can be used to unpause
+				if (paused && Input.GetButtonUp("player0Fire1")){
+					setPause(false, false);
+				}
+				//h calls up the rules
+				if (Input.GetKeyDown(KeyCode.H)){
+					setPause(true, true);
 				}
 			}
-		}
-		
-		if (doingKillEffect){
-			//don't let this timer be affected by the time scale
-			killEffectTimer -= Time.deltaTime*(1/Time.timeScale);
 			
-			//end the kill effect
-			if (killEffectTimer <= 0){
-				bool reasignStarHelm = starHelm.ChosenOne == killEffectFoe;
-				
-				PlayerGhost newGhost = players[0].makeGhost();
-				ghosts.Add(newGhost);
-				resetRound();
-				
-				
-				killEffectFoe.killPlayerCustom(null);
-				
-				if (reasignStarHelm){
-					starHelm.setChosenOne(newGhost);
+			//pause the game when it starts for now
+			if (Time.frameCount == 2 && !pauseScreen.debugSkipTitle){
+				setPause(true, true);
+				pauseScreen.showTitle();
+			}
+			
+			if (!gameOver && !doingKillEffect){
+				//spawn pickups?
+				pickupTimer -= Time.deltaTime;
+				if (pickupTimer <= 0){
+					spawnPickup();
+					pickupTimer = Random.Range(nextPickupTimeMin, nextPickupTimeMax);
 				}
 				
-				doingKillEffect = false;
+				//spawn goons?
+				if (useGoons){
+					goonTimer -= Time.deltaTime;
+					if (goonTimer <= 0){
+						spawnGoon();
+						goonTimer = Random.Range(minGoonTime, maxGoonTime);
+					}
+				}
+			}
+			
+			if (doingKillEffect){
+				//don't let this timer be affected by the time scale
+				killEffectTimer -= Time.deltaTime*(1/Time.timeScale);
+				
+				//end the kill effect
+				if (killEffectTimer <= 0){
+					bool reasignStarHelm = starHelm.ChosenOne == killEffectFoe;
+					
+					PlayerGhost newGhost = players[0].makeGhost();
+					ghosts.Add(newGhost);
+					resetRound();
+					
+					
+					killEffectFoe.killPlayerCustom(null);
+					
+					if (reasignStarHelm){
+						starHelm.setChosenOne(newGhost);
+					}
+					
+					doingKillEffect = false;
+				}
 			}
 		}
-		
 	}
 	
 	public void setPause(bool pauseGame, bool showHowTo){
@@ -337,7 +353,9 @@ public class GameManager : MonoBehaviour {
 	
 	public void endGame(int score){
 		gameOver = true;
+		gameState = "gameOver";
 		
+		hud.gameObject.SetActive(false);
 		statusText.turnOff();
 		gameOverScreen.turnOn(players[0].Score);
 		//statusText.showEndGame(score);

@@ -143,6 +143,8 @@
      <Compile Include="Assets\scripts\StarHelm.cs" />
      <Compile Include="Assets\scripts\displays\GameOverScreen.cs" />
      <Compile Include="Assets\scripts\displays\HUD.cs" />
+     <Compile Include="Assets\scripts\displays\LevelSelectIcon.cs" />
+     <Compile Include="Assets\scripts\displays\LevelSelectScreen.cs" />
      <Compile Include="Assets\scripts\displays\PauseScreen.cs" />
      <Compile Include="Assets\scripts\displays\StatusText.cs" />
      <Compile Include="Assets\scripts\powers\BarrelEffect.cs" />
@@ -193,6 +195,7 @@
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitBlendVertexColor.shader" />
      <None Include="Assets\TK2DROOT\tk2dUI_demo\Assets\Dark\Fonts\Nunito16.fnt" />
      <None Include="Assets\TK2DROOT\tk2dUI_demo\Assets\Dark\Fonts\Nunito32.fnt" />
+     <None Include="Assets\fonts\spriteFonts\vdj50.fnt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\AdditiveVertexColor.shader" />
      <None Include="Assets\TK2DROOT\tk2d_demo\democameradata\source\democamerafont.fnt" />
   </ItemGroup>

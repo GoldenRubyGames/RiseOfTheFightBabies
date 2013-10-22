@@ -1,10 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/powers/Bullet.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/displays/LevelSelectIcon.cs">
     <Files>
-      <File FileName="Assets/scripts/powers/Bullet.cs" Line="59" Column="2" />
+      <File FileName="Assets/scripts/powers/Bullet.cs" Line="1" Column="1" />
       <File FileName="Assets/scripts/powers/SpawnEffectPower.cs" Line="1" Column="1" />
-      <File FileName="Assets/scripts/displays/HUD.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/displays/HUD.cs" Line="41" Column="48" />
+      <File FileName="Assets/scripts/powers/BatEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/BoomerangEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/MeleeStandardPower.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/PlayerGhost.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/displays/LevelSelectIcon.cs" Line="47" Column="24" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
