@@ -49,10 +49,12 @@ public class tenTonDropEffect : MonoBehaviour {
 	    
 		
 		//did we touch a player that is below us?
-		if (collision.gameObject.layer == LayerMask.NameToLayer("playerHitBox") && collision.gameObject.transform.position.y < transform.position.y){
-			Player thisPlayer = collision.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner){
-				thisPlayer.changeHealth(-1, owner);
+		if (collision.gameObject.layer == LayerMask.NameToLayer("playerHitBox")){
+			if( collision.gameObject.transform.position.y < transform.position.y){
+				Player thisPlayer = collision.gameObject.transform.parent.gameObject.GetComponent<Player>();
+				if (thisPlayer != owner){
+					thisPlayer.changeHealth(-1, owner);
+				}
 			}
 		}
 		else{

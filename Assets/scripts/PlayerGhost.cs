@@ -106,6 +106,13 @@ public class PlayerGhost : Player {
 			}
 		}
 		
+		//get rid of any attacks that need to go away
+		for (int i=0; i<powers.Count; i++){
+			if (powers[i].destroyOnDeath){
+				powers[i].customCleanUp();
+			}
+		}
+		
 		//reset the ghost
 		reset();
 		
