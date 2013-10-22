@@ -62,13 +62,14 @@ public class GameManager : MonoBehaviour {
 	//other screens
 	public LevelSelectScreen levelSelectScreen;
 	public DataHolder dataHolder;
+	public GameObject titleScreen;
 
 	// Use this for initialization
 	void Start () {
 		dataHolder.setup();
 		
-		gameState = "levelSelect";
-		levelSelectScreen.reset();
+		gameState = "title";
+		//levelSelectScreen.reset();
 			
 		for (int i=0; i<players.Length; i++){
 			players[i].Gm = this;
@@ -178,8 +179,14 @@ public class GameManager : MonoBehaviour {
 				goToLevelSelect();
 			}
 		}
-		
-		if (gameState == "game"){
+		else if (gameState == "title"){
+			if (Input.GetMouseButtonUp(0)){
+				Destroy(titleScreen);
+				gameState = "levelSelect";
+				levelSelectScreen.reset();
+			}
+		}
+		else if (gameState == "game"){
 			//don't allow any input while title screen is up
 			if (!pauseScreen.ShowingTitle){
 				if (Input.GetKeyDown(KeyCode.V)){

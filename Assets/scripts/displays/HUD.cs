@@ -110,12 +110,14 @@ public class HUD : MonoBehaviour {
 	
 	//deal with the icons
 	
-	//TETSING
+	//TESTING
+	/*
 	void LateUpdate(){
 		for (int i=0; i<pickupIcons.Count; i++){
 			Vector3 newPos = new Vector3( anchor.transform.position.x+iconStartOffset.x + iconSpacing*i, anchor.transform.position.y+iconStartOffset.y, 0);
 			pickupIcons[i].transform.position = newPos;
 		}
 	}
+	*/
 	
 }
