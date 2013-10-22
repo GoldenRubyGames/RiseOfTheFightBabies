@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour {
 	//game status
 	private bool gameOver;
 	private string gameState;
+	private int roundNum;
 	
 	//pausing
 	public PauseScreen pauseScreen;
@@ -130,6 +131,8 @@ public class GameManager : MonoBehaviour {
 		goonTimer = minGoonTime;
 		starHelm.setChosenOne( goons[0] );
 		
+		roundNum = 0;
+		
 		doingKillEffect = false;
 		
 		hud.gameObject.SetActive(true);
@@ -159,6 +162,8 @@ public class GameManager : MonoBehaviour {
 			Destroy( effects[i] );
 		}
 		
+		roundNum++;
+		
 		//reset HUD
 		hud.reset();
 		
@@ -170,7 +175,12 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//tetsing
+		if (Input.GetKeyDown(KeyCode.Alpha0)){
+			dataHolder.clearData();
+		}
 		
+		//do things acording to game state
 		if (gameState == "gameOver"){
 			if (Input.GetKeyDown(KeyCode.R)){
 				resetGame();
@@ -192,7 +202,6 @@ public class GameManager : MonoBehaviour {
 				if (Input.GetKeyDown(KeyCode.V)){
 					spawnPickup();
 				}
-				
 				
 				//makeshift pause
 				if (Input.GetButtonUp("pauseButton")){
@@ -355,6 +364,20 @@ public class GameManager : MonoBehaviour {
 		//reset the game
 		resetGame();
 		
+		
+		//if they have no high scores at all, show the help
+		bool noHighScores = true;
+		for (int i=0; i<dataHolder.HighScores.Length; i++){
+			if (dataHolder.HighScores[i] > 0){
+				noHighScores = false;
+				break;
+			}
+		}
+		
+		if (noHighScores){
+			setPause(true, true);
+		}
+		
 	}
 	
 	void spawnPickup(){
@@ -427,6 +450,7 @@ public class GameManager : MonoBehaviour {
 		
 		//turn on the leve select
 		levelSelectScreen.reset();
+		
 	}
 	
 	
@@ -466,6 +490,12 @@ public class GameManager : MonoBehaviour {
 		}
 		set {
 			doingKillEffect = value;
+		}
+	}
+	
+	public int RoundNum {
+		get {
+			return this.roundNum;
 		}
 	}
 }

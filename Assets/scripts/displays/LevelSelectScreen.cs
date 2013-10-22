@@ -68,21 +68,23 @@ public class LevelSelectScreen : MonoBehaviour {
 		//check the mouse. If it moved, see if it's over anything
 		Vector2 curMousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 		if ( Mathf.Abs(curMousePos.x-prevMousePos.x) > mouseMoveThreshold || Mathf.Abs(curMousePos.y-prevMousePos.y) > mouseMoveThreshold){
+			int thisSelection = -1;
+			
 			Ray ray;
 			RaycastHit hit;
 			
 			ray = guiCam.ScreenPointToRay(Input.mousePosition);
 			
 			if(Physics.Raycast(ray, out hit)) {
-				
 				//figure out if it was any of our levels
 				for (int i=0; i<levelIcons.Length; i++){
 					if (hit.transform == levelIcons[i].transform){
-						setIconSelected(i);
+						thisSelection = i;
 					}
 				}
-				
 			}
+			
+			setIconSelected(thisSelection);
 		}
 		
 		//clicking starts the game

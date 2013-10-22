@@ -32,6 +32,8 @@ public class DataHolder : MonoBehaviour {
 		
 	public void clearData(){
 		PlayerPrefs.DeleteAll();
+		loadData();
+		Debug.Log("data is dead");
 	}
 	
 	

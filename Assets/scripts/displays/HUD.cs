@@ -19,6 +19,9 @@ public class HUD : MonoBehaviour {
 	private Dictionary<string, int> iconIds = new Dictionary<string, int>();
 	public Vector2 iconStartOffset;
 	public float iconSpacing;
+	
+	public int maxNumIconsPerRow;
+	public float iconSpacingVert;
 		
 
 	// Use this for initialization
@@ -61,11 +64,15 @@ public class HUD : MonoBehaviour {
 	
 	public void addIcon(Power newPower){
 		//make a new icon
-		Vector3 newPos = new Vector3( anchor.transform.position.x+ iconStartOffset.x + iconSpacing*pickupIcons.Count, anchor.transform.position.y+iconStartOffset.y, 0);
+		int row = pickupIcons.Count < maxNumIconsPerRow ? 0 : 1;
+		int col = pickupIcons.Count % maxNumIconsPerRow;
+		Vector3 newPos = new Vector3( anchor.transform.position.x+ iconStartOffset.x + iconSpacing*col, anchor.transform.position.y+iconStartOffset.y - row*iconSpacingVert, 0);
+		
 		GameObject newIconObj = Instantiate(iconPrefab, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
 		tk2dSprite newIconSprite = newIconObj.GetComponent<tk2dSprite>();
 		newIconSprite.spriteId = iconIds[newPower.powerName];
 		
+		newIconSprite.transform.position = newPos;
 		pickupIcons.Add(newIconObj);
 	}
 	
@@ -92,9 +99,10 @@ public class HUD : MonoBehaviour {
 		
 		//lives
 		topText += "Lives: "+player.LivesLeft;
+		//round
+		topText += "\nRound: "+gm.RoundNum;
 		//score
 		topText += "\nScore: "+player.Score;
-		
 		/*
 		//then list powers
 		topText += "\n";
@@ -114,7 +122,9 @@ public class HUD : MonoBehaviour {
 	/*
 	void LateUpdate(){
 		for (int i=0; i<pickupIcons.Count; i++){
-			Vector3 newPos = new Vector3( anchor.transform.position.x+iconStartOffset.x + iconSpacing*i, anchor.transform.position.y+iconStartOffset.y, 0);
+			int row = i <= maxNumIconsPerRow ? 0 : 1;
+			int col = i % maxNumIconsPerRow;
+			Vector3 newPos = new Vector3( anchor.transform.position.x+iconStartOffset.x + iconSpacing*col, anchor.transform.position.y+iconStartOffset.y - row*iconSpacing, 0);
 			pickupIcons[i].transform.position = newPos;
 		}
 	}
