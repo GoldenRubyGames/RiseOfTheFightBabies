@@ -46,6 +46,10 @@ public class HUD : MonoBehaviour {
 		iconIds.Add("Uppercut", sampleSprite.GetSpriteIdByName("pickupIconUppercut"));
 		iconIds.Add("Spike Ball", sampleSprite.GetSpriteIdByName("pickupIconSpikeBarrel"));
 		
+		//need icons
+		iconIds.Add("Fat Gun", sampleSprite.GetSpriteIdByName("pickupIconSpikeBarrel"));
+		iconIds.Add("10 Ton Drop", sampleSprite.GetSpriteIdByName("pickupIconSpikeBarrel"));
+		
 	}
 	
 	public void reset(){

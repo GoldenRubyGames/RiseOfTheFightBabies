@@ -12,6 +12,8 @@ public class GrenadeEffect : MonoBehaviour {
 	
 	public float startXVel, startYVel;
 	
+	public Color normColor, blinkColor;
+	
 	//exploding
 	public GameObject explosionPrefab;
 
@@ -22,6 +24,8 @@ public class GrenadeEffect : MonoBehaviour {
 		
 		Vector3 startForce = new Vector3( startXVel*owner.facingDir, startYVel, 0); 
 		rigidbody.AddForce( startForce);
+		
+		sprite.color = normColor;
 	}
 	
 	// Update is called once per frame
@@ -34,7 +38,8 @@ public class GrenadeEffect : MonoBehaviour {
 		//when not exploding, blink
 		if (timer < 1f){
 			float blinkTime = 0.1f;
-			sprite.gameObject.SetActive( (Time.time % blinkTime) < blinkTime*0.5f );
+			sprite.color = (Time.time % blinkTime) < blinkTime*0.5f ? normColor : blinkColor;
+			//sprite.gameObject.SetActive( (Time.time % blinkTime) < blinkTime*0.5f );
 		}
 		
 	}
