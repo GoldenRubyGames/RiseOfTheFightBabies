@@ -6,12 +6,11 @@ public class LevelSelectIcon : MonoBehaviour {
 	private int levelNum;
 	
 	public tk2dTextMesh textSprite;
-	public tk2dSlicedSprite borderSprite;
+	public GameObject borderNorm, borderHighlight;
 	public tk2dSprite iconSprite;
 	
 	private bool isSelected;
 	
-	private int borderNormId, borderHighlightedId;
 	
 	
 	
@@ -28,9 +27,6 @@ public class LevelSelectIcon : MonoBehaviour {
 		
 		isSelected = false;
 		
-		borderNormId = borderSprite.GetSpriteIdByName("levelSelectBox");
-		borderHighlightedId = borderSprite.GetSpriteIdByName("levelSelectBoxHighlight");
-		
 	}
 	
 	// Update is called once per frame
@@ -41,13 +37,9 @@ public class LevelSelectIcon : MonoBehaviour {
 	public void setSelected(bool _isSelected){
 		isSelected = _isSelected;
 		
-		borderSprite.spriteId = isSelected ? borderHighlightedId : borderNormId;
-		//make sure the padding is right
-		int borderVal = isSelected ? 4 : 2;
-		borderSprite.borderLeft = borderVal;
-		borderSprite.borderRight = borderVal;
-		borderSprite.borderTop = borderVal;
-		borderSprite.borderBottom = borderVal;
+		borderNorm.SetActive( !isSelected );
+		borderHighlight.SetActive( isSelected );
+		
 		
 	}
 }

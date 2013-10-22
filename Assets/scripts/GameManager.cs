@@ -166,6 +166,14 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+		if (gameState == "gameOver"){
+			if (Input.GetKeyDown(KeyCode.R)){
+				resetGame();
+			}
+			if (Input.GetKeyDown(KeyCode.Q)){
+				goToLevelSelect();
+			}
+		}
 		
 		if (gameState == "game"){
 			//don't allow any input while title screen is up
@@ -174,27 +182,6 @@ public class GameManager : MonoBehaviour {
 					spawnPickup();
 				}
 				
-				if (Input.GetKeyDown(KeyCode.R)){
-					resetGame();
-				}
-				
-				if (Input.GetKeyDown(KeyCode.G)){
-					useGoons = !useGoons;
-				}
-				if (Input.GetKeyDown(KeyCode.T)){
-					spawnGoon();
-				}
-				
-				//switching levels
-				if (Input.GetKeyDown(KeyCode.Alpha1)){
-					setLevel(0);
-				}
-				if (Input.GetKeyDown(KeyCode.Alpha2)){
-					setLevel(1);
-				}
-				if (Input.GetKeyDown(KeyCode.Alpha3)){
-					setLevel(2);
-				}
 				
 				//makeshift pause
 				if (Input.GetButtonUp("pauseButton")){
@@ -207,6 +194,31 @@ public class GameManager : MonoBehaviour {
 				//h calls up the rules
 				if (Input.GetKeyDown(KeyCode.H)){
 					setPause(true, true);
+				}
+				//Q ends the game
+				if (Input.GetKeyDown(KeyCode.Q)){
+					endGame(0);
+				}
+				
+				//dbeug stuff
+				if (Input.GetKeyDown(KeyCode.G)){
+					useGoons = !useGoons;
+				}
+				if (Input.GetKeyDown(KeyCode.T)){
+					spawnGoon();
+				}
+				//switching levels
+				if (Input.GetKeyDown(KeyCode.Alpha1)){
+					setLevel(0);
+				}
+				if (Input.GetKeyDown(KeyCode.Alpha2)){
+					setLevel(1);
+				}
+				if (Input.GetKeyDown(KeyCode.Alpha3)){
+					setLevel(2);
+				}
+				if (Input.GetKeyDown(KeyCode.R)){
+					resetGame();
 				}
 			}
 			
@@ -305,7 +317,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 	
-	void setLevel(int num){
+	public void setLevel(int num){
 		//destroy the current level if there is one
 		if (levelObject != null){
 			Destroy(levelObject);
@@ -322,6 +334,7 @@ public class GameManager : MonoBehaviour {
 			//the game objects array will also have pickup spots from the level we just removed, so we need ot only take ones we want
 			if (pickupSpotObjects[i].transform.parent == levelObject.transform){
 				pickupSpots.Add( pickupSpotObjects[i].GetComponent<PickupSpot>() );
+				pickupSpots[ pickupSpots.Count-1 ].Hud = hud;
 			}
 			
 			
@@ -385,8 +398,18 @@ public class GameManager : MonoBehaviour {
 		hud.gameObject.SetActive(false);
 		
 		starHelm.gameObject.SetActive(false);
+	}
+	
+	public void goToLevelSelect(){
+		gameState = "levelSelect";
 		
+		//make sure everything is off
+		gameOverScreen.turnOff();
 		
+		Destroy(levelObject);
+		
+		//turn on the leve select
+		levelSelectScreen.reset();
 	}
 	
 	

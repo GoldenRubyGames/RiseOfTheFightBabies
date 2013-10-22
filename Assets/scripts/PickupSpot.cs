@@ -35,7 +35,7 @@ public class PickupSpot : MonoBehaviour {
 		closeClip = doorSprite.GetClipByName("pickupDoorClose");
 		
 		//find the HUd
-		hud = GameObject.Find("HUD").GetComponent<HUD>();
+		//hud = GameObject.Find("HUD").GetComponent<HUD>();
 	}
 	
 	public void activate(GameObject _powerObject){
@@ -119,6 +119,15 @@ public class PickupSpot : MonoBehaviour {
 		}
 		set {
 			isActive = value;
+		}
+	}
+	
+	public HUD Hud {
+		get {
+			return this.hud;
+		}
+		set {
+			hud = value;
 		}
 	}
 }

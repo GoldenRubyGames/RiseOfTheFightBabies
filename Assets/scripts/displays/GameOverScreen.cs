@@ -13,6 +13,7 @@ public class GameOverScreen : MonoBehaviour {
 	
 	private string scoreText;
 	
+	
 	public Vector2 boxSize;  //this should be the width and height of the box image
 	
 	void Start(){

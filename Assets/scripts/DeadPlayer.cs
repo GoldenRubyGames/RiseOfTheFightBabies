@@ -27,7 +27,11 @@ public class DeadPlayer : MonoBehaviour {
 		deathTimer = deathTime;
 		
 		//set the vel based on the angle to the killer
-		float angleToKiller = Mathf.Atan2( transform.position.y-killer.transform.position.y, transform.position.x-killer.transform.position.x);
+		float angleToKiller = 0;
+		if (killer != null){
+			angleToKiller = Mathf.Atan2( transform.position.y-killer.transform.position.y, transform.position.x-killer.transform.position.x);
+		}
+		
 		vel = new Vector3(Mathf.Cos(angleToKiller) * flySpeed, Mathf.Sin(angleToKiller) * flySpeed,0);
 		
 		//cur angle is used to rotate the sprite
