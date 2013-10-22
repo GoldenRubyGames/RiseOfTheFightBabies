@@ -61,13 +61,11 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		paused = false;
 		
-		setLevel(startingLevel);
-		
 		for (int i=0; i<players.Length; i++){
 			players[i].Gm = this;
 		}
 		
-		resetGame();
+		setLevel(startingLevel);
 		
 	}
 	
@@ -174,11 +172,12 @@ public class GameManager : MonoBehaviour {
 			//switching levels
 			if (Input.GetKeyDown(KeyCode.Alpha1)){
 				setLevel(0);
-				resetGame();
 			}
 			if (Input.GetKeyDown(KeyCode.Alpha2)){
 				setLevel(1);
-				resetGame();
+			}
+			if (Input.GetKeyDown(KeyCode.Alpha3)){
+				setLevel(2);
 			}
 			
 			//makeshift pause
@@ -312,7 +311,8 @@ public class GameManager : MonoBehaviour {
 			
 		}
 		
-		Debug.Log("we got "+pickupSpots.Count+" spots");
+		//reset the game
+		resetGame();
 		
 	}
 	
