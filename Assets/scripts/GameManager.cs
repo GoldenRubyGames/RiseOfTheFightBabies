@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
 	public int startingLevel;
 	public GameObject[] levelObjects;
 	private GameObject levelObject;
+	private int curLevelNum;
 	
 	//list of powers
 	public GameObject[] powerObjects;
@@ -60,9 +61,12 @@ public class GameManager : MonoBehaviour {
 	
 	//other screens
 	public LevelSelectScreen levelSelectScreen;
+	public DataHolder dataHolder;
 
 	// Use this for initialization
 	void Start () {
+		dataHolder.setup();
+		
 		gameState = "levelSelect";
 		levelSelectScreen.reset();
 			
@@ -197,7 +201,7 @@ public class GameManager : MonoBehaviour {
 				}
 				//Q ends the game
 				if (Input.GetKeyDown(KeyCode.Q)){
-					endGame(0);
+					endGame(players[0].Score);
 				}
 				
 				//dbeug stuff
@@ -325,6 +329,7 @@ public class GameManager : MonoBehaviour {
 		
 		//load the selected one
 		levelObject = Instantiate(levelObjects[num], new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
+		curLevelNum = num;
 		
 		//find all of the pickup spots
 		//levelObject.transform.chil
@@ -370,7 +375,7 @@ public class GameManager : MonoBehaviour {
 		
 		hud.gameObject.SetActive(false);
 		statusText.turnOff();
-		gameOverScreen.turnOn(players[0].Score);
+		gameOverScreen.turnOn(players[0].Score, score > dataHolder.HighScores[curLevelNum]);
 		//statusText.showEndGame(score);
 		
 		//destroy everything!
@@ -398,6 +403,11 @@ public class GameManager : MonoBehaviour {
 		hud.gameObject.SetActive(false);
 		
 		starHelm.gameObject.SetActive(false);
+		
+		//is this a new high score?
+		if (score > dataHolder.HighScores[curLevelNum]){
+			dataHolder.setHighScore(curLevelNum, score);
+		}
 	}
 	
 	public void goToLevelSelect(){

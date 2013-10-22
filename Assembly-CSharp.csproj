@@ -127,6 +127,7 @@
      <Compile Include="Assets\notUsing\SpikeShoesPower.cs" />
      <Compile Include="Assets\notUsing\flame.cs" />
      <Compile Include="Assets\scripts\CamControl.cs" />
+     <Compile Include="Assets\scripts\DataHolder.cs" />
      <Compile Include="Assets\scripts\DeadGun.cs" />
      <Compile Include="Assets\scripts\DeadPlayer.cs" />
      <Compile Include="Assets\scripts\GameManager.cs" />

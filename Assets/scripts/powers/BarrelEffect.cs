@@ -46,7 +46,6 @@ public class BarrelEffect : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision collision) {
 		rigidbody.velocity *= dampening;
-		Debug.Log(rigidbody.velocity.x);
 		if (rigidbody.velocity.x > 0 ){
 			facingDir = 1;
 		}

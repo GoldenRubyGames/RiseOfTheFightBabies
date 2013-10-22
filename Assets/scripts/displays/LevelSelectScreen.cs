@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class LevelSelectScreen : MonoBehaviour {
 	
 	public GameManager gm;
+	public DataHolder dataHolder;
 	
 	public GameObject iconPrefab;
 	
@@ -40,7 +41,7 @@ public class LevelSelectScreen : MonoBehaviour {
 			GameObject newIconObj = Instantiate(iconPrefab, newPos, new Quaternion(0,0,0,0)) as GameObject;
 			levelIcons[i] = newIconObj.GetComponent<LevelSelectIcon>();
 			
-			levelIcons[i].setup(i, levelNames[i], 666);
+			levelIcons[i].setup(i, levelNames[i], dataHolder.HighScores[i]);
 		}
 		
 		//set the first one as selected
