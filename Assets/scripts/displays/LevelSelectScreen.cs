@@ -6,8 +6,11 @@ public class LevelSelectScreen : MonoBehaviour {
 	
 	public GameManager gm;
 	public DataHolder dataHolder;
+	public UnlockManager unlockManager;
 	
 	public GameObject iconPrefab;
+	
+	public tk2dTextMesh killText, nextUnlockText;
 	
 	public string[] levelNames;
 	private LevelSelectIcon[] levelIcons;
@@ -43,6 +46,17 @@ public class LevelSelectScreen : MonoBehaviour {
 			
 			levelIcons[i].setup(i, levelNames[i], dataHolder.HighScores[i]);
 		}
+		
+		
+		//set the bottom text
+		killText.text = "Total Clone Kills: "+dataHolder.CloneKills.ToString();
+		killText.Commit();
+		if (!unlockManager.DoneWithUnlocks){
+			nextUnlockText.text = "Next Unlock: "+unlockManager.UnlockVals[ unlockManager.NextUnlock ];
+		}else{
+			nextUnlockText.text = "Next Unlock: NEVER";
+		}
+		nextUnlockText.Commit();
 		
 		//set the first one as selected
 		curSelection = -1;

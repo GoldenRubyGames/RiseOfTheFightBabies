@@ -12,8 +12,6 @@ public class PlayerGhost : Player {
 	public float startingStunTimeBonusRange;
 	private float stunTimer;
 	
-	public bool outOfRound; //when killed, ghosts should not come back until next round
-	
 	public float rewindSpeed;
 	
 	public void ghostSetup(Color oldColor, GhostRecorder record, List<Power> oldPowers, StarHelm _starHelm, GameManager _gm){
@@ -117,10 +115,12 @@ public class PlayerGhost : Player {
 			}
 		}
 		
+		//store the kill
+		gm.dataHolder.addCloneKill();
+		
+		//move the ghost away and turn them off until the next round
 		transform.position = new Vector3(0, -100, 0); //move it off screen
 		gameObject.SetActive(false);
-		//reset the ghost
-		//reset();
 		
 	}
 }

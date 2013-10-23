@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour {
 	//list of powers
 	public GameObject[] powerObjects;
 	public GameObject punchPowerObject;
+	public int powerUnlockCutoff; //array location of the first unlockable power
+	private int powerJustUnlocked;
 	
 	//pickup object
 	private List<PickupSpot> pickupSpots = new List<PickupSpot>();
@@ -64,10 +66,19 @@ public class GameManager : MonoBehaviour {
 	public LevelSelectScreen levelSelectScreen;
 	public DataHolder dataHolder;
 	public GameObject titleScreen;
-
+	public UnlockManager unlockManager;
+	
+	private UnlockPopUp unlockScreenPopUp;
+	
 	// Use this for initialization
 	void Start () {
 		dataHolder.setup();
+		unlockManager.setup();
+		unlockManager.checkUnlocks(dataHolder.CloneKills, false);
+		
+		unlockScreenPopUp = null;
+		
+		powerJustUnlocked = -1;
 		
 		gameState = "title";
 		//levelSelectScreen.reset();
@@ -173,7 +184,7 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//tetsing
+		//testing
 		if (Input.GetKeyDown(KeyCode.Alpha0)){
 			dataHolder.clearData();
 		}
@@ -192,6 +203,15 @@ public class GameManager : MonoBehaviour {
 				Destroy(titleScreen);
 				gameState = "levelSelect";
 				levelSelectScreen.reset();
+			}
+		}
+		else if (gameState == "unlockPopUp"){
+			if (Input.anyKey && unlockScreenPopUp.CanBeKilled){
+				gameState = "gameOver";
+				Destroy(unlockScreenPopUp.gameObject);
+				unlockScreenPopUp = null;
+				//see if there are any more
+				unlockManager.checkUnlocks(dataHolder.CloneKills, true);
 			}
 		}
 		else if (gameState == "game"){
@@ -386,16 +406,24 @@ public class GameManager : MonoBehaviour {
 		//select a point
 		int posNum = (int)Random.Range(0, pickupSpots.Count);
 		
+		int numPowersAvailable = powerUnlockCutoff + unlockManager.WeaponsUnlocked;
+		
 		//make sure the power is not already being used
 		bool alreadyUsed = true;
 		while (alreadyUsed){
 			alreadyUsed = false;
-			powerID = (int)Random.Range(0, powerObjects.Length);
+			powerID = (int)Random.Range(0, numPowersAvailable);
 			for (int i=0; i<pickupSpots.Count; i++){
 				if (pickupSpots[i].IsActive && pickupSpots[i].PowerObject == powerObjects[powerID]){
 					alreadyUsed = true;
 				}
 			}
+		}
+		
+		//if the player just unlocked something, show that
+		if (powerJustUnlocked != -1){
+			powerID = powerJustUnlocked;
+			powerJustUnlocked = -1;
 		}
 		
 		if (!pickupSpots[posNum].IsActive){
@@ -450,6 +478,12 @@ public class GameManager : MonoBehaviour {
 		if (score > dataHolder.HighScores[curLevelNum]){
 			dataHolder.setHighScore(curLevelNum, score);
 		}
+		
+		//was anything unlocked?
+		unlockManager.checkUnlocks(dataHolder.CloneKills, true);
+		
+		//save
+		dataHolder.save();
 	}
 	
 	public void goToLevelSelect(){
@@ -465,6 +499,11 @@ public class GameManager : MonoBehaviour {
 		
 	}
 	
+	
+	public void setUnlockPopUpShowing(UnlockPopUp _unlockScreenPopUp){
+		gameState = "unlockPopUp";
+		unlockScreenPopUp = _unlockScreenPopUp;
+	}
 	
 	
 	//setters getters
@@ -508,6 +547,21 @@ public class GameManager : MonoBehaviour {
 	public int RoundNum {
 		get {
 			return this.roundNum;
+		}
+	}
+	
+	public UnlockPopUp UnlockScreenPopUp {
+		get {
+			return this.unlockScreenPopUp;
+		}
+	}
+	
+	public int PowerJustUnlocked {
+		get {
+			return this.powerJustUnlocked;
+		}
+		set {
+			powerJustUnlocked = value;
 		}
 	}
 }

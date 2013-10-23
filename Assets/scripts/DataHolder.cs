@@ -7,12 +7,19 @@ public class DataHolder : MonoBehaviour {
 	public int numLevels;
 	
 	private int[] highScores;
+	
+	private int cloneKills;
 
 	// Use this for initialization
 	public void setup () {
 		highScores = new int[numLevels];
 		
 		loadData();
+	}
+	
+	public void save(){
+		Debug.Log("pave my save");
+		PlayerPrefs.Save();
 	}
 	
 	public void loadData(){
@@ -22,12 +29,19 @@ public class DataHolder : MonoBehaviour {
 			highScores[i] = PlayerPrefs.GetInt("level_"+i.ToString(), 0);
 		}
 		
+		//grab kill count
+		cloneKills = PlayerPrefs.GetInt("cloneKills", 0);
+		
 	}
 	
 	public void setHighScore(int levelNum, int score){
 		highScores[levelNum] = score;
 		PlayerPrefs.SetInt("level_"+levelNum.ToString(), score);
-		PlayerPrefs.Save();
+	}
+	
+	public void addCloneKill(){
+		cloneKills++;
+		PlayerPrefs.SetInt("cloneKills", cloneKills);
 	}
 		
 	public void clearData(){
@@ -42,6 +56,12 @@ public class DataHolder : MonoBehaviour {
 	public int[] HighScores {
 		get {
 			return this.highScores;
+		}
+	}
+	
+	public int CloneKills {
+		get {
+			return this.cloneKills;
 		}
 	}
 }

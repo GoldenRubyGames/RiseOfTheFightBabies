@@ -4,6 +4,7 @@ using System.Collections;
 public class GameOverScreen : MonoBehaviour {
 	
 	//public TextMesh scoreText;
+	public GameManager gm;
 	
 	public float blinkSpeed;
 	
@@ -46,17 +47,21 @@ public class GameOverScreen : MonoBehaviour {
 	
 	void OnGUI(){
 		
-		string textThisFrame = scoreText;
-		if (isHighScore && Time.time%blinkSpeed < blinkSpeed/2){
-			textThisFrame = "GAME OVER\n";
+		//don't show anything if the unlock screen is active
+		if (gm.UnlockScreenPopUp == null){
+		
+			string textThisFrame = scoreText;
+			if (isHighScore && Time.time%blinkSpeed < blinkSpeed/2){
+				textThisFrame = "GAME OVER\n";
+			}
+			
+			bool isOn = (Time.time%blinkSpeed) < blinkSpeed;
+			
+			float xPos = Screen.width/2 - boxSize.x/2;
+			float yPos = Screen.height/2 - boxSize.y/2;
+			
+			Rect textPos = new Rect(xPos,yPos, boxSize.x, boxSize.y);
+			GUI.Label(textPos, textThisFrame, style);
 		}
-		
-		bool isOn = (Time.time%blinkSpeed) < blinkSpeed;
-		
-		float xPos = Screen.width/2 - boxSize.x/2;
-		float yPos = Screen.height/2 - boxSize.y/2;
-		
-		Rect textPos = new Rect(xPos,yPos, boxSize.x, boxSize.y);
-		GUI.Label(textPos, textThisFrame, style);
 	}
 }
