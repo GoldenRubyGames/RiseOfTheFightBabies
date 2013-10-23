@@ -28,9 +28,11 @@ public class PlayerController : Player {
 		
 		clearPowers();
 		//give them a punch
-		GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
-		Power thisPower = powerObject.GetComponent<Power>();
-		thisPower.assignToPlayer(this);
+		if (punchPowerObject != null){
+			GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
+			Power thisPower = powerObject.GetComponent<Power>();
+			thisPower.assignToPlayer(this);
+		}
 		
 		//set the controller
 		moveAxis = "player0Move";
@@ -65,9 +67,11 @@ public class PlayerController : Player {
 		
 		clearPowers();
 		//give them a punch
-		GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
-		Power thisPower = powerObject.GetComponent<Power>();
-		thisPower.assignToPlayer(this);
+		if (punchPowerObject != null){
+			GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
+			Power thisPower = powerObject.GetComponent<Power>();
+			thisPower.assignToPlayer(this);
+		}
 		
 		if (recorder == null){
 			recorder = new GhostRecorder();
@@ -206,9 +210,11 @@ public class PlayerController : Player {
 		//empty out the powers
 		clearPowers();
 		//give them a punch
-		GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
-		Power thisPower = powerObject.GetComponent<Power>();
-		thisPower.assignToPlayer(this);
+		if (punchPowerObject != null){
+			GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
+			Power thisPower = powerObject.GetComponent<Power>();
+			thisPower.assignToPlayer(this);
+		}
 		
 		//destroy all effect objects
 		GameObject[] effects = GameObject.FindGameObjectsWithTag("powerEffect");
