@@ -28,8 +28,8 @@ public class PlayerController : Player {
 		
 		clearPowers();
 		//give them a punch
-		if (punchPowerObject != null){
-			GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
+		if (startingPowerObject != null){
+			GameObject powerObject = Instantiate(startingPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
 			Power thisPower = powerObject.GetComponent<Power>();
 			thisPower.assignToPlayer(this);
 		}
@@ -67,8 +67,8 @@ public class PlayerController : Player {
 		
 		clearPowers();
 		//give them a punch
-		if (punchPowerObject != null){
-			GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
+		if (startingPowerObject != null){
+			GameObject powerObject = Instantiate(startingPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
 			Power thisPower = powerObject.GetComponent<Power>();
 			thisPower.assignToPlayer(this);
 		}
@@ -210,8 +210,8 @@ public class PlayerController : Player {
 		//empty out the powers
 		clearPowers();
 		//give them a punch
-		if (punchPowerObject != null){
-			GameObject powerObject = Instantiate(punchPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
+		if (startingPowerObject != null){
+			GameObject powerObject = Instantiate(startingPowerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0) ) as GameObject;
 			Power thisPower = powerObject.GetComponent<Power>();
 			thisPower.assignToPlayer(this);
 		}

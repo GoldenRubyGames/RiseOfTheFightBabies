@@ -29,7 +29,7 @@ public class Player : MonoBehaviour {
 	//powers
 	[System.NonSerialized]
 	public List<Power> powers = new List<Power>();
-	public GameObject punchPowerObject;
+	public GameObject startingPowerObject;
 	
 	private int score;
 	
@@ -308,11 +308,11 @@ public class Player : MonoBehaviour {
 	
 		
 	public void addScore(int val){
-		score += val + powers.Count;
+		score += val;
 	}
 	
 	public void starHelmScore(){
-		score += starHelm.scoreValue + powers.Count;
+		score += starHelm.scoreValue;
 		
 		
 		//show the text

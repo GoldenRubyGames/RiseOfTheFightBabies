@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour {
 		goonTimer = minGoonTime;
 		starHelm.setChosenOne( goons[0] );
 		
-		roundNum = 0;
+		roundNum = 1;
 		
 		doingKillEffect = false;
 		
@@ -161,8 +161,6 @@ public class GameManager : MonoBehaviour {
 		for (int i=0; i<effects.Length; i++){
 			Destroy( effects[i] );
 		}
-		
-		roundNum++;
 		
 		//reset HUD
 		hud.reset();
@@ -276,13 +274,15 @@ public class GameManager : MonoBehaviour {
 					
 					PlayerGhost newGhost = players[0].makeGhost();
 					ghosts.Add(newGhost);
-					resetRound();
-					
 					
 					killEffectFoe.killPlayerCustom(null);
 					
+					resetRound();
+					
 					if (reasignStarHelm){
 						starHelm.setChosenOne(newGhost);
+						//increase the round number
+						roundNum++;
 					}
 					
 					doingKillEffect = false;

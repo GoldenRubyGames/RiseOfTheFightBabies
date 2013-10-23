@@ -12,6 +12,8 @@ public class PlayerGhost : Player {
 	public float startingStunTimeBonusRange;
 	private float stunTimer;
 	
+	public bool outOfRound; //when killed, ghosts should not come back until next round
+	
 	public float rewindSpeed;
 	
 	public void ghostSetup(Color oldColor, GhostRecorder record, List<Power> oldPowers, StarHelm _starHelm, GameManager _gm){
@@ -40,6 +42,8 @@ public class PlayerGhost : Player {
 	
 	
 	public override void customReset(){
+		gameObject.SetActive(true);
+		
 		recorder.reset(false);
 		recorder.play(false);
 		
@@ -113,8 +117,9 @@ public class PlayerGhost : Player {
 			}
 		}
 		
+		gameObject.SetActive(false);
 		//reset the ghost
-		reset();
+		//reset();
 		
 	}
 }
