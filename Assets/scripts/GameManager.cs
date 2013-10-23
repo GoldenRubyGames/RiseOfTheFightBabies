@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject[] levelObjects;
 	private GameObject levelObject;
 	private int curLevelNum;
+	private bool levelJustUnlocked;
 	
 	//list of powers
 	public GameObject[] powerObjects;
@@ -192,7 +193,12 @@ public class GameManager : MonoBehaviour {
 		//do things acording to game state
 		if (gameState == "gameOver"){
 			if (Input.GetKeyDown(KeyCode.R)){
-				resetGame();
+				if (!levelJustUnlocked){
+					resetGame();
+				}else{
+					levelJustUnlocked = false;
+					goToLevelSelect();
+				}
 			}
 			if (Input.GetKeyDown(KeyCode.Q)){
 				goToLevelSelect();
@@ -443,6 +449,7 @@ public class GameManager : MonoBehaviour {
 		gameOver = true;
 		gameState = "gameOver";
 		
+		hud.reset();
 		hud.gameObject.SetActive(false);
 		statusText.turnOff();
 		gameOverScreen.turnOn(players[0].Score, score > dataHolder.HighScores[curLevelNum]);
@@ -562,6 +569,15 @@ public class GameManager : MonoBehaviour {
 		}
 		set {
 			powerJustUnlocked = value;
+		}
+	}
+	
+	public bool LevelJustUnlocked {
+		get {
+			return this.levelJustUnlocked;
+		}
+		set {
+			levelJustUnlocked = value;
 		}
 	}
 }

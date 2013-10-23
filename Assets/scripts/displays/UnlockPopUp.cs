@@ -29,6 +29,9 @@ public class UnlockPopUp : MonoBehaviour {
 		}else{
 			bottomText.text = "NO MORE UNLOCKS. YOU DID IT!";
 		}
+		if (!isWeapon){
+			bottomText.text = "";
+		}
 		bottomText.Commit();
 		
 		gm.setUnlockPopUpShowing(this);

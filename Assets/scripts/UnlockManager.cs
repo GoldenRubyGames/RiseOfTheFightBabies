@@ -3,15 +3,20 @@ using System.Collections;
 
 public class UnlockManager : MonoBehaviour {
 	
+	public bool debugUnlockAll;
+	
 	public GameManager gm;
+	public DataHolder dataHolder;
 	
 	private int numWeaponUnlocks;
 	
-	//private bool[] unlockState;
 	private int[] unlockVals;
 	
 	private int weaponsUnlocked;
 	private int nextUnlock;
+	
+	public int[] levelUnlockScores;
+	private bool[] levelUnlocks;
 	
 	public GameObject popUpPrefab;
 	
@@ -25,12 +30,20 @@ public class UnlockManager : MonoBehaviour {
 		
 		for (int i=0; i<numWeaponUnlocks; i++){
 			unlockVals[i] = getUnlockVal(i);
-			//Debug.Log(i + " : " + getUnlockVal(i));
+		}
+		
+		levelUnlocks = new bool[levelUnlockScores.Length];
+		for (int i=0; i<levelUnlocks.Length; i++){
+			levelUnlocks[i] = false;
 		}
 		
 		doneWithUnlocks = false;
 		weaponsUnlocked = 0;
 		nextUnlock = 0;
+		
+		if (debugUnlockAll){
+			unlockAll();
+		}
 	}
 	
 	public void checkUnlocks(int cloneKills, bool showPopUp){
@@ -40,7 +53,7 @@ public class UnlockManager : MonoBehaviour {
 				weaponsUnlocked = i+1;
 				nextUnlock = i+1;
 				if (showPopUp){
-					makePopUp(i);
+					makeWeaponPopUp(i);
 					gm.PowerJustUnlocked = gm.powerUnlockCutoff + i;
 					return;
 				}
@@ -50,6 +63,21 @@ public class UnlockManager : MonoBehaviour {
 		if (nextUnlock >= numWeaponUnlocks){
 			doneWithUnlocks = true;
 			nextUnlock = 0;
+		}
+		
+		//check for new levels too
+		for (int i=0; i<levelUnlocks.Length; i++){
+			if ( dataHolder.HighScores[i] >= levelUnlockScores[i]){
+				if (levelUnlocks[i] == false){
+					levelUnlocks[i] = true;
+					if (showPopUp){
+						makeLevelPopUp(i);
+						gm.PowerJustUnlocked = gm.powerUnlockCutoff + i;
+						gm.LevelJustUnlocked = true;
+						return;
+					}
+				}
+			}
 		}
 		
 		Debug.Log("weapons unlocked: "+weaponsUnlocked);
@@ -65,7 +93,7 @@ public class UnlockManager : MonoBehaviour {
 		//return  (int)( 25.0f*Mathf.Pow( fNum, 1.25f) );
 	}
 	
-	void makePopUp(int num){
+	void makeWeaponPopUp(int num){
 		GameObject newPopUpObj = Instantiate(popUpPrefab, new Vector3(0,0,-2), new Quaternion(0,0,0,0)) as GameObject;
 		UnlockPopUp newPopUp = newPopUpObj.GetComponent<UnlockPopUp>();
 		int nextUnlockVal = 0;
@@ -76,6 +104,25 @@ public class UnlockManager : MonoBehaviour {
 		newPopUp.setup(unlockName, true, nextUnlockVal, num==numWeaponUnlocks-1, gm);
 	}
 	
+	void makeLevelPopUp(int num){
+		GameObject newPopUpObj = Instantiate(popUpPrefab, new Vector3(0,0,-2), new Quaternion(0,0,0,0)) as GameObject;
+		UnlockPopUp newPopUp = newPopUpObj.GetComponent<UnlockPopUp>();
+		
+		string unlockName = gm.levelSelectScreen.levelNames[num+1];
+		newPopUp.setup(unlockName, false, 0, num==numWeaponUnlocks-1, gm);
+	}
+	
+	
+	public void unlockAll(){
+		doneWithUnlocks = true;
+		nextUnlock = 0;
+		
+		weaponsUnlocked = numWeaponUnlocks;
+		
+		for (int i=0; i<levelUnlocks.Length; i++){
+			levelUnlocks[i] = true;
+		}
+	}
 	
 	//setters getters
 	
@@ -113,6 +160,12 @@ public class UnlockManager : MonoBehaviour {
 		}
 		set {
 			weaponsUnlocked = value;
+		}
+	}
+	
+	public bool[] LevelUnlocks {
+		get {
+			return this.levelUnlocks;
 		}
 	}
 }

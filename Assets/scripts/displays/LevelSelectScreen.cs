@@ -45,6 +45,14 @@ public class LevelSelectScreen : MonoBehaviour {
 			levelIcons[i] = newIconObj.GetComponent<LevelSelectIcon>();
 			
 			levelIcons[i].setup(i, levelNames[i], dataHolder.HighScores[i]);
+			
+			//lock them if they are locked
+			if (i!=0){
+				if (!unlockManager.LevelUnlocks[i-1]){
+					levelIcons[i].lockLevel( unlockManager.levelUnlockScores[i-1], levelNames[i-1]);
+				}
+			}
+					
 		}
 		
 		
@@ -92,7 +100,7 @@ public class LevelSelectScreen : MonoBehaviour {
 			if(Physics.Raycast(ray, out hit)) {
 				//figure out if it was any of our levels
 				for (int i=0; i<levelIcons.Length; i++){
-					if (hit.transform == levelIcons[i].transform){
+					if (hit.transform == levelIcons[i].transform && !levelIcons[i].IsLocked){
 						thisSelection = i;
 					}
 				}
