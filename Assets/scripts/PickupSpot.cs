@@ -130,4 +130,10 @@ public class PickupSpot : MonoBehaviour {
 			hud = value;
 		}
 	}
+	
+	public GameObject PowerObject {
+		get {
+			return this.powerObject;
+		}
+	}
 }

@@ -382,9 +382,21 @@ public class GameManager : MonoBehaviour {
 	
 	void spawnPickup(){
 		//select a power
-		int powerID = (int)Random.Range(0, powerObjects.Length);
+		int powerID = 0;
 		//select a point
 		int posNum = (int)Random.Range(0, pickupSpots.Count);
+		
+		//make sure the power is not already being used
+		bool alreadyUsed = true;
+		while (alreadyUsed){
+			alreadyUsed = false;
+			powerID = (int)Random.Range(0, powerObjects.Length);
+			for (int i=0; i<pickupSpots.Count; i++){
+				if (pickupSpots[i].IsActive && pickupSpots[i].PowerObject == powerObjects[powerID]){
+					alreadyUsed = true;
+				}
+			}
+		}
 		
 		if (!pickupSpots[posNum].IsActive){
 			pickupSpots[posNum].activate( powerObjects[powerID] );

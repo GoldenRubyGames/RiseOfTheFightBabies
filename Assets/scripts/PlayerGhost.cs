@@ -117,6 +117,7 @@ public class PlayerGhost : Player {
 			}
 		}
 		
+		transform.position = new Vector3(0, -100, 0); //move it off screen
 		gameObject.SetActive(false);
 		//reset the ghost
 		//reset();
