@@ -27,7 +27,7 @@ public class StarHelm : MonoBehaviour {
 		//ussualy just stay with the chosen player
 		if (!doingKillEffect){
 			if (chosenOne == null){
-				Debug.Log("laugh at god");
+				//Debug.Log("laugh at god");
 				return;
 			}
 			transform.position = chosenOne.transform.position + offset;	

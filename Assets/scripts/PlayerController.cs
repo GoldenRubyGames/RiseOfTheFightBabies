@@ -56,7 +56,7 @@ public class PlayerController : Player {
 	}
 	
 	public override void customReset(){
-		
+		Debug.Log("place ma player");
 		//set the pos
 		float spawnX = Random.Range(spawnLeft.transform.position.x, spawnRight.transform.position.x);
 		transform.position = new Vector3(spawnX, spawnLeft.transform.position.y, 0);

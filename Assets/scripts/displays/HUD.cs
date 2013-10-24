@@ -51,6 +51,8 @@ public class HUD : MonoBehaviour {
 		iconIds.Add("Fat Gun", sampleSprite.GetSpriteIdByName("pickupIconFatGun"));
 		iconIds.Add("10 Ton Drop", sampleSprite.GetSpriteIdByName("pickupIconTenTonDrop"));
 		iconIds.Add("Boomerang", sampleSprite.GetSpriteIdByName("pickupIconBoomerang"));
+		iconIds.Add("Knives", sampleSprite.GetSpriteIdByName("pickupIconKnives"));
+		
 		
 	}
 	

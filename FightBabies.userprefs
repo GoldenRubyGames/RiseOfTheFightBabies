@@ -1,15 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/powers/KnifeEffect.cs">
-    <Files>
-      <File FileName="Assets/scripts/GameManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/scripts/powers/Bullet.cs" Line="82" Column="6" />
-      <File FileName="Assets/scripts/powers/LightningPower.cs" Line="19" Column="3" />
-      <File FileName="Assets/scripts/powers/LightningEffect.cs" Line="37" Column="52" />
-      <File FileName="Assets/scripts/powers/KnifePower.cs" Line="13" Column="3" />
-      <File FileName="Assets/scripts/powers/KnifeEffect.cs" Line="23" Column="3" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

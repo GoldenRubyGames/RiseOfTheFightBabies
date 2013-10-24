@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour {
 	private List<PlayerGoon> goons = new List<PlayerGoon>();
 	
 	//the level
-	public int startingLevel;
 	public GameObject[] levelObjects;
 	private GameObject levelObject;
 	private int curLevelNum;
@@ -98,13 +97,6 @@ public class GameManager : MonoBehaviour {
 			players[i].Gm = this;
 		}
 		
-		/*
-		paused = false;
-		
-		
-		
-		setLevel(startingLevel);
-		*/
 	}
 	
 	void resetGame(){
@@ -114,7 +106,9 @@ public class GameManager : MonoBehaviour {
 		gameOverScreen.turnOff();
 		
 		starHelm.gameObject.SetActive(true);
-		hud.gameObject.SetActive(true);
+		if (!doingIntro){
+			hud.gameObject.SetActive(true);
+		}
 		
 		//kill all existing pickups, goons and ghosts
 		for (int i=0; i<pickupSpots.Count; i++){
@@ -133,7 +127,9 @@ public class GameManager : MonoBehaviour {
 		ghosts.Clear();
 		
 		//give us a starting pickup
-		spawnPickup();
+		if (!doingIntro){
+			spawnPickup();
+		}
 		pickupTimer = nextPickupTimeMin;
 		
 		//reset the players
@@ -141,7 +137,6 @@ public class GameManager : MonoBehaviour {
 			for (int i=0; i<players.Length; i++){
 				players[i].gameObject.SetActive(true);
 				players[i].clearPowers();
-				//players[i].reset();
 				players[i].Score = 0;
 				players[i].LivesLeft = players[i].numLives;
 			}
@@ -149,15 +144,21 @@ public class GameManager : MonoBehaviour {
 		
 		
 		//spawn one goon and give it the star helm
-		spawnGoon();
-		goonTimer = minGoonTime;
-		starHelm.setChosenOne( goons[0] );
+		if (!doingIntro){
+			spawnGoon();
+			goonTimer = minGoonTime;
+			starHelm.setChosenOne( goons[0] );
+		}
+		else{
+			//starHelm.gameObject.SetActive(false);
+		}
+		
+		Debug.Log("Intro? "+doingIntro);
+		
 		
 		roundNum = 1;
 		
 		doingKillEffect = false;
-		
-		hud.gameObject.SetActive(true);
 		
 		resetRound();
 	}
@@ -166,6 +167,11 @@ public class GameManager : MonoBehaviour {
 		//reset players
 		for (int i=0; i<players.Length; i++){
 			players[i].reset();
+			//if we're in the intro, put them on the far left
+			if (doingIntro){
+				Debug.Log("piss and blood party");
+				players[i].transform.position = new Vector3(players[i].spawnLeft.transform.position.x, players[i].spawnLeft.transform.position.y, 0);
+			}
 		}
 		
 		//reset all ghosts
@@ -411,6 +417,10 @@ public class GameManager : MonoBehaviour {
 			
 		}
 		
+		if (curLevelNum == 0){
+			doingIntro = true;
+		}
+		
 		//reset the game
 		resetGame();
 		
@@ -501,8 +511,6 @@ public class GameManager : MonoBehaviour {
 		}
 		ghosts.Clear();
 		
-		hud.gameObject.SetActive(false);
-		
 		starHelm.gameObject.SetActive(false);
 		
 		//is this a new high score?
@@ -530,6 +538,9 @@ public class GameManager : MonoBehaviour {
 		
 		//turn on the leve select
 		levelSelectScreen.reset();
+		
+		//make sure the pause screen is gone
+		setPause(false, false);
 		
 	}
 	

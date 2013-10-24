@@ -146,6 +146,7 @@
      <Compile Include="Assets\scripts\UnlockManager.cs" />
      <Compile Include="Assets\scripts\displays\GameOverScreen.cs" />
      <Compile Include="Assets\scripts\displays\HUD.cs" />
+     <Compile Include="Assets\scripts\displays\IntroSpeakerText.cs" />
      <Compile Include="Assets\scripts\displays\LevelSelectIcon.cs" />
      <Compile Include="Assets\scripts\displays\LevelSelectScreen.cs" />
      <Compile Include="Assets\scripts\displays\PauseScreen.cs" />

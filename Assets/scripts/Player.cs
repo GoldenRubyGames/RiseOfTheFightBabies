@@ -128,7 +128,7 @@ public class Player : MonoBehaviour {
 		
 		customStart();
 		
-		reset();
+		//reset();
 		
 		facingDir = 1;
 	}
@@ -136,6 +136,7 @@ public class Player : MonoBehaviour {
 	public virtual void customStart(){}
 	
 	public void reset(){
+		Debug.Log("reset player");
 		health = baseHealth;
 		
 		invincibilityTimer = invincibilityTime;
