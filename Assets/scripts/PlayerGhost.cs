@@ -123,4 +123,16 @@ public class PlayerGhost : Player {
 		gameObject.SetActive(false);
 		
 	}
+	
+	
+	
+	
+	public float StunTimer {
+		get {
+			return this.stunTimer;
+		}
+		set {
+			stunTimer = value;
+		}
+	}
 }

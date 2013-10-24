@@ -265,8 +265,10 @@ public class Player : MonoBehaviour {
 	
 	//by default, just kill the player, but allow child classes to define their own
 	public void killPlayer(Player killer){
-		if (gm.DoingKillEffect){
-			return;
+		if (gm != null){
+			if (gm.DoingKillEffect){
+				return;
+			}
 		}
 		
 		//instantiate a dead player object to take the fall

@@ -136,4 +136,13 @@ public class PickupSpot : MonoBehaviour {
 			return this.powerObject;
 		}
 	}
+	
+	public float Timer {
+		get {
+			return this.timer;
+		}
+		set {
+			timer = value;
+		}
+	}
 }

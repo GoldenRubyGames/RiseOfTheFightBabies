@@ -106,9 +106,7 @@ public class GameManager : MonoBehaviour {
 		gameOverScreen.turnOff();
 		
 		starHelm.gameObject.SetActive(true);
-		if (!doingIntro){
-			hud.gameObject.SetActive(true);
-		}
+		hud.gameObject.SetActive(true);
 		
 		//kill all existing pickups, goons and ghosts
 		for (int i=0; i<pickupSpots.Count; i++){
@@ -133,12 +131,14 @@ public class GameManager : MonoBehaviour {
 		pickupTimer = nextPickupTimeMin;
 		
 		//reset the players
-		if (Time.frameCount > 2){
-			for (int i=0; i<players.Length; i++){
-				players[i].gameObject.SetActive(true);
-				players[i].clearPowers();
-				players[i].Score = 0;
-				players[i].LivesLeft = players[i].numLives;
+		for (int i=0; i<players.Length; i++){
+			players[i].gameObject.SetActive(true);
+			players[i].clearPowers();
+			players[i].Score = 0;
+			players[i].LivesLeft = players[i].numLives;
+			if (doingIntro){
+				Debug.Log("set the lives for intro");
+				players[i].LivesLeft = 2;
 			}
 		}
 		
@@ -326,18 +326,26 @@ public class GameManager : MonoBehaviour {
 				if (killEffectTimer <= 0){
 					bool reasignStarHelm = starHelm.ChosenOne == killEffectFoe;
 					
-					PlayerGhost newGhost = players[0].makeGhost();
-					ghosts.Add(newGhost);
+					//make a ghost unless the player died during the intro
+					if (!doingIntro || reasignStarHelm){
+						PlayerGhost newGhost = players[0].makeGhost();
+						ghosts.Add(newGhost);
+						
+						if (reasignStarHelm){
+							starHelm.setChosenOne(newGhost);
+							//increase the round number
+							roundNum++;
+						}
+					}
+					
+					//in the intro, make sure the player has a weapon
+					if(doingIntro && killEffectFoe == players[0]){
+						levelObject.SendMessage("playerDied");
+					}
 					
 					killEffectFoe.killPlayerCustom(null);
 					
 					resetRound();
-					
-					if (reasignStarHelm){
-						starHelm.setChosenOne(newGhost);
-						//increase the round number
-						roundNum++;
-					}
 					
 					doingKillEffect = false;
 				}
@@ -472,7 +480,7 @@ public class GameManager : MonoBehaviour {
 		
 	}
 	
-	void spawnGoon(){
+	public void spawnGoon(){
 		GameObject goonSpawnObj = Instantiate(goonPrefab, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
 		PlayerGoon goonSpawn = goonSpawnObj.GetComponent<PlayerGoon>();
 		goonSpawn.gm = this;

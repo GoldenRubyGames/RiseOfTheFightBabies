@@ -105,16 +105,10 @@ public class HUD : MonoBehaviour {
 		topText += "\nRound: "+gm.RoundNum;
 		//score
 		topText += "\nScore: "+player.Score;
-		/*
-		//then list powers
-		topText += "\n";
-		for (int k=0; k<player.Powers.Count; k++){
-			topText += "\n"+player.Powers[k].powerName;
+		
+		if (!gm.DoingIntro){
+			GUI.Label(textPos, topText, textStyle);
 		}
-		*/
-		
-		
-		GUI.Label(textPos, topText, textStyle);
 	}
 	
 	

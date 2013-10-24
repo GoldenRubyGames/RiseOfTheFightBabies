@@ -47,7 +47,7 @@ public class PlayerController : Player {
 			atack2Button = "player1Fire2";  //triangle
 		}
 		
-		livesLeft = numLives;
+		//livesLeft = numLives;
 		
 		if (recorder == null){
 			recorder = new GhostRecorder();
@@ -197,13 +197,6 @@ public class PlayerController : Player {
 			killer.addScore(1);
 		}
 		
-		//spawn a spooky ghost
-		/*
-		if (isPlayerControlled){
-			makeGhost();
-		}
-		*/
-		
 		//reset the player
 		reset();
 		
@@ -222,9 +215,11 @@ public class PlayerController : Player {
 			Destroy( effects[i] );
 		}
 		
-		livesLeft--;
-		if (livesLeft <= 0){
-			gm.endGame(Score);
+		if (!gm.DoingIntro){
+			livesLeft--;
+			if (livesLeft <= 0){
+				gm.endGame(Score);
+			}
 		}
 	}
 	
