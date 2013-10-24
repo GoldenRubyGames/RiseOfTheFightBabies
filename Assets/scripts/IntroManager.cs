@@ -5,7 +5,7 @@ public class IntroManager : MonoBehaviour {
 	
 	GameManager gm;
 	
-	public PickupSpot  pickupSpot;
+	public PickupSpot  pickupSpot, pickupSpot2;
 	
 	private int curPowerNum;
 	public GameObject[] powerObjects;
@@ -90,82 +90,87 @@ public class IntroManager : MonoBehaviour {
 			return;
 		}
 		
-		if (phase == 5 && targetObject == null){
+		if (phase == 5 && timer > 2){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 6 && timer > 3){
+		if (phase == 6 && targetObject == null){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 7 && timer > 9){
+		if (phase == 7 && timer > 3){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 8 && !pickupSpot.IsActive){
+		if (phase == 8 && timer > 9){
+			advancePhase();
+			return;
+		}
+		
+		if (phase == 9 && !pickupSpot2.IsActive){
 			advancePhase();	
 			return;
 		}
 		
-		if (phase == 9 && timer > 7){
+		if (phase == 10 && timer > 7){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 10 && timer > 5){
+		if (phase == 11 && timer > 5){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 11 && timer > 3){
+		if (phase == 12 && timer > 3){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 12 && gm.Goons.Count == 0){
+		if (phase == 13 && gm.Goons.Count == 0){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 13 && !popUp.IsActive){
+		if (phase == 14 && !popUp.IsActive){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 14 && timer > 4){
+		if (phase == 15 && timer > 4){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 15 && timer > 12){
+		if (phase == 16 && timer > 12){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 16 && gm.RoundNum >= 3){
+		if (phase == 17 && gm.RoundNum >= 3){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 17 && timer > 3){
+		if (phase == 18 && timer > 3){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 18 && gm.RoundNum >= 4){
+		if (phase == 19 && gm.RoundNum >= 4){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 19 && !popUp.IsActive && timer > 2){
+		if (phase == 20 && !popUp.IsActive && timer > 2){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 20 && timer > 8){
+		if (phase == 21 && timer > 8){
 			advancePhase();
 			return;
 		}
@@ -195,62 +200,67 @@ public class IntroManager : MonoBehaviour {
 		}
 		
 		if (phase == 5){
-			speakerText.setNewText("Try taking down that target\nup there.");
+			//just to pause before spawning the target
+			speakerText.setNewText("");
+		}
+		
+		if (phase == 6){
+			speakerText.setNewText("Try taking down this target.");
 			targetObject = Instantiate(targetPrefab, targetSpawnPoint.transform.position, new Quaternion(0,0,0,0)) as GameObject;
 			targetObject.GetComponent<PlayerTarget>().customReset();
 		}
 		
-		if (phase == 6){
+		if (phase == 7){
 			speakerText.setNewText("Nice.");
 		}
 		
-		if (phase == 7){
+		if (phase == 8){
 			speakerText.setNewText("You seem like a strong person.\nI bet you can handle another\npower up.");
 		}
 		
-		if (phase == 8){
+		if (phase == 9){
 			speakerText.setNewText("");
 			curPowerNum = 1;
-			pickupSpot.activate(powerObjects[1]);
-			pickupSpot.Timer = 9999;
-		}
-		
-		if (phase == 9){
-			speakerText.setNewText("When you press Z they will both\nfire.");
+			pickupSpot2.activate(powerObjects[1]);
+			pickupSpot2.Timer = 9999;
 		}
 		
 		if (phase == 10){
-			speakerText.setNewText("Uh oh.\nOne of the robots got loose.");
+			speakerText.setNewText("When you press Z they will both\nfire.");
 		}
 		
 		if (phase == 11){
+			speakerText.setNewText("Uh oh.\nOne of the robots got loose.");
+		}
+		
+		if (phase == 12){
 			gm.spawnGoon();
 			gm.Goons[0].reset();
 			gm.starHelm.setChosenOne(gm.Goons[0]);
 		}
 		
-		if (phase == 12){
+		if (phase == 13){
 			speakerText.setNewText("Would you mind destroying it?");
 		}
 		
-		if (phase == 13){
+		if (phase == 14){
 			//pop up about ending rounds
 			setPopUp("Each round ends when\nyou kill the King\n(wearing the crown).\n\nThe King is worth\n10 points");
 			popUp.crownSprite.SetActive(true);
 		}
 		
-		if (phase == 14){
+		if (phase == 15){
 			//this is to give some pause when the new round starts.
 			speakerText.setNewText("");
 			//we also want to freeze the ghost
 			gm.Ghosts[0].StunTimer = 999;
 		}
 		
-		if (phase == 15){
-			speakerText.setNewText("Good Work, but Here's the issue:\nThe facility just cloned you.\nCould you destroy that too?");
+		if (phase == 16){
+			speakerText.setNewText("Good Work, but Here's the issue:\nThe facility just cloned you.\nCould you deal with that too?");
 		}
 		
-		if (phase == 16){
+		if (phase == 17){
 			curPowerNum = 2;
 			pickupSpot.activate(powerObjects[2]);
 			pickupSpot.Timer = 9999;
@@ -260,19 +270,19 @@ public class IntroManager : MonoBehaviour {
 			speakerText.setNewText("");
 		}
 		
-		if (phase == 17){
+		if (phase == 18){
 			//pop up about clones
 			setPopUp("When a round ends,\na clone will be made\nthat does exactly\nwhat you did (with\nyour powers).\n\nThis new clone will\nbe the King.");
 		}
 		
-		if (phase == 18){
+		if (phase == 19){
 			curPowerNum = 3;
 			pickupSpot.activate(powerObjects[3]);
 			pickupSpot.Timer = 9999;
 			speakerText.setNewText("This is going to be a problem.");
 		}
 		
-		if (phase == 19){
+		if (phase == 20){
 			speakerText.setNewText("");
 			//pop up about clones
 			setPopUp("Only killing the King\nwill end the round.\n\nKilling other clones\nis worth 1 point.\n");
@@ -283,11 +293,11 @@ public class IntroManager : MonoBehaviour {
 			pickupSpot.Timer = 9999;
 		}
 		
-		if (phase == 20){
+		if (phase == 21){
 			speakerText.setNewText("You're on your own! Good luck!");
 		}
 		
-		if (phase == 21){
+		if (phase == 22){
 			//we're done!
 			gm.DoingIntro = false;
 			Destroy(speakerText.gameObject);
