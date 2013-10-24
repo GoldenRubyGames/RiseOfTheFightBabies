@@ -73,11 +73,16 @@ public class GameManager : MonoBehaviour {
 	
 	private UnlockPopUp unlockScreenPopUp;
 	
+	//intro
+	private bool doingIntro;
+	
 	//kongregate
 	public GameObject kongManager;
 	
 	// Use this for initialization
 	void Start () {
+		titleScreen.SetActive(true);
+		
 		dataHolder.setup();
 		unlockManager.setup();
 		unlockManager.checkUnlocks(dataHolder.CloneKills, false);
@@ -215,9 +220,17 @@ public class GameManager : MonoBehaviour {
 		}
 		else if (gameState == "title"){
 			if (Input.GetMouseButtonUp(0)){
-				Destroy(titleScreen);
+				titleScreen.SetActive(false);
 				gameState = "levelSelect";
 				levelSelectScreen.reset();
+			}
+		}
+		else if (gameState == "levelSelect"){
+			//most level seletc input is handled in the level select class
+			if (Input.GetKeyDown(KeyCode.Q)){
+				gameState = "title";
+				levelSelectScreen.cleanUp();
+				titleScreen.SetActive(true);
 			}
 		}
 		else if (gameState == "unlockPopUp"){
@@ -281,7 +294,7 @@ public class GameManager : MonoBehaviour {
 				pauseScreen.showTitle();
 			}
 			
-			if (!gameOver && !doingKillEffect){
+			if (!gameOver && !doingKillEffect && !doingIntro){
 				//spawn pickups?
 				pickupTimer -= Time.deltaTime;
 				if (pickupTimer <= 0){
@@ -377,6 +390,8 @@ public class GameManager : MonoBehaviour {
 		if (levelObject != null){
 			Destroy(levelObject);
 		}
+		
+		doingIntro = false; //assume this is not the intro level
 		
 		//load the selected one
 		levelObject = Instantiate(levelObjects[num], new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
@@ -599,6 +614,15 @@ public class GameManager : MonoBehaviour {
 		}
 		set {
 			levelJustUnlocked = value;
+		}
+	}
+	
+	public bool DoingIntro {
+		get {
+			return this.doingIntro;
+		}
+		set {
+			doingIntro = value;
 		}
 	}
 }

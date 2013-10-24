@@ -134,6 +134,7 @@
      <Compile Include="Assets\scripts\GhostRecorder.cs" />
      <Compile Include="Assets\scripts\GoombaHitCheck.cs" />
      <Compile Include="Assets\scripts\GunSprite.cs" />
+     <Compile Include="Assets\scripts\IntroManager.cs" />
      <Compile Include="Assets\scripts\Pickup.cs" />
      <Compile Include="Assets\scripts\PickupSpot.cs" />
      <Compile Include="Assets\scripts\Player.cs" />
@@ -165,6 +166,8 @@
      <Compile Include="Assets\scripts\powers\FreezeRayEffect.cs" />
      <Compile Include="Assets\scripts\powers\GrenadeEffect.cs" />
      <Compile Include="Assets\scripts\powers\GrenadePower.cs" />
+     <Compile Include="Assets\scripts\powers\KnifeEffect.cs" />
+     <Compile Include="Assets\scripts\powers\KnifePower.cs" />
      <Compile Include="Assets\scripts\powers\LightningEffect.cs" />
      <Compile Include="Assets\scripts\powers\LightningPower.cs" />
      <Compile Include="Assets\scripts\powers\MeleeStandardPower.cs" />
@@ -203,6 +206,9 @@
      <None Include="Assets\fonts\spriteFonts\vdj50.fnt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\AdditiveVertexColor.shader" />
      <None Include="Assets\TK2DROOT\tk2d_demo\democameradata\source\democamerafont.fnt" />
+ <Reference Include="Library\ScriptAssemblies\Assembly-UnityScript-firstpass">
+ <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

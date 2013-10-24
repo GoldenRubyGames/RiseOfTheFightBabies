@@ -121,6 +121,11 @@ public class LevelSelectScreen : MonoBehaviour {
 	
 	
 	public void finish(){
+		cleanUp();
+		gm.setLevel(curSelection);
+	}
+	
+	public void cleanUp(){
 		//destroy all icons
 		for (int i=0; i<levelIcons.Length; i++){
 			Destroy(levelIcons[i].gameObject);
@@ -129,7 +134,6 @@ public class LevelSelectScreen : MonoBehaviour {
 		//turn this off
 		gameObject.SetActive(false);
 		
-		gm.setLevel(curSelection);
 	}
 	
 	
