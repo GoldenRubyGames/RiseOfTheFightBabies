@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 	
+	public Kongregate kongregate;
+	
 	//camera
 	public CamControl camera;
 	
@@ -70,6 +72,9 @@ public class GameManager : MonoBehaviour {
 	public UnlockManager unlockManager;
 	
 	private UnlockPopUp unlockScreenPopUp;
+	
+	//kongregate
+	public GameObject kongManager;
 	
 	// Use this for initialization
 	void Start () {
@@ -185,9 +190,13 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//kongManager.SendMessage("IsConnected");
 		//testing
 		if (Input.GetKeyDown(KeyCode.Alpha0)){
 			dataHolder.clearData();
+		}
+		if (Input.GetKeyDown(KeyCode.D)){
+			kongregate.toggleDebug();
 		}
 		
 		//do things acording to game state
@@ -489,6 +498,9 @@ public class GameManager : MonoBehaviour {
 		//was anything unlocked?
 		unlockManager.checkUnlocks(dataHolder.CloneKills, true);
 		
+		//try sending the score to Kongregate
+		Kongregate.SubmitHighScore(curLevelNum, score);
+		
 		//save
 		dataHolder.save();
 	}
@@ -510,6 +522,15 @@ public class GameManager : MonoBehaviour {
 	public void setUnlockPopUpShowing(UnlockPopUp _unlockScreenPopUp){
 		gameState = "unlockPopUp";
 		unlockScreenPopUp = _unlockScreenPopUp;
+	}
+	
+	public void kongTest(bool connected){
+		if (connected){
+			Debug.Log("im here");
+			Instantiate(goonPrefab, new Vector3(0,0,0), new Quaternion(0,0,0,0));
+		}else{
+			Debug.Log("you will die");
+		}
 	}
 	
 	
