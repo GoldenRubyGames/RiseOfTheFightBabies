@@ -153,8 +153,6 @@ public class GameManager : MonoBehaviour {
 			starHelm.gameObject.transform.position = new Vector3(0, 1000, 0);
 		}
 		
-		Debug.Log("Intro? "+doingIntro);
-		
 		
 		roundNum = 1;
 		
@@ -205,6 +203,10 @@ public class GameManager : MonoBehaviour {
 		//testing
 		if (Input.GetKeyDown(KeyCode.Alpha0)){
 			dataHolder.clearData();
+			if (gameState == "levelSelect"){
+				levelSelectScreen.cleanUp();
+			}
+			goToLevelSelect();
 		}
 		if (Input.GetKeyDown(KeyCode.D)){
 			kongregate.toggleDebug();

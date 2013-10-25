@@ -15,7 +15,10 @@ public class PlayerGoon : Player {
 	
 	
 	public override void customStart(){
-		powers = new List<Power>();
+		Debug.Log("new power list dude");
+		if (powers == null){
+			powers = new List<Power>();
+		}
 	}
 	
 	
@@ -116,8 +119,10 @@ public class PlayerGoon : Player {
 		controller.Move(curVel*Time.deltaTime + pushVel*Time.deltaTime);
 		
 		//using powers
-		if (attackNow){
+		if (attackNow && !gm.DoingIntro){
+			Debug.Log( "try do punck " + powers.Count);
 			for (int i=0; i<powers.Count; i++){
+				Debug.Log("punch now");
 				powers[i].use();
 			}
 		}

@@ -1,13 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/IntroManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/PlayerGoon.cs">
     <Files>
-      <File FileName="Assets/scripts/GameManager.cs" Line="339" Column="7" />
-      <File FileName="Assets/TK2DROOT/tk2d/Code/Sprites/tk2dSpriteAnimator.cs" Line="1" Column="1" />
-      <File FileName="Assets/scripts/PlayerController.cs" Line="211" Column="3" />
+      <File FileName="Assets/scripts/GameManager.cs" Line="155" Column="3" />
+      <File FileName="Assets/scripts/PlayerController.cs" Line="58" Column="37" />
       <File FileName="Assets/scripts/IntroManager.cs" Line="211" Column="4" />
-      <File FileName="Assets/scripts/displays/IntroPopUp.cs" Line="51" Column="32" />
-      <File FileName="Assets/scripts/PickupSpot.cs" Line="147" Column="3" />
+      <File FileName="Assets/scripts/Player.cs" Line="363" Column="16" />
+      <File FileName="Assets/scripts/PlayerGoon.cs" Line="21" Column="4" />
+      <File FileName="Assets/scripts/powers/MeleeStandardPower.cs" Line="18" Column="26" />
+      <File FileName="Assets/scripts/Power.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -4,6 +4,7 @@ using System.Collections;
 public class UnlockManager : MonoBehaviour {
 	
 	public bool debugUnlockAll;
+	public bool debugUnlockFirstLevel;
 	
 	public GameManager gm;
 	public DataHolder dataHolder;
@@ -24,7 +25,6 @@ public class UnlockManager : MonoBehaviour {
 	
 	public void setup(){
 		numWeaponUnlocks = gm.powerObjects.Length - gm.powerUnlockCutoff;
-		Debug.Log("I got "+numWeaponUnlocks+" to unlock");
 		
 		unlockVals = new int[numWeaponUnlocks];
 		
@@ -35,6 +35,11 @@ public class UnlockManager : MonoBehaviour {
 		levelUnlocks = new bool[levelUnlockScores.Length];
 		for (int i=0; i<levelUnlocks.Length; i++){
 			levelUnlocks[i] = false;
+		}
+		
+		if (debugUnlockFirstLevel){
+			levelUnlockScores[0] = 0;
+			levelUnlocks[0] = true;
 		}
 		
 		doneWithUnlocks = false;
@@ -80,7 +85,6 @@ public class UnlockManager : MonoBehaviour {
 			}
 		}
 		
-		Debug.Log("weapons unlocked: "+weaponsUnlocked);
 		
 	}
 	

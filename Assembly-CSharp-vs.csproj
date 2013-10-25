@@ -174,6 +174,7 @@
      <Compile Include="Assets\scripts\powers\LightningEffect.cs" />
      <Compile Include="Assets\scripts\powers\LightningPower.cs" />
      <Compile Include="Assets\scripts\powers\MeleeStandardPower.cs" />
+     <Compile Include="Assets\scripts\powers\MineEffect.cs" />
      <Compile Include="Assets\scripts\powers\PunchEffect.cs" />
      <Compile Include="Assets\scripts\powers\RocketEffect.cs" />
      <Compile Include="Assets\scripts\powers\SpawnEffectPower.cs" />

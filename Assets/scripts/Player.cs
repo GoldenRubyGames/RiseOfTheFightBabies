@@ -136,7 +136,6 @@ public class Player : MonoBehaviour {
 	public virtual void customStart(){}
 	
 	public void reset(){
-		Debug.Log("reset player");
 		health = baseHealth;
 		
 		invincibilityTimer = invincibilityTime;
@@ -345,10 +344,12 @@ public class Player : MonoBehaviour {
 			powers.RemoveAt(0);
 		}
 		
+		
 		return true;
 	}
 	
 	public void clearPowers(){
+		
 		for (int i=0; i<powers.Count; i++){
 			powers[i].cleanUp();
 		}

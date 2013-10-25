@@ -14,6 +14,7 @@ public class MeleeStandardPower : Power {
 		
 		//push the user forward
 		owner.push( new Vector3(dashForce.x*owner.facingDir, dashForce.y, 0) );
+		
 	}
 	
 	public override void customCleanUp (){
