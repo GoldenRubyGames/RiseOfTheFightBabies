@@ -24,6 +24,11 @@ public class Power : MonoBehaviour {
 	
 	public bool destroyOnDeath;  //things like the uppercut should not stick around during kill effect
 	
+	//sounds!
+	AudioManager audioController;
+	public AudioClip activationSoundPlayer;
+	public AudioClip activationSoundGhost;
+	
 	// Use this for initialization
 	void Start () {
 	
@@ -33,6 +38,8 @@ public class Power : MonoBehaviour {
 		owner = player;
 		if (owner.getPower(this)){
 			reset();
+			audioController = player.AudioController;
+			Debug.Log("audio "+audioController.transform.name);
 			return true;
 		}else{
 			Destroy(gameObject);
@@ -55,9 +62,19 @@ public class Power : MonoBehaviour {
 	public void use(){
 		if (canUse){
 			customUse();
+			playSound();
 			coolDownTimer = coolDownTime;
 		}else{
 			//Debug.Log("fuckin wait "+owner.controllerNum);
+		}
+	}
+	
+	public void playSound(){
+		if (owner.isPlayerControlled && activationSoundPlayer != null){
+			audioController.Play(activationSoundPlayer);
+		}
+		else if (!owner.isPlayerControlled && activationSoundGhost != null){
+			audioController.Play(activationSoundGhost);
 		}
 	}
 	

@@ -8,6 +8,7 @@ public class StarHelm : MonoBehaviour {
 	public int scoreValue;
 	
 	public Vector3 offset;
+	private Vector3 curOffset;
 	
 	//flying off in kill effect
 	private bool doingKillEffect;
@@ -15,6 +16,11 @@ public class StarHelm : MonoBehaviour {
 	public float flySpeed, angleSpeedBase;
 	private float angleSpeed;
 	public float deathEffectFric;
+	
+	//having the crown fall when the ghost melts
+	public Vector3 meltOffset;
+	public float meltZeno;
+	
 	
 	// Use this for initialization
 	void Start () {
@@ -30,7 +36,14 @@ public class StarHelm : MonoBehaviour {
 				//Debug.Log("laugh at god");
 				return;
 			}
-			transform.position = chosenOne.transform.position + offset;	
+			
+			if (!chosenOne.IsGhostMelting){
+				curOffset = offset;
+			}else{
+				curOffset = Vector3.Lerp( curOffset, meltOffset, meltZeno);
+			}
+			
+			transform.position = chosenOne.transform.position + curOffset;	
 		}
 		//but during kill effect, fly the fuck away
 		else{

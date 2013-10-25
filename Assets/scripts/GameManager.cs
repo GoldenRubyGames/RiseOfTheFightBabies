@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
 	//camera
 	public CamControl camera;
 	
+	
 	//players
 	public PlayerController[] players;
 	private List<PlayerGhost> ghosts = new List<PlayerGhost>();
@@ -43,6 +44,10 @@ public class GameManager : MonoBehaviour {
 	
 	//the star
 	public StarHelm starHelm;
+	
+	//sound
+	public AudioManager audioController;
+	public AudioClip finishRoundSound;
 	
 	//game status
 	private bool gameOver;
@@ -95,6 +100,8 @@ public class GameManager : MonoBehaviour {
 			
 		for (int i=0; i<players.Length; i++){
 			players[i].Gm = this;
+			Debug.Log("set set set it up");
+			players[i].AudioController = audioController;
 		}
 		
 	}
@@ -371,6 +378,7 @@ public class GameManager : MonoBehaviour {
 		
 		if (starHelm.ChosenOne == freshlyKilled){
 			starHelm.startKillEffect(killer);
+			audioController.Play(finishRoundSound);
 		}
 		
 		//stun everybody!
@@ -467,6 +475,7 @@ public class GameManager : MonoBehaviour {
 		GameObject goonSpawnObj = Instantiate(goonPrefab, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
 		PlayerGoon goonSpawn = goonSpawnObj.GetComponent<PlayerGoon>();
 		goonSpawn.gm = this;
+		goonSpawn.AudioController = audioController;
 		goons.Add(goonSpawn);
 	}
 	

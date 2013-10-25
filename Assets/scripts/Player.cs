@@ -99,6 +99,12 @@ public class Player : MonoBehaviour {
 	private float velForWalkAnim = 1;
 	public GunSprite gunSprite;
 	private bool isKicking;
+	private bool isGhostMelting;
+	
+	//sound
+	AudioManager audioController;
+	public AudioClip deathSound;
+	public AudioClip jumpSound;
 	
 	//dying
 	public GameObject deadPlayerPrefab;
@@ -152,6 +158,8 @@ public class Player : MonoBehaviour {
 		avatar.gameObject.SetActive(true);
 		endKickAnimation();
 		
+		isGhostMelting = false;
+		
 		//do the custome reset for this type of player
 		customReset();
 		
@@ -203,16 +211,18 @@ public class Player : MonoBehaviour {
 		
 		
 		//set the animation
-		if (Mathf.Abs(curVel.x) > velForWalkAnim){
-			if (avatarAnimation.CurrentClip != animWalkingClip){
-				avatarAnimation.Play(animWalkingClip);
+		if (!isGhostMelting){
+			if (Mathf.Abs(curVel.x) > velForWalkAnim){
+				if (avatarAnimation.CurrentClip != animWalkingClip){
+					avatarAnimation.Play(animWalkingClip);
+				}
+			}else{
+				avatarAnimation.Play(animStandingClip);
 			}
-		}else{
-			avatarAnimation.Play(animStandingClip);
-		}
-		
-		if (isKicking){
-			avatarAnimation.Play(animKickingClip);
+			
+			if (isKicking){
+				avatarAnimation.Play(animKickingClip);
+			}
 		}
 		
 	}
@@ -222,6 +232,10 @@ public class Player : MonoBehaviour {
 	public void startJump(){
 		isJumping = true;
 		curVel.y = jumpPower;
+		
+		if (isPlayerControlled){
+			audioController.Play(jumpSound);
+		}
 	}
 	
 	public void endJump(){
@@ -283,6 +297,10 @@ public class Player : MonoBehaviour {
 				gm.startKillEffect(this, killer);
 				return;
 			}
+		}
+		//otherwise just play the death sound{
+		else{
+			audioController.Play(deathSound);
 		}
 		
 		
@@ -366,7 +384,7 @@ public class Player : MonoBehaviour {
 	public PlayerGhost makeGhost(){
 		GameObject ghostObject = Instantiate(ghostPrefab, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
 		PlayerGhost newGhost = ghostObject.GetComponent<PlayerGhost>();
-		newGhost.ghostSetup(myColor, recorder, powers, starHelm, gm);
+		newGhost.ghostSetup(myColor, recorder, powers, starHelm, gm, audioController);
 		
 		
 		return newGhost;
@@ -458,6 +476,24 @@ public class Player : MonoBehaviour {
 		}
 		set {
 			invincibilityTimer = value;
+		}
+	}
+	
+	public bool IsGhostMelting {
+		get {
+			return this.isGhostMelting;
+		}
+		set {
+			isGhostMelting = value;
+		}
+	}
+	
+	public AudioManager AudioController {
+		get {
+			return this.audioController;
+		}
+		set {
+			audioController = value;
 		}
 	}
 }

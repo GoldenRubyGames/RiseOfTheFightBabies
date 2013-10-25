@@ -25,7 +25,6 @@ public class MineEffect : MonoBehaviour {
 		rigidbody.velocity = startVel;
 		
 		if (owner.isGhost){
-			Debug.Log("im ghost");
 			sprite.Play("mineGhost");
 		}else{
 			sprite.Play("mine");

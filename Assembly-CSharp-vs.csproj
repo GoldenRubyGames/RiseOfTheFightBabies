@@ -145,6 +145,11 @@
      <Compile Include="Assets\scripts\Power.cs" />
      <Compile Include="Assets\scripts\StarHelm.cs" />
      <Compile Include="Assets\scripts\UnlockManager.cs" />
+     <Compile Include="Assets\scripts\audio\AudioFadeInScript.cs" />
+     <Compile Include="Assets\scripts\audio\AudioFadeOutScript.cs" />
+     <Compile Include="Assets\scripts\audio\AudioManager.cs" />
+     <Compile Include="Assets\scripts\audio\SoundManager.cs" />
+     <Compile Include="Assets\scripts\audio\SoundManagerOLD.cs" />
      <Compile Include="Assets\scripts\displays\GameOverScreen.cs" />
      <Compile Include="Assets\scripts\displays\HUD.cs" />
      <Compile Include="Assets\scripts\displays\IntroPopUp.cs" />

@@ -1,14 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/PlayerGoon.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/audio/SoundManager.cs">
     <Files>
-      <File FileName="Assets/scripts/GameManager.cs" Line="155" Column="3" />
-      <File FileName="Assets/scripts/PlayerController.cs" Line="58" Column="37" />
-      <File FileName="Assets/scripts/IntroManager.cs" Line="211" Column="4" />
-      <File FileName="Assets/scripts/Player.cs" Line="363" Column="16" />
-      <File FileName="Assets/scripts/PlayerGoon.cs" Line="21" Column="4" />
-      <File FileName="Assets/scripts/powers/MeleeStandardPower.cs" Line="18" Column="26" />
-      <File FileName="Assets/scripts/Power.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/PlayerController.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/IntroManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/Player.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/PlayerGhost.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/StarHelm.cs" Line="45" Column="65" />
+      <File FileName="Assets/scripts/powers/MineEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/audio/SoundManager.cs" Line="585" Column="2" />
+      <File FileName="Assets/scripts/audio/AudioFadeInScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/audio/AudioManager.cs" Line="28" Column="48" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

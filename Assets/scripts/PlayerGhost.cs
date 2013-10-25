@@ -14,7 +14,15 @@ public class PlayerGhost : Player {
 	
 	public float rewindSpeed;
 	
-	public void ghostSetup(Color oldColor, GhostRecorder record, List<Power> oldPowers, StarHelm _starHelm, GameManager _gm){
+	//returning after melting
+	public float returnTime, pauseBeforeReturning;
+	private float returnTimer;
+	private Vector3 deathPos;
+	private bool gunSpriteWasOn;
+	
+	public float returningNoiseDist, returningNoiseSpeed;
+	
+	public void ghostSetup(Color oldColor, GhostRecorder record, List<Power> oldPowers, StarHelm _starHelm, GameManager _gm, AudioManager _audioController){
 		
 		isGhost = true;
 		
@@ -22,6 +30,7 @@ public class PlayerGhost : Player {
 		
 		starHelm = _starHelm;
 		gm = _gm;
+		AudioController = _audioController;
 		
 		//set the powers to obey only me!
 		for (int i=0; i<oldPowers.Count; i++){
@@ -64,35 +73,63 @@ public class PlayerGhost : Player {
 	public override void customUpdate(){
 		stunTimer -= Time.deltaTime;
 		
-		//if this thing has nothing in the recording, destroy it
-		if (recorder.Data.Count == 0){
-			Debug.Log("GHOST HAS NO RECORDING");
-			Destroy(gameObject);
-		}
+		if (!IsGhostMelting){
 		
-		if (stunTimer <= 0){
-			recorder.play(true);
-		}
-		
-		transform.position = recorder.CurPos;
-		curVel = recorder.CurVel;
-		facingDir = recorder.CurFacingDir;
-		
-		bool attackPressed = recorder.checkAttack();
-		if (attackPressed && recorder.PlaybackDir == 1){
-			for (int i=0; i<powers.Count; i++){
-				powers[i].use();
+			//if this thing has nothing in the recording, destroy it
+			if (recorder.Data.Count == 0){
+				Debug.Log("GHOST HAS NO RECORDING");
+				Destroy(gameObject);
 			}
+			
+			if (stunTimer <= 0){
+				recorder.play(true);
+			}
+			
+			transform.position = recorder.CurPos;
+			curVel = recorder.CurVel;
+			facingDir = recorder.CurFacingDir;
+			
+			bool attackPressed = recorder.checkAttack();
+			if (attackPressed && recorder.PlaybackDir == 1){
+				for (int i=0; i<powers.Count; i++){
+					powers[i].use();
+				}
+			}
+			
+			//if we hit the end, rewind
+			if (recorder.PlaybackDir == 1 && recorder.isAtEnd()){
+				avatarAnimation.Play("melting");
+				IsGhostMelting = true;
+				returnTimer = -pauseBeforeReturning;
+				deathPos = transform.position;
+				recorder.reset(false);
+				recorder.play(false);
+				gunSpriteWasOn = gunSprite.gameObject.active;
+				gunSprite.gameObject.SetActive(false);
+				//recorder.setPlaybackDir(-1);
+				//recorder.setPlaybackSpeed(rewindSpeed);
+			}
+			/*
+			if (recorder.PlaybackDir == -1 && recorder.isAtStart()){
+				recorder.setPlaybackDir(1);
+				recorder.setPlaybackSpeed(1);
+			}
+			*/
 		}
 		
-		//if we hit the end, rewind
-		if (recorder.PlaybackDir == 1 && recorder.isAtEnd()){
-			recorder.setPlaybackDir(-1);
-			recorder.setPlaybackSpeed(rewindSpeed);
-		}
-		if (recorder.PlaybackDir == -1 && recorder.isAtStart()){
-			recorder.setPlaybackDir(1);
-			recorder.setPlaybackSpeed(1);
+		if (!avatarAnimation.Playing && IsGhostMelting){
+			returnTimer += Time.deltaTime;
+			if (returnTimer >= 0){
+				InvincibilityTimer = 0.1f;
+				float prc = returnTimer/returnTime;
+				//set the pos
+				transform.position = Vector3.Lerp(deathPos, recorder.CurPos, prc);
+				transform.position += new Vector3( Mathf.PerlinNoise( Time.time*returningNoiseSpeed, 0) * returningNoiseDist, Mathf.PerlinNoise( Time.time*returningNoiseSpeed, 100) * returningNoiseDist, 0);
+				if (prc >= 1){
+					IsGhostMelting = false;
+					gunSprite.gameObject.SetActive(gunSpriteWasOn);
+				}
+			}
 		}
 		
 	}

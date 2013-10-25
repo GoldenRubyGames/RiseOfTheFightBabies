@@ -13,14 +13,19 @@ public class Explosion : MonoBehaviour {
 	private Player owner;
 	
 	public float rotationSpeed;
+	
+	//sound
+	public AudioClip soundEffect;
 
 	// Use this for initialization
 	void Start () {
 		timer = explosionTime;
+		
 	}
 	
 	public void setOwner(Player _owner){
 		owner = _owner;
+		owner.AudioController.Play(soundEffect);
 	}
 	
 	// Update is called once per frame
