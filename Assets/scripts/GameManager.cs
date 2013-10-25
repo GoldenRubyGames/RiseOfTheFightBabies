@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour {
 			starHelm.setChosenOne( goons[0] );
 		}
 		else{
-			//starHelm.gameObject.SetActive(false);
+			starHelm.gameObject.transform.position = new Vector3(0, 1000, 0);
 		}
 		
 		Debug.Log("Intro? "+doingIntro);
@@ -294,11 +294,6 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 			
-			//pause the game when it starts for now
-			if (Time.frameCount == 2 && !pauseScreen.debugSkipTitle){
-				setPause(true, true);
-				pauseScreen.showTitle();
-			}
 			
 			if (!gameOver && !doingKillEffect && !doingIntro){
 				//spawn pickups?
@@ -431,20 +426,6 @@ public class GameManager : MonoBehaviour {
 		
 		//reset the game
 		resetGame();
-		
-		
-		//if they have no high scores at all, show the help
-		bool noHighScores = true;
-		for (int i=0; i<dataHolder.HighScores.Length; i++){
-			if (dataHolder.HighScores[i] > 0){
-				noHighScores = false;
-				break;
-			}
-		}
-		
-		if (noHighScores){
-			setPause(true, true);
-		}
 		
 	}
 	
