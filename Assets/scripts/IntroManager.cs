@@ -208,6 +208,7 @@ public class IntroManager : MonoBehaviour {
 			speakerText.setNewText("Try taking down this target.");
 			targetObject = Instantiate(targetPrefab, targetSpawnPoint.transform.position, new Quaternion(0,0,0,0)) as GameObject;
 			targetObject.GetComponent<PlayerTarget>().customReset();
+			targetObject.GetComponent<PlayerTarget>().AudioController = gm.audioController;
 		}
 		
 		if (phase == 7){

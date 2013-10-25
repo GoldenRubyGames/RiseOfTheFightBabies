@@ -17,11 +17,18 @@ public class AudioManager : MonoBehaviour
 	
 	public bool muted;
 	
-	void Start(){
-		muted = false;
+	
+	void Update(){
+		if (Input.GetKeyDown(KeyCode.O)){
+			muted = !muted;
+		}
 	}
 	
 	public AudioSource Play(AudioClip clip){
+		if (muted){
+			return null;
+		}
+		
 		if (clip != null){
 			return Play(clip, transform, 1f, 1f);
 		}else{

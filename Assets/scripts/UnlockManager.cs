@@ -29,6 +29,7 @@ public class UnlockManager : MonoBehaviour {
 		unlockVals = new int[numWeaponUnlocks];
 		
 		for (int i=0; i<numWeaponUnlocks; i++){
+			Debug.Log("its "+getUnlockVal(i));
 			unlockVals[i] = getUnlockVal(i);
 		}
 		
@@ -92,9 +93,9 @@ public class UnlockManager : MonoBehaviour {
 		
 		float fNum = num+1;
 		
-		return 2+ 2*num;
+		//return 2+ 2*num;
 		
-		//return  (int)( 25.0f*Mathf.Pow( fNum, 1.25f) );
+		return  (int)( 20.0f*Mathf.Pow( fNum, 1.25f) );
 	}
 	
 	void makeWeaponPopUp(int num){

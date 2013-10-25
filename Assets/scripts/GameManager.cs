@@ -100,7 +100,6 @@ public class GameManager : MonoBehaviour {
 			
 		for (int i=0; i<players.Length; i++){
 			players[i].Gm = this;
-			Debug.Log("set set set it up");
 			players[i].AudioController = audioController;
 		}
 		

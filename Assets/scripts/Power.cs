@@ -39,7 +39,6 @@ public class Power : MonoBehaviour {
 		if (owner.getPower(this)){
 			reset();
 			audioController = player.AudioController;
-			Debug.Log("audio "+audioController.transform.name);
 			return true;
 		}else{
 			Destroy(gameObject);
