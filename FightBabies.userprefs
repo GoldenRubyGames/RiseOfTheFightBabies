@@ -3,10 +3,27 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/powers/BatEffect.cs">
     <Files>
       <File FileName="Assets/scripts/GameManager.cs" Line="441" Column="14" />
-      <File FileName="Assets/scripts/PlayerController.cs" Line="178" Column="34" />
-      <File FileName="Assets/scripts/Power.cs" Line="72" Column="48" />
-      <File FileName="Assets/scripts/PlayerGoon.cs" Line="119" Column="3" />
-      <File FileName="Assets/scripts/powers/BatEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/PlayerController.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/Player.cs" Line="299" Column="21" />
+      <File FileName="Assets/scripts/Power.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/PowerEffect.cs" Line="14" Column="16" />
+      <File FileName="Assets/scripts/powers/BatEffect.cs" Line="64" Column="48" />
+      <File FileName="Assets/scripts/powers/BarrelEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/BoomerangEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/DeathOrbEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/DefenseBotEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/DiveKickEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/FreezeRayEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/GrenadeEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/LightningEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/KnifeEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/MineEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/PunchEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/RocketEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/SwordEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/tenTonDropEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/UpperCutEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/powers/SwordBlade.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

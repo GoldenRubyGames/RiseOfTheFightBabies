@@ -12,7 +12,7 @@ public class SpawnEffectPower : Power {
 		if (!owner.controller.isGrounded || !requirePlayerToBeInAir){
 			//spawn an effect
 			GameObject thisObj = Instantiate( effectObject, owner.transform.position, new Quaternion(0,0,0,0)) as GameObject;
-			thisObj.SendMessage("setup", owner);
+			thisObj.GetComponent<PowerEffect>().setup(owner, isCloneKiller);
 			
 			//recoil!
 			owner.push( new Vector3(recoilForce.x*owner.facingDir*-1, recoilForce.y, 0) );

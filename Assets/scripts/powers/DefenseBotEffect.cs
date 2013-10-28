@@ -1,9 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class DefenseBotEffect : MonoBehaviour {
-	
-	Player owner;
+public class DefenseBotEffect : PowerEffect {
 	
 	public float distFromPlayer;
 	public float speed;
@@ -12,8 +10,7 @@ public class DefenseBotEffect : MonoBehaviour {
 	
 	private float angle;
 
-	public void setup(Player _owner){
-		owner = _owner;
+	public override void setupCustom(){
 		
 		angle = 0;
 		
@@ -21,7 +18,7 @@ public class DefenseBotEffect : MonoBehaviour {
 		GameObject[] otherOrbs = GameObject.FindGameObjectsWithTag("defenseBot");
 		for (int i=0; i<otherOrbs.Length; i++){
 			DefenseBotEffect otherOrb = otherOrbs[i].GetComponent<DefenseBotEffect>();
-			if (otherOrb.Owner == owner && otherOrb != this){
+			if (otherOrb.Owner == Owner && otherOrb != this){
 				angle = otherOrb.Angle + (Mathf.PI*2)/maxNumOrbs;
 			}
 		}
@@ -40,8 +37,8 @@ public class DefenseBotEffect : MonoBehaviour {
 		angle += speed*Time.deltaTime;
 		
 		//figure out where that would put it
-		float newX = owner.transform.position.x + Mathf.Cos(angle) * distFromPlayer;
-		float newY = owner.transform.position.y + Mathf.Sin(angle) * distFromPlayer;
+		float newX = Owner.transform.position.x + Mathf.Cos(angle) * distFromPlayer;
+		float newY = Owner.transform.position.y + Mathf.Sin(angle) * distFromPlayer;
 		
 		transform.position = new Vector3(newX, newY, 0);
 		
@@ -53,20 +50,12 @@ public class DefenseBotEffect : MonoBehaviour {
 		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner){
-				thisPlayer.changeHealth(-1, owner);
+			if (thisPlayer != Owner){
+				thisPlayer.takeDamage(Owner, IsCloneKiller);
 			}
 		}
 	}
 	
-	public Player Owner {
-		get {
-			return this.owner;
-		}
-		set {
-			owner = value;
-		}
-	}
 	
 	public float Angle {
 		get {

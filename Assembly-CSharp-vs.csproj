@@ -132,7 +132,6 @@
      <Compile Include="Assets\scripts\DeadPlayer.cs" />
      <Compile Include="Assets\scripts\GameManager.cs" />
      <Compile Include="Assets\scripts\GhostRecorder.cs" />
-     <Compile Include="Assets\scripts\GoombaHitCheck.cs" />
      <Compile Include="Assets\scripts\GunSprite.cs" />
      <Compile Include="Assets\scripts\IntroManager.cs" />
      <Compile Include="Assets\scripts\Pickup.cs" />

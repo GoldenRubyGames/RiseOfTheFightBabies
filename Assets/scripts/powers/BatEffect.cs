@@ -19,16 +19,16 @@ public class BatEffect : PowerEffect {
 
 	public override void setupCustom(){
 		
-		dir = owner.facingDir;
+		dir = Owner.facingDir;
 		
-		sprite.FlipX = owner.facingDir == -1;
+		sprite.FlipX = Owner.facingDir == -1;
 		
 		curDist = 1f;
 		startDist = curDist;
 		
 		pushForce.x *= dir;
 		
-		transform.position = owner.transform.position + new Vector3(0.5f*owner.facingDir, 0, 0);
+		transform.position = Owner.transform.position + new Vector3(0.5f*Owner.facingDir, 0, 0);
 		
 		goingBack = false;
 	}
@@ -38,7 +38,7 @@ public class BatEffect : PowerEffect {
 	void Update () {
 		int nowDir = goingBack ? -1 : 1;
 		curDist += speed * Time.deltaTime * nowDir;
-		transform.position = owner.transform.position + new Vector3( dir*curDist*0.5f, 0,0);
+		transform.position = Owner.transform.position + new Vector3( dir*curDist*0.5f, 0,0);
 		
 		transform.localScale = new Vector3(curDist, transform.localScale.y, transform.localScale.z);
 		
@@ -49,8 +49,8 @@ public class BatEffect : PowerEffect {
 			Destroy(gameObject);
 		}
 		
-		//if the owner changes direction, kill it
-		if (dir != owner.facingDir){
+		//if the Owner changes direction, kill it
+		if (dir != Owner.facingDir){
 			Destroy(gameObject);
 		}
 	}
@@ -60,14 +60,10 @@ public class BatEffect : PowerEffect {
 		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner){
-				hitPlayer(thisPlayer);
+			if (thisPlayer != Owner){
+				thisPlayer.takeDamage(Owner, IsCloneKiller);
 			}
 		}
 	}
 	
-	void hitPlayer(Player targetPlayer){
-		targetPlayer.push( pushForce );
-		targetPlayer.changeHealth(-1, owner);
-	}
 }

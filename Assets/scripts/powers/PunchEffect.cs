@@ -1,13 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
-public class PunchEffect : MonoBehaviour {
+public class PunchEffect : PowerEffect {
 	
 	public float speed;
 	
 	public float maxDist;
-	
-	Player owner;
 	
 	public Vector3 pushForce;
 	
@@ -16,34 +14,33 @@ public class PunchEffect : MonoBehaviour {
 	
 	public tk2dSprite sprite;
 	
-	public void setup(Player _owner){
-		owner = _owner;
+	public override void setupCustom(){
 		
-		dir = owner.facingDir;
+		dir = Owner.facingDir;
 		
 		curDist = 0.5f;
 		
 		pushForce.x *= dir;
 		
-		transform.position = owner.transform.position + new Vector3(0.5f*owner.facingDir, 0, 0);
+		transform.position = Owner.transform.position + new Vector3(0.5f*Owner.facingDir, 0, 0);
 		
-		renderer.material.color = owner.myColor;
-		sprite.color = owner.myColor;
-		sprite.FlipX = owner.facingDir == -1;
+		renderer.material.color = Owner.myColor;
+		sprite.color = Owner.myColor;
+		sprite.FlipX = Owner.facingDir == -1;
 	}
 
 	
 	// Update is called once per frame
 	void Update () {
 		curDist += speed * Time.deltaTime;
-		transform.position = owner.transform.position + new Vector3(curDist*dir, 0, 0);
+		transform.position = Owner.transform.position + new Vector3(curDist*dir, 0, 0);
 		
 		if( curDist >= maxDist){
 			Destroy(gameObject);
 		}
 		
-		//if the owner changes direction, kill it
-		if (dir != owner.facingDir){
+		//if the Owner changes direction, kill it
+		if (dir != Owner.facingDir){
 			Destroy(gameObject);
 		}
 	}
@@ -52,15 +49,10 @@ public class PunchEffect : MonoBehaviour {
 		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner){
-				hitPlayer(thisPlayer);
+			if (thisPlayer != Owner){
+				thisPlayer.takeDamage(Owner, IsCloneKiller);
 			}
 		}
 	}
 	
-	void hitPlayer(Player targetPlayer){
-		targetPlayer.push( pushForce );
-		targetPlayer.changeHealth(-1, owner);
-		
-	}
 }

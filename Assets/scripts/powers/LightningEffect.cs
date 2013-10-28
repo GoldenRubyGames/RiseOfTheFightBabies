@@ -1,9 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class LightningEffect : MonoBehaviour {
-	
-	Player owner;
+public class LightningEffect : PowerEffect {
 	
 	public Vector3 moveSpeed;
 	
@@ -14,15 +12,12 @@ public class LightningEffect : MonoBehaviour {
 	
 	public float flipTime;
 	
-	public void setup(Player _owner, bool goUp){
-		owner = _owner;
+	public override void setupCustom(bool goUp){
 		timer = 0;
 		
 		if (!goUp){
 			moveSpeed.y *= -1;
 		}
-		
-		
 	}
 	
 	// Update is called once per frame
@@ -46,8 +41,8 @@ public class LightningEffect : MonoBehaviour {
 		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner){
-				thisPlayer.changeHealth(-1, owner);
+			if (thisPlayer != Owner){
+				thisPlayer.takeDamage(Owner, IsCloneKiller);
 			}
 		}
 	}

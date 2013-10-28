@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class DiveKickEffect : MonoBehaviour {
+public class DiveKickEffect : PowerEffect {
 
 	public Vector3 vel;
 	public float velFriction;
@@ -11,24 +11,21 @@ public class DiveKickEffect : MonoBehaviour {
 	public float time;
 	private float timer;
 	
-	Player owner;
-	
 	public float playerRotation;
 	
-	public void setup(Player _owner){
-		owner = _owner;
-		owner.startKickAnimation( playerRotation*owner.facingDir);
+	public override void setupCustom(){
+		Owner.startKickAnimation( playerRotation*Owner.facingDir);
 		
 		timer = time;
 		
-		offset.x *= owner.facingDir;
-		vel.x    *= owner.facingDir;
+		offset.x *= Owner.facingDir;
+		vel.x    *= Owner.facingDir;
 		
-		transform.position = owner.transform.position + offset;
+		transform.position = Owner.transform.position + offset;
 		
-		renderer.material.color = owner.myColor;
+		renderer.material.color = Owner.myColor;
 		
-		transform.localEulerAngles += new Vector3(0,0, 45 * owner.facingDir);
+		transform.localEulerAngles += new Vector3(0,0, 45 * Owner.facingDir);
 		
 	}
 
@@ -36,15 +33,15 @@ public class DiveKickEffect : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if (!owner.gm.Paused){
-			owner.push(vel);
+		if (!Owner.gm.Paused){
+			Owner.push(vel);
 			vel *= Mathf.Pow(velFriction, Time.deltaTime);
 		}
-		transform.position = owner.transform.position + offset;
+		transform.position = Owner.transform.position + offset;
 		
 		timer -= Time.deltaTime;
 		if (timer <= 0){
-			owner.endKickAnimation();
+			Owner.endKickAnimation();
 			Destroy(gameObject);
 		}
 	}
@@ -54,8 +51,8 @@ public class DiveKickEffect : MonoBehaviour {
 		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner){
-				thisPlayer.changeHealth(-1, owner);
+			if (thisPlayer != Owner){
+				thisPlayer.takeDamage(Owner, IsCloneKiller);
 			}
 		}
 	}

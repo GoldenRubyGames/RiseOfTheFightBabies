@@ -1,14 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class BarrelEffect : MonoBehaviour {
+public class BarrelEffect : PowerEffect {
 	
 	public float speed;
 	public float dampening;
 	
 	private int facingDir;
-	
-	private Player owner;
 	
 	public float time;
 	private float timer;
@@ -17,13 +15,12 @@ public class BarrelEffect : MonoBehaviour {
 	
 	public tk2dSprite sprite;
 	
-	public void setup(Player _owner){
-		owner = _owner;
+	public override void setupCustom(){
 		timer = time;
 		
-		facingDir = owner.facingDir;
+		facingDir = Owner.facingDir;
 		
-		transform.position = owner.transform.position + new Vector3( facingDir, 0,0);
+		transform.position = Owner.transform.position + new Vector3( facingDir, 0,0);
 		transform.localEulerAngles = new Vector3(90, 0, 0);
 	}
 	
@@ -57,8 +54,8 @@ public class BarrelEffect : MonoBehaviour {
 		//did we hit a player?
 		if (collision.gameObject.layer == LayerMask.NameToLayer("playerHitBox")){
 			Player thisPlayer = collision.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner){
-				thisPlayer.changeHealth(-1, owner);
+			if (thisPlayer != Owner){
+				thisPlayer.takeDamage(Owner, IsCloneKiller);
 			}
 		}
 		

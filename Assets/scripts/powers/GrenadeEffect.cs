@@ -1,9 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class GrenadeEffect : MonoBehaviour {
-	
-	Player owner;
+public class GrenadeEffect : PowerEffect {
 	
 	public tk2dSprite sprite;
 	
@@ -17,12 +15,11 @@ public class GrenadeEffect : MonoBehaviour {
 	//exploding
 	public GameObject explosionPrefab;
 
-	public void setup(Player _owner){
-		owner = _owner;
+	public override void setupCustom(){
 		
 		timer = time;
 		
-		Vector3 startForce = new Vector3( startXVel*owner.facingDir, startYVel, 0); 
+		Vector3 startForce = new Vector3( startXVel*Owner.facingDir, startYVel, 0); 
 		rigidbody.AddForce( startForce);
 		
 		sprite.color = normColor;
@@ -46,8 +43,7 @@ public class GrenadeEffect : MonoBehaviour {
 	
 	void explode(){
 		GameObject newExplosion = Instantiate(explosionPrefab, transform.position, new Quaternion(0,0,0,0)) as GameObject;
-		newExplosion.SendMessage("setOwner", owner);
-		
+		newExplosion.GetComponent<Explosion>().setOwner(Owner, IsCloneKiller);
 		Destroy(gameObject);
 		
 	}

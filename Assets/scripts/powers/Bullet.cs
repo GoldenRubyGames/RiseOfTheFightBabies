@@ -1,12 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class Bullet : MonoBehaviour {
+public class Bullet : PowerEffect {
 	
 	public float time;
 	float timer;
-	
-	Player owner;
 	
 	public float speed;
 	Vector3 vel;
@@ -19,20 +17,19 @@ public class Bullet : MonoBehaviour {
 	
 	public tk2dSprite sprite;
 
-	public void setup(Player _owner){
-		owner = _owner;
+	public override void setupCustom(){
 		
 		timer = time;
 		
-		pushForce.x *= owner.facingDir;
+		pushForce.x *= Owner.facingDir;
 		
-		vel = new Vector3( speed*owner.facingDir, 0, 0);
+		vel = new Vector3( speed*Owner.facingDir, 0, 0);
 		
 		float spriteAngle = Mathf.Atan2( vel.y, vel.x);
 		sprite.gameObject.transform.localEulerAngles = new Vector3(0,0,  spriteAngle*Mathf.Rad2Deg);
 		
-		//vel.x += owner.CurVel.x;
-		transform.position = owner.transform.position + new Vector3(0.5f*owner.facingDir, 0, 0);
+		//vel.x += Owner.CurVel.x;
+		transform.position = Owner.transform.position + new Vector3(0.5f*Owner.facingDir, 0, 0);
 		
 		ricochetsLeft = numRicochets;
 		
@@ -66,8 +63,8 @@ public class Bullet : MonoBehaviour {
 		//did we touch a player?
 		if (collision.gameObject.layer == LayerMask.NameToLayer("playerHitBox")){
 			Player thisPlayer = collision.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner){
-				hitPlayer(thisPlayer);
+			if (thisPlayer != Owner){
+				thisPlayer.takeDamage(Owner, IsCloneKiller);
 			}else{
 				return;
 			}
@@ -80,12 +77,6 @@ public class Bullet : MonoBehaviour {
 			ricochet();
 		}
     }
-	
-	void hitPlayer(Player targetPlayer){
-		targetPlayer.push( pushForce );
-		targetPlayer.changeHealth(-1, owner);
-		
-	}
 	
 	void ricochet(){
 		numRicochets--;

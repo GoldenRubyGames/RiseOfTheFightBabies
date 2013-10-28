@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class UpperCutEffect : MonoBehaviour {
+public class UpperCutEffect : PowerEffect {
 
 	public Vector3 vel;
 	public float velFriction;
@@ -11,39 +11,37 @@ public class UpperCutEffect : MonoBehaviour {
 	public float time;
 	private float timer;
 	
-	Player owner;
 	
 	public tk2dSprite sprite;
 	 
-	public void setup(Player _owner){
-		owner = _owner;
+	public override void setupCustom(){
 		
 		timer = time;
 		
-		offset.x *= owner.facingDir;
-		vel.x    *= owner.facingDir;
+		offset.x *= Owner.facingDir;
+		vel.x    *= Owner.facingDir;
 		
-		transform.position = owner.transform.position + offset;
+		transform.position = Owner.transform.position + offset;
 		
-		sprite.color = owner.myColor;
-		sprite.FlipX = owner.facingDir == -1;
-		if (owner.facingDir == -1){
+		sprite.color = Owner.myColor;
+		sprite.FlipX = Owner.facingDir == -1;
+		if (Owner.facingDir == -1){
 			sprite.gameObject.transform.localPosition = new Vector3(-sprite.gameObject.transform.localPosition.x, sprite.gameObject.transform.localPosition.y, sprite.gameObject.transform.localPosition.z);
 		}
 		
-		//transform.localEulerAngles += new Vector3(0,0, 150 * owner.facingDir);
+		//transform.localEulerAngles += new Vector3(0,0, 150 * Owner.facingDir);
 	}
 
 	
 	// Update is called once per frame
 	void Update () {
 		
-		if (!owner.gm.Paused){
-			owner.push(vel);
+		if (!Owner.gm.Paused){
+			Owner.push(vel);
 			vel *= Mathf.Pow(velFriction, Time.deltaTime);
 		}
 		
-		transform.position = owner.transform.position + offset;
+		transform.position = Owner.transform.position + offset;
 		
 		timer -= Time.deltaTime;
 		if (timer <= 0){
@@ -51,8 +49,8 @@ public class UpperCutEffect : MonoBehaviour {
 		}
 		
 		//blink if player is blinking
-		if (owner.avatar.gameObject.active != sprite.gameObject.active){
-			sprite.gameObject.SetActive(owner.avatar.gameObject.active);
+		if (Owner.avatar.gameObject.active != sprite.gameObject.active){
+			sprite.gameObject.SetActive(Owner.avatar.gameObject.active);
 		}
 	}
 	
@@ -61,8 +59,8 @@ public class UpperCutEffect : MonoBehaviour {
 		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner){
-				thisPlayer.changeHealth(-1, owner);
+			if (thisPlayer != Owner){
+				thisPlayer.takeDamage(Owner, IsCloneKiller);
 			}
 		}
 	}

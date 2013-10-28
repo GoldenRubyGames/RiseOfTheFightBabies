@@ -1,9 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class DeathOrbEffect : MonoBehaviour {
-	
-	Player owner;
+public class DeathOrbEffect : PowerEffect {
 	
 	public float time;
 	private float timer;
@@ -14,8 +12,7 @@ public class DeathOrbEffect : MonoBehaviour {
 	public tk2dSprite sprite;
 	public float rotateSpeed;
 	
-	public void setup(Player _owner){
-		owner = _owner;
+	public override void setupCustom(){
 		
 		timer = time;
 		
@@ -39,8 +36,8 @@ public class DeathOrbEffect : MonoBehaviour {
 		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner){
-				thisPlayer.changeHealth(-1, owner);
+			if (thisPlayer != Owner){
+				thisPlayer.takeDamage(Owner, IsCloneKiller);
 			}
 		}
 	}

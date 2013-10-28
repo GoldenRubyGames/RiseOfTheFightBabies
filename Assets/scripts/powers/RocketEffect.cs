@@ -1,9 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class RocketEffect : MonoBehaviour {
-	
-	Player owner;
+public class RocketEffect : PowerEffect {
 	
 	public Vector3 moveForce;
 	
@@ -12,13 +10,12 @@ public class RocketEffect : MonoBehaviour {
 	//exploding
 	public GameObject explosionPrefab;
 	
-	public void setup(Player _owner){
-		owner = _owner;
+	public override void setupCustom(){
 		
-		moveForce.x *= owner.facingDir;
-		transform.position = owner.transform.position + new Vector3( owner.facingDir*1, 0, 0);
+		moveForce.x *= Owner.facingDir;
+		transform.position = Owner.transform.position + new Vector3( Owner.facingDir*1, 0, 0);
 		
-		if (owner.facingDir == -1){
+		if (Owner.facingDir == -1){
 			sprite.FlipX = true;
 		}
 		
@@ -33,7 +30,7 @@ public class RocketEffect : MonoBehaviour {
 	
 	void explode(){
 		GameObject newExplosion = Instantiate(explosionPrefab, transform.position, new Quaternion(0,0,0,0)) as GameObject;
-		newExplosion.SendMessage("setOwner", owner);
+		newExplosion.GetComponent<Explosion>().setOwner(Owner, IsCloneKiller);
 		
 		Destroy(gameObject);
 	}
@@ -48,7 +45,7 @@ public class RocketEffect : MonoBehaviour {
 		//did we touch a player?
 		if (collision.gameObject.layer == LayerMask.NameToLayer("playerHitBox")){
 			Player thisPlayer = collision.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner){
+			if (thisPlayer != Owner){
 				explode();
 			}else{
 				return;

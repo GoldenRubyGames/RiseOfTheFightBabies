@@ -1,9 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class tenTonDropEffect : MonoBehaviour {
-	
-	private Player owner;
+public class tenTonDropEffect : PowerEffect {
 	
 	public Vector3 startVel;
 	public Vector3 pushForce;
@@ -19,13 +17,12 @@ public class tenTonDropEffect : MonoBehaviour {
 	public float blinkTime, blinkSpeed;
 
 	
-	public void setup(Player _owner){
-		owner = _owner;
+	public override void setupCustom(){
 		
 		timer = time;
 		
 		//start below the player
-		transform.position = owner.transform.position + new Vector3(0, -startDist, 0);
+		transform.position = Owner.transform.position + new Vector3(0, -startDist, 0);
 		rigidbody.velocity = startVel;
 	}
 	
@@ -52,8 +49,8 @@ public class tenTonDropEffect : MonoBehaviour {
 		if (collision.gameObject.layer == LayerMask.NameToLayer("playerHitBox")){
 			if( collision.gameObject.transform.position.y < transform.position.y){
 				Player thisPlayer = collision.gameObject.transform.parent.gameObject.GetComponent<Player>();
-				if (thisPlayer != owner){
-					thisPlayer.changeHealth(-1, owner);
+				if (thisPlayer != Owner){
+					thisPlayer.takeDamage(Owner, IsCloneKiller);
 				}
 			}
 		}

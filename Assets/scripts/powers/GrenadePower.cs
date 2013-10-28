@@ -7,7 +7,7 @@ public class GrenadePower : Power {
 		
 		//spawn a bullet effect
 		GameObject thisObj = Instantiate( effectObject, owner.transform.position, new Quaternion(0,0,0,0)) as GameObject;
-		thisObj.SendMessage("setup", owner);
+		thisObj.GetComponent<PowerEffect>().setup(owner, isCloneKiller);
 		
 	}
 }

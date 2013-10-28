@@ -1,9 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class FreezeRayEffect : MonoBehaviour {
-	
-	Player owner;
+public class FreezeRayEffect : PowerEffect {
 	
 	public float growSpeed;
 	
@@ -12,10 +10,8 @@ public class FreezeRayEffect : MonoBehaviour {
 	
 	public float freezeTime;
 	
-	public void setup(Player _owner){
-		owner = _owner;
+	public override void setupCustom(){
 		timer = 0;
-		
 	}
 	
 	// Update is called once per frame
@@ -36,7 +32,7 @@ public class FreezeRayEffect : MonoBehaviour {
 		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner){
+			if (thisPlayer != Owner){
 				thisPlayer.freeze(freezeTime);
 			}
 		}

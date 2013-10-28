@@ -11,6 +11,7 @@ public class Explosion : MonoBehaviour {
 	private float timer;
 	
 	private Player owner;
+	private bool isCloneKiller;
 	
 	public float rotationSpeed;
 	
@@ -23,9 +24,11 @@ public class Explosion : MonoBehaviour {
 		
 	}
 	
-	public void setOwner(Player _owner){
+	public void setOwner(Player _owner, bool _isCloneKiller){
 		owner = _owner;
 		owner.AudioController.Play(soundEffect);
+		
+		isCloneKiller = _isCloneKiller;
 	}
 	
 	// Update is called once per frame
@@ -48,7 +51,7 @@ public class Explosion : MonoBehaviour {
 			//THIS CAN HIT THE OWNER BECAUSE IT'S A GODDAMN EXPLOSION
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
 			
-			thisPlayer.changeHealth(-1, owner);
+			thisPlayer.takeDamage(owner, isCloneKiller);
 			
 		}
 		

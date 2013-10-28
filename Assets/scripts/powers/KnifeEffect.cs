@@ -1,9 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class KnifeEffect : MonoBehaviour {
-	
-	Player owner;
+public class KnifeEffect : PowerEffect {
 	
 	public Vector3 moveSpeed;
 	
@@ -13,8 +11,7 @@ public class KnifeEffect : MonoBehaviour {
 	public tk2dSprite sprite;
 	
 	
-	public void setup(Player _owner, bool goLeft){
-		owner = _owner;
+	public override void setupCustom(bool goLeft){
 		timer = 0;
 		
 		if (goLeft){
@@ -22,7 +19,6 @@ public class KnifeEffect : MonoBehaviour {
 		}
 		
 		sprite.FlipX = goLeft;
-		
 	}
 	
 	
@@ -48,8 +44,8 @@ public class KnifeEffect : MonoBehaviour {
 		//did we touch a player?
 		if (collision.gameObject.layer == LayerMask.NameToLayer("playerHitBox")){
 			Player thisPlayer = collision.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner){
-				thisPlayer.changeHealth(-1, owner);
+			if (thisPlayer != Owner){
+				thisPlayer.takeDamage(Owner, IsCloneKiller);
 			}else{
 				return;
 			}

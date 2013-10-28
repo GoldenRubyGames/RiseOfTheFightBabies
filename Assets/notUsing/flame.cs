@@ -53,7 +53,7 @@ public class flame : MonoBehaviour {
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
 			if (thisPlayer != owner){
 				thisPlayer.push(playerBounce);
-				thisPlayer.changeHealth(-1, owner);
+				thisPlayer.takeDamage(owner, false);
 				
 			}
 		}

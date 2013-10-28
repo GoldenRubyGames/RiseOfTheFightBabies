@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class SwordEffect : MonoBehaviour {
+public class SwordEffect : PowerEffect {
 	
 	
 	//public float size;
@@ -9,24 +9,20 @@ public class SwordEffect : MonoBehaviour {
 	public float angleRange;
 	public float speed;
 	
-	private Player owner;
-	
 	private int angleDir;
 	private float curAngle;
 	private float endAngle;
 	
 	public tk2dSprite sprite;
 	
-
-	public void setup(Player _owner){
-		owner = _owner;
+	public override void setupCustom(){
 		
-		angleDir = owner.facingDir; //swip from front to back
+		angleDir = Owner.facingDir; //swip from front to back
 		
 		curAngle = angleRange/2 * -angleDir;
 		endAngle = -curAngle;
 		
-		transform.position = owner.transform.position;
+		transform.position = Owner.transform.position;
 		
 		if (angleDir == 1){
 			sprite.FlipX = true;
@@ -41,7 +37,7 @@ public class SwordEffect : MonoBehaviour {
 	void Update () {
 		
 		//keep it on the player
-		transform.position = owner.transform.position;
+		transform.position = Owner.transform.position;
 		
 		//advance rotation
 		curAngle += speed * Time.deltaTime * angleDir;
@@ -58,9 +54,4 @@ public class SwordEffect : MonoBehaviour {
 	}
 	
 	
-	public Player Owner {
-		get {
-			return this.owner;
-		}
-	}
 }

@@ -1,9 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class BoomerangEffect : MonoBehaviour {
-	
-	Player owner;
+public class BoomerangEffect : PowerEffect {
 	
 	public float timeToTarget; //how long it takes to hit the target
 	public float moveCurve; //have it slow down at target
@@ -19,19 +17,18 @@ public class BoomerangEffect : MonoBehaviour {
 	private float timer;
 	
 	
-	public void setup(Player _owner){
-		owner = _owner;
+	public override void setupCustom(){
 		
 		//spin with the player
-		rotSpeed *= owner.facingDir;
+		rotSpeed *= Owner.facingDir;
 		curAngle = 0;
 		
-		targetOffset.x *= owner.facingDir;
+		targetOffset.x *= Owner.facingDir;
 		
-		startPos = owner.transform.position;
+		startPos = Owner.transform.position;
 		
 		//set the target pos
-		targetPos = owner.transform.position + targetOffset;
+		targetPos = Owner.transform.position + targetOffset;
 		
 		timer = 0;
 		
@@ -66,7 +63,7 @@ public class BoomerangEffect : MonoBehaviour {
 		if (!isComingBack){
 			transform.position = Vector3.Lerp(startPos, targetPos, prc);
 		}else{
-			transform.position = Vector3.Lerp(targetPos, owner.transform.position, prc);
+			transform.position = Vector3.Lerp(targetPos, Owner.transform.position, prc);
 		}
 		
 		
@@ -81,8 +78,8 @@ public class BoomerangEffect : MonoBehaviour {
 		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			if (thisPlayer != owner){
-				thisPlayer.changeHealth(-1, owner);
+			if (thisPlayer != Owner){
+				thisPlayer.takeDamage(Owner, IsCloneKiller);
 			}
 		}
 	}
