@@ -20,6 +20,9 @@ public class PlayerController : Player {
 	public int numLives;
 	private int livesLeft;
 	
+	//killing clones forever and ever amen
+	bool nextAttackIsCloneKill;
+	
 	public override void customStart(){
 		
 		isPlayerControlled = true;
@@ -79,6 +82,8 @@ public class PlayerController : Player {
 		
 		isGrounded = false;
 		notGroundedTimer = timeBeforeNotGrounded;
+		
+		nextAttackIsCloneKill = false;
 	}
 	
 	public override void customUpdate(){
@@ -167,8 +172,14 @@ public class PlayerController : Player {
 		if (Input.GetButtonDown(attack1Button)){
 			attackPressed = true;
 			for (int i=0; i<powers.Count; i++){
-				powers[i].use();
+				powers[i].use(nextAttackIsCloneKill);
 			}
+			
+			nextAttackIsCloneKill = false;
+		}
+		
+		if (Input.GetButtonDown("useCloneKill")){
+			useCloneKill();
 		}
 		
 		//record for ghosts
@@ -222,7 +233,9 @@ public class PlayerController : Player {
 		}
 	}
 	
-	
+	void useCloneKill(){
+		nextAttackIsCloneKill = true;
+	}
 	
 	
 	

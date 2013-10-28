@@ -1,13 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
-public class BatEffect : MonoBehaviour {
+public class BatEffect : PowerEffect {
 	
 	public float speed;
 	
 	public float maxDist;
-	
-	Player owner;
 	
 	public Vector3 pushForce;
 	
@@ -19,8 +17,7 @@ public class BatEffect : MonoBehaviour {
 	private float startDist;
 	private bool goingBack;
 
-	public void setup(Player _owner){
-		owner = _owner;
+	public override void setupCustom(){
 		
 		dir = owner.facingDir;
 		

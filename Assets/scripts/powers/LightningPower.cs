@@ -5,7 +5,7 @@ public class LightningPower : Power {
 
 	public Vector3 recoilForce;
 
-	public override void customUse(){
+	public override void customUse(bool isCloneKiller){
 		
 		//spawn 2 lightnings 
 		for (int i=0; i<2; i++){

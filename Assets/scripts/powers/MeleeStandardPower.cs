@@ -7,7 +7,7 @@ public class MeleeStandardPower : Power {
 	
 	private GameObject curObject;
 	
-	public override void customUse(){
+	public override void customUse(bool isCloneKiller){
 		//spawn an effect
 		curObject = Instantiate( effectObject, owner.transform.position, new Quaternion(0,0,0,0)) as GameObject;
 		curObject.SendMessage("setup", owner);

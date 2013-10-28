@@ -3,7 +3,7 @@ using System.Collections;
 
 public class KnifePower :  Power {
 
-	public override void customUse(){
+	public override void customUse(bool isCloneKiller){
 		
 		//spawn 2 knives 
 		for (int i=0; i<2; i++){

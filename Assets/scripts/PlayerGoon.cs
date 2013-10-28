@@ -120,7 +120,7 @@ public class PlayerGoon : Player {
 		//using powers
 		if (attackNow && !gm.DoingIntro){
 			for (int i=0; i<powers.Count; i++){
-				powers[i].use();
+				powers[i].use(false);
 			}
 		}
 		

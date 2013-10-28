@@ -7,7 +7,7 @@ public class SpawnEffectPower : Power {
 	
 	public bool requirePlayerToBeInAir;
 
-	public override void customUse(){
+	public override void customUse(bool isCloneKiller){
 		
 		if (!owner.controller.isGrounded || !requirePlayerToBeInAir){
 			//spawn an effect

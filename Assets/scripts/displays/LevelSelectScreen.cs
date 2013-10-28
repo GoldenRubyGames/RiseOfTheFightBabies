@@ -191,7 +191,6 @@ public class LevelSelectScreen : MonoBehaviour {
 		
 		//turn this off
 		gameObject.SetActive(false);
-		
 	}
 	
 	void moveSelection(int xDir, int yDir){

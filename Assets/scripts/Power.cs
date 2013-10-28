@@ -58,9 +58,9 @@ public class Power : MonoBehaviour {
 		canUse = coolDownTimer <= 0;
 	}
 	
-	public void use(){
+	public void use(bool isCloneKiller){
 		if (canUse){
-			customUse();
+			customUse(isCloneKiller);
 			playSound();
 			coolDownTimer = coolDownTime;
 		}else{
@@ -77,7 +77,7 @@ public class Power : MonoBehaviour {
 		}
 	}
 	
-	public virtual void customUse(){}
+	public virtual void customUse(bool isCloneKiller){}
 	
 	public void cleanUp(){
 		customCleanUp();
