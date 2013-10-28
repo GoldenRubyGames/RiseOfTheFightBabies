@@ -58,14 +58,18 @@ public class StatusText : MonoBehaviour {
 		setText("YOU DIED\n"+livesLeft.ToString()+" LIVES LEFT");	
 	}
 	
-	public void showGhostKill(){
+	public void showGhostKill(bool cloneDeadFoever){
 		//ignore this if the score text is on screen
 		if (showingScoreText){
 			return;
 		}
 		
 		textMesh.color = scoreColor;
-		setText("CLONE KILL!");
+		if (cloneDeadFoever){
+			setText("CLONE\nBANISHED!");
+		}else{
+			setText("CLONE KILL!");
+		}
 		displayTimer *= 0.5f;
 	}
 	

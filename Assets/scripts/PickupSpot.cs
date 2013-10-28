@@ -52,7 +52,6 @@ public class PickupSpot : MonoBehaviour {
 		
 		//open the door
 		doorSprite.Play(openClip);
-		
 	}
 	
 	

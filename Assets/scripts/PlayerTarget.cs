@@ -33,7 +33,7 @@ public class PlayerTarget : Player {
 		
 	}
 	
-	public override void killPlayerCustom(Player killer){
+	public override void killPlayerCustom(Player killer, bool cloneKiller){
 		Debug.Log("im dead");
 		clearPowers();
 		Destroy(gameObject);

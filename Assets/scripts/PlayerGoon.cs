@@ -126,7 +126,7 @@ public class PlayerGoon : Player {
 		
 	}
 	
-	public override void killPlayerCustom(Player killer){
+	public override void killPlayerCustom(Player killer, bool cloneKiller){
 		gm.Goons.Remove(this);
 		
 		clearPowers();

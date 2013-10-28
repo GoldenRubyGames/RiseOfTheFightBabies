@@ -134,9 +134,9 @@ public class PlayerGhost : Player {
 		
 	}
 	
-	public override void killPlayerCustom(Player killer){
+	public override void killPlayerCustom(Player killer, bool cloneKiller){
 		//show the text
-		GameObject.FindGameObjectWithTag("statusText").SendMessage("showGhostKill");
+		GameObject.FindGameObjectWithTag("statusText").SendMessage("showGhostKill", cloneKiller);
 		
 		//if the killer was a player, give them a point
 		if (killer!=null){
@@ -158,6 +158,11 @@ public class PlayerGhost : Player {
 		//move the ghost away and turn them off until the next round
 		transform.position = new Vector3(0, -100, 0); //move it off screen
 		gameObject.SetActive(false);
+		
+		//if this was a clone killer, remove this ghost forever
+		if (cloneKiller){
+			gm.removeGhost(this);
+		}
 		
 	}
 	

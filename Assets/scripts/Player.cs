@@ -296,12 +296,13 @@ public class Player : MonoBehaviour {
 		
 		//is this fucker dead?
 		if (health <= 0){
-			killPlayer(source);
+			killPlayer(source, cloneKiller);
+			
 		}
 	}
 	
 	//by default, just kill the player, but allow child classes to define their own
-	public void killPlayer(Player killer){
+	public void killPlayer(Player killer, bool cloneKiller){
 		if (gm != null){
 			if (gm.DoingKillEffect){
 				return;
@@ -318,7 +319,7 @@ public class Player : MonoBehaviour {
 			if (killer.isPlayerControlled){
 				killer.starHelmScore();
 				
-				gm.startKillEffect(this, killer);
+				gm.startKillEffect(this, killer, cloneKiller);
 				return;
 			}
 		}
@@ -328,7 +329,7 @@ public class Player : MonoBehaviour {
 		}
 		
 		
-		killPlayerCustom(killer);
+		killPlayerCustom(killer, cloneKiller);
 	}
 	
 	public void startKickAnimation(float angle){
@@ -341,7 +342,7 @@ public class Player : MonoBehaviour {
 	}
 	
 	
-	public virtual void killPlayerCustom(Player killer){
+	public virtual void killPlayerCustom(Player killer, bool cloneKiller){
 		clearPowers();
 		Destroy(gameObject);
 	}

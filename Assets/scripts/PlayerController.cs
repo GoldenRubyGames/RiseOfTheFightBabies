@@ -22,6 +22,7 @@ public class PlayerController : Player {
 	
 	//killing clones forever and ever amen
 	bool nextAttackIsCloneKill;
+	private int cloneKillsAvailable;
 	
 	public override void customStart(){
 		
@@ -188,15 +189,15 @@ public class PlayerController : Player {
 		
 		//testing
 		if (Input.GetKeyDown(KeyCode.K) && controllerNum==0){
-			killPlayer(null);
+			killPlayer(null, false);
 		}
 		
 	}
 	
 	
-	public override void killPlayerCustom(Player killer){
+	public override void killPlayerCustom(Player killer, bool cloneKiller){
 		if(!gm.DoingKillEffect){
-			gm.startKillEffect(this, killer);
+			gm.startKillEffect(this, killer, false);
 			//show the text
 			GameObject.FindGameObjectWithTag("statusText").SendMessage("showDeathText", livesLeft-1);
 			return;
@@ -234,7 +235,15 @@ public class PlayerController : Player {
 	}
 	
 	void useCloneKill(){
-		nextAttackIsCloneKill = true;
+		if (cloneKillsAvailable > 0){
+			nextAttackIsCloneKill = true;
+			Debug.Log("get ready to kill");
+			cloneKillsAvailable--;
+		}
+	}
+	
+	public void addCloneKill(){
+		cloneKillsAvailable++;
 	}
 	
 	
@@ -251,5 +260,13 @@ public class PlayerController : Player {
 	}
 	
 	
+	public int CloneKillsAvailable {
+		get {
+			return this.cloneKillsAvailable;
+		}
+		set {
+			cloneKillsAvailable = value;
+		}
+	}
 	
 }

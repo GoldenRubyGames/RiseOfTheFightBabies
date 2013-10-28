@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour {
 	public float killEffectTime;
 	private float killEffectTimer;
 	private Player killEffectFoe;
+	private bool killEffectIsCloneKiller;
 	
 	//other screens
 	public LevelSelectScreen levelSelectScreen;
@@ -142,6 +143,7 @@ public class GameManager : MonoBehaviour {
 			players[i].clearPowers();
 			players[i].Score = 0;
 			players[i].LivesLeft = players[i].numLives;
+			players[i].CloneKillsAvailable = 0;
 			if (doingIntro){
 				Debug.Log("set the lives for intro");
 				players[i].LivesLeft = 2;
@@ -347,7 +349,7 @@ public class GameManager : MonoBehaviour {
 						levelObject.SendMessage("playerDied");
 					}
 					
-					killEffectFoe.killPlayerCustom(null);
+					killEffectFoe.killPlayerCustom(null, killEffectIsCloneKiller);
 					
 					resetRound();
 					
@@ -367,7 +369,7 @@ public class GameManager : MonoBehaviour {
 		Time.timeScale = paused ? 0 : 1;
 	}
 	
-	public void startKillEffect(Player freshlyKilled, Player killer){
+	public void startKillEffect(Player freshlyKilled, Player killer, bool _killEffectIsCloneKiller){
 		camera.startKillEffect(freshlyKilled.transform.position);
 		
 		doingKillEffect = true;
@@ -375,6 +377,8 @@ public class GameManager : MonoBehaviour {
 		
 		killEffectFoe = freshlyKilled;
 		killEffectFoe.hideSprite();
+		
+		killEffectIsCloneKiller = _killEffectIsCloneKiller;
 		
 		if (starHelm.ChosenOne == freshlyKilled){
 			starHelm.startKillEffect(killer);
@@ -488,6 +492,14 @@ public class GameManager : MonoBehaviour {
 		goons.Add(goonSpawn);
 	}
 	
+	public void removeGhost(PlayerGhost ghost){
+		Debug.Log("num ghosts before: "+ghosts.Count);
+		ghosts.Remove(ghost);
+		ghost.clearPowers();
+		Destroy(ghost.gameObject);
+		Debug.Log("num ghosts after: "+ghosts.Count);
+	}
+	
 	public void endGame(int score){
 		gameOver = true;
 		gameState = "gameOver";
@@ -557,15 +569,6 @@ public class GameManager : MonoBehaviour {
 	public void setUnlockPopUpShowing(UnlockPopUp _unlockScreenPopUp){
 		gameState = "unlockPopUp";
 		unlockScreenPopUp = _unlockScreenPopUp;
-	}
-	
-	public void kongTest(bool connected){
-		if (connected){
-			Debug.Log("im here");
-			Instantiate(goonPrefab, new Vector3(0,0,0), new Quaternion(0,0,0,0));
-		}else{
-			Debug.Log("you will die");
-		}
 	}
 	
 	
