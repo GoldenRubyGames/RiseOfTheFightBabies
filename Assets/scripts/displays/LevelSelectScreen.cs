@@ -83,7 +83,6 @@ public class LevelSelectScreen : MonoBehaviour {
 		
 		//for controller, start with intro or level one
 		if (Input.GetJoystickNames().Length > 0){
-			Debug.Log("sex spr");
 			setIconSelected( unlockManager.LevelUnlocks[0] ? 1 : 0 );
 		}
 		
@@ -208,7 +207,6 @@ public class LevelSelectScreen : MonoBehaviour {
 	
 	//turns on the selecte dicona nd turns off all others
 	void setIconSelected(int num){
-		Debug.Log("do it "+num);
 		for (int i=0; i<levelIcons.Length; i++){
 			levelIcons[i].setSelected( i==num );
 		}

@@ -196,7 +196,11 @@ public class IntroManager : MonoBehaviour {
 		}
 		
 		if (phase == 4){
-			speakerText.setNewText("Press Z to fire.");
+			if (Input.GetJoystickNames().Length == 0){
+				speakerText.setNewText("Press Z to fire.");
+			}else{
+				speakerText.setNewText("Press X to fire.");
+			}
 		}
 		
 		if (phase == 5){
@@ -227,7 +231,12 @@ public class IntroManager : MonoBehaviour {
 		}
 		
 		if (phase == 10){
-			speakerText.setNewText("When you press Z they will both\nfire.");
+			if (Input.GetJoystickNames().Length == 0){
+				speakerText.setNewText("When you press Z they will both\nfire.");
+			}else{
+				speakerText.setNewText("When you press X they will both\nfire.");
+			}
+				
 		}
 		
 		if (phase == 11){

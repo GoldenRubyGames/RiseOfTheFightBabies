@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour {
 	
 	//pickup object
 	private List<PickupSpot> pickupSpots = new List<PickupSpot>();
-	//public GameObject pickupPrefab;
+	public GameObject pickupSpotPrefab;
 	//public GameObject[] pickupSpawnPoints;
 	
 	//pickup timing
@@ -416,14 +416,19 @@ public class GameManager : MonoBehaviour {
 		levelObject = Instantiate(levelObjects[num], new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
 		curLevelNum = num;
 		
-		//find all of the pickup spots
+		//find all of the pickup spots and add them
 		//levelObject.transform.chil
-		GameObject[] pickupSpotObjects = GameObject.FindGameObjectsWithTag("pickupSpot");
+		GameObject[] pickupSpotObjects = GameObject.FindGameObjectsWithTag("pickupSpotMarker");
 		pickupSpots.Clear();
 		for (int i=0; i<pickupSpotObjects.Length; i++){
 			//the game objects array will also have pickup spots from the level we just removed, so we need ot only take ones we want
 			if (pickupSpotObjects[i].transform.parent == levelObject.transform){
-				pickupSpots.Add( pickupSpotObjects[i].GetComponent<PickupSpot>() );
+				
+				GameObject newPickupObj = Instantiate( pickupSpotPrefab, pickupSpotObjects[i].transform.position, new Quaternion(0,0,0,0) ) as GameObject;
+				newPickupObj.transform.parent = levelObject.transform;
+				Destroy(pickupSpotObjects[i]);
+				
+				pickupSpots.Add( newPickupObj.GetComponent<PickupSpot>() );
 				pickupSpots[ pickupSpots.Count-1 ].Hud = hud;
 			}
 			
@@ -432,6 +437,10 @@ public class GameManager : MonoBehaviour {
 		
 		if (curLevelNum == 0){
 			doingIntro = true;
+			//set the pickups
+			IntroManager thisIntro = levelObject.GetComponent<IntroManager>();
+			thisIntro.pickupSpot = pickupSpots[0];
+			thisIntro.pickupSpot2 = pickupSpots[1];
 		}
 		
 		//reset the game
@@ -536,7 +545,7 @@ public class GameManager : MonoBehaviour {
 		
 		Destroy(levelObject);
 		
-		//turn on the leve select
+		//turn on the level select
 		levelSelectScreen.reset();
 		
 		//make sure the pause screen is gone
