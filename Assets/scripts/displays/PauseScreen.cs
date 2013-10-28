@@ -17,7 +17,13 @@ public class PauseScreen : MonoBehaviour {
 
 	public void activate(bool showHowTo){
 		gameObject.SetActive(true);
-		mainSprite.SetSprite( showHowTo ? "howToCard" : "pauseBox" );
+		
+		//set the image base don if we're showing the title card and if there is a controller
+		if (showHowTo){
+			mainSprite.SetSprite(  (Input.GetJoystickNames().Length > 0) ? "howToCardXbox" : "howToCard" );
+		}else{
+			mainSprite.SetSprite( (Input.GetJoystickNames().Length > 0) ? "pauseBoxXbox" : "pauseBox" );
+		}
 		
 		mainSprite.gameObject.transform.position = new Vector3( centerAnchor.transform.position.x, centerAnchor.transform.position.y, -2);
 	}

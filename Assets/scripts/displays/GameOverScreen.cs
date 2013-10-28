@@ -10,6 +10,8 @@ public class GameOverScreen : MonoBehaviour {
 	
 	public GUIStyle style;
 	
+	public Texture2D xboxPic;
+	
 	private bool isActive;
 	
 	private string scoreText;
@@ -21,6 +23,10 @@ public class GameOverScreen : MonoBehaviour {
 	
 	void Start(){
 		isActive = false;
+		
+		if (Input.GetJoystickNames().Length > 0){
+			style.normal.background = xboxPic;
+		}
 	}
 	
 	public void turnOn(int score, bool _isHighScore){

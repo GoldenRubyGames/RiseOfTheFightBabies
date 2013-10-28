@@ -21,14 +21,26 @@ public class LevelSelectScreen : MonoBehaviour {
 	
 	//selecting
 	private int curSelection;
+	public float minTimeOnScreen;
+	private float timer;
 	
 	//chekcing the mouse
 	public Camera guiCam;
 	public float mouseMoveThreshold;
 	private Vector2 prevMousePos;
+	private bool usingMouse;
+	
+	//joystick controls
+	public float joystickThreshold;
+	private bool canPressUp, canPressDown, canPressLeft, canPressRight;
 	
 	public void reset(){
 		gameObject.SetActive(true);
+		
+		canPressUp = false;
+		canPressDown = false;
+		canPressLeft = false;
+		canPressRight = false;
 		
 		//spawn some level icons!
 		levelIcons = new LevelSelectIcon[levelNames.Length];
@@ -66,12 +78,28 @@ public class LevelSelectScreen : MonoBehaviour {
 		}
 		nextUnlockText.Commit();
 		
-		//set the first one as selected
+		//for mouse control, select nothing
 		curSelection = -1;
+		
+		//for controller, start with intro or level one
+		if (Input.GetJoystickNames().Length > 0){
+			Debug.Log("sex spr");
+			setIconSelected( unlockManager.LevelUnlocks[0] ? 1 : 0 );
+		}
+		
+		usingMouse = Input.GetJoystickNames().Length == 0;
+		
+		timer = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		//clicking or pressing start/jump starts the game
+		if (timer>=minTimeOnScreen && (Input.GetMouseButtonUp(0) || Input.GetButton("player0Fire1") || (Input.GetButton("player0Jump") && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.UpArrow)) || Input.GetButton("pauseButton")) && curSelection != -1){
+			finish();
+		}
+		timer += Time.deltaTime;
+		
 		/*
 		for (int i=0; i<levelNames.Length; i++){
 		
@@ -86,43 +114,74 @@ public class LevelSelectScreen : MonoBehaviour {
 		}
 		*/
 		
+		//check for joystick input
+		float xAxisInput = Input.GetAxis("Horizontal");
+		float yAxisInput = Input.GetAxis("Vertical");
+		
+		if (xAxisInput < joystickThreshold)   canPressRight = true;
+		if (xAxisInput > -joystickThreshold)  canPressLeft = true;
+		if (yAxisInput < joystickThreshold)   canPressDown = true;
+		if (yAxisInput > -joystickThreshold)  canPressUp = true;
+		
+		if (xAxisInput > joystickThreshold && canPressRight){
+			canPressRight = false;
+			moveSelection(1, 0);
+		}
+		if (xAxisInput < -joystickThreshold && canPressLeft){
+			canPressLeft = false;
+			moveSelection(-1, 0);
+		}
+		if (yAxisInput > joystickThreshold && canPressDown){
+			canPressDown = false;
+			moveSelection(0, 1);
+		}
+		if (yAxisInput < -joystickThreshold && canPressUp){
+			canPressUp = false;
+			moveSelection(0, -1);
+		}
+		
+		//up/dow is being screwy with the input, so I'm just not using it
+		if ( Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) ){
+			moveSelection(0, -1);
+		}
+		if ( Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) ){
+			moveSelection(0, 1);
+		}
+		
 		
 		//check the mouse. If it moved, see if it's over anything
-		Vector2 curMousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-		if ( Mathf.Abs(curMousePos.x-prevMousePos.x) > mouseMoveThreshold || Mathf.Abs(curMousePos.y-prevMousePos.y) > mouseMoveThreshold){
-			int thisSelection = -1;
-			
-			Ray ray;
-			RaycastHit hit;
-			
-			ray = guiCam.ScreenPointToRay(Input.mousePosition);
-			
-			if(Physics.Raycast(ray, out hit)) {
-				//figure out if it was any of our levels
-				for (int i=0; i<levelIcons.Length; i++){
-					if (hit.transform == levelIcons[i].transform && !levelIcons[i].IsLocked){
-						thisSelection = i;
+		if (usingMouse){
+			Vector2 curMousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+			if ( Mathf.Abs(curMousePos.x-prevMousePos.x) > mouseMoveThreshold || Mathf.Abs(curMousePos.y-prevMousePos.y) > mouseMoveThreshold){
+				int thisSelection = -1;
+				
+				Ray ray;
+				RaycastHit hit;
+				
+				ray = guiCam.ScreenPointToRay(Input.mousePosition);
+				
+				if(Physics.Raycast(ray, out hit)) {
+					//figure out if it was any of our levels
+					for (int i=0; i<levelIcons.Length; i++){
+						if (hit.transform == levelIcons[i].transform && !levelIcons[i].IsLocked){
+							thisSelection = i;
+						}
 					}
 				}
+				
+				setIconSelected(thisSelection);
 			}
-			
-			setIconSelected(thisSelection);
+			//save the mouse position for next frame
+			prevMousePos = curMousePos;
 		}
 		
-		//clicking starts the game
-		if (Input.GetMouseButtonUp(0) && curSelection != -1){
-			finish();
-		}
-		
-		
-		//save the mouse position for next frame
-		prevMousePos = curMousePos;
 	}
 	
-	
 	public void finish(){
-		cleanUp();
-		gm.setLevel(curSelection);
+		if (!levelIcons[curSelection].IsLocked){
+			cleanUp();
+			gm.setLevel(curSelection);
+		}
 	}
 	
 	public void cleanUp(){
@@ -136,12 +195,24 @@ public class LevelSelectScreen : MonoBehaviour {
 		
 	}
 	
+	void moveSelection(int xDir, int yDir){
+		curSelection += xDir + yDir*iconRowSize;
+		
+		if (curSelection < 0){
+			curSelection += levelIcons.Length;
+		}
+		
+		setIconSelected( curSelection % levelIcons.Length );
+		
+	}
 	
 	//turns on the selecte dicona nd turns off all others
 	void setIconSelected(int num){
+		Debug.Log("do it "+num);
 		for (int i=0; i<levelIcons.Length; i++){
 			levelIcons[i].setSelected( i==num );
 		}
+		
 		curSelection = num;
 	}
 }

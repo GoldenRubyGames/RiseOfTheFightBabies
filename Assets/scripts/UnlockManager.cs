@@ -5,6 +5,7 @@ public class UnlockManager : MonoBehaviour {
 	
 	public bool debugUnlockAll;
 	public bool debugUnlockFirstLevel;
+	public bool debugQuickUnlocks;
 	
 	public GameManager gm;
 	public DataHolder dataHolder;
@@ -29,7 +30,7 @@ public class UnlockManager : MonoBehaviour {
 		unlockVals = new int[numWeaponUnlocks];
 		
 		for (int i=0; i<numWeaponUnlocks; i++){
-			Debug.Log("its "+getUnlockVal(i));
+			//Debug.Log("its "+getUnlockVal(i));
 			unlockVals[i] = getUnlockVal(i);
 		}
 		
@@ -93,7 +94,9 @@ public class UnlockManager : MonoBehaviour {
 		
 		float fNum = num+1;
 		
-		//return 2+ 2*num;
+		if (debugQuickUnlocks){
+			return 2+ 2*num;
+		}
 		
 		return  (int)( 20.0f*Mathf.Pow( fNum, 1.25f) );
 	}

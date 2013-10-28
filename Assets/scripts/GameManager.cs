@@ -214,13 +214,13 @@ public class GameManager : MonoBehaviour {
 			}
 			goToLevelSelect();
 		}
-		if (Input.GetKeyDown(KeyCode.D)){
+		if (Input.GetKeyDown(KeyCode.Y)){
 			kongregate.toggleDebug();
 		}
 		
 		//do things acording to game state
 		if (gameState == "gameOver"){
-			if (Input.GetKeyDown(KeyCode.R)){
+			if (Input.GetKeyDown(KeyCode.R) || Input.GetButton("player0Jump") || Input.GetButton("player0Fire1") || Input.GetButton("pauseButton")){
 				if (!levelJustUnlocked){
 					resetGame();
 				}else{
@@ -228,12 +228,12 @@ public class GameManager : MonoBehaviour {
 					goToLevelSelect();
 				}
 			}
-			if (Input.GetKeyDown(KeyCode.Q)){
+			if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown("joystick button 6")){
 				goToLevelSelect();
 			}
 		}
 		else if (gameState == "title"){
-			if (Input.GetMouseButtonUp(0)){
+			if (Input.GetMouseButtonUp(0) || Input.GetButton("player0Jump") || Input.GetButton("player0Fire1") || Input.GetButton("pauseButton") ){
 				titleScreen.SetActive(false);
 				gameState = "levelSelect";
 				levelSelectScreen.reset();
@@ -271,12 +271,13 @@ public class GameManager : MonoBehaviour {
 				if (paused && Input.GetButtonUp("player0Fire1")){
 					setPause(false, false);
 				}
-				//h calls up the rules
-				if (Input.GetKeyDown(KeyCode.H)){
+				//h calls up the rules (y on xbox)
+				if (Input.GetKeyDown(KeyCode.H) || (paused && Input.GetKeyDown("joystick button 3")) ){
 					setPause(true, true);
 				}
-				//Q ends the game
-				if (Input.GetKeyDown(KeyCode.Q)){
+				//Q ends the game (back on xbox)
+				if (paused && (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown("joystick button 6")) ){
+					setPause(false, false);
 					endGame(players[0].Score);
 				}
 				
