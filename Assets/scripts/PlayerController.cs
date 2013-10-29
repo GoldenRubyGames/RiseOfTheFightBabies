@@ -17,6 +17,8 @@ public class PlayerController : Player {
 	private float notGroundedTimer;
 	private bool isGrounded;
 	
+	public bool neverBeenGrounded;
+	
 	public int numLives;
 	private int livesLeft;
 	
@@ -86,6 +88,7 @@ public class PlayerController : Player {
 		recorder.reset(true);
 		
 		isGrounded = false;
+		neverBeenGrounded = true;
 		notGroundedTimer = timeBeforeNotGrounded;
 		
 		//make sure they are not doing clone kill
@@ -201,6 +204,12 @@ public class PlayerController : Player {
 		
 		//record for ghosts
 		recorder.record(curVel, facingDir, transform.position, attackPressed);
+		
+		if (isGrounded && neverBeenGrounded){
+			neverBeenGrounded = false;
+			Debug.Log("suck my shit");
+			recorder.markGrounded();
+		}
 		
 		
 		//if the clone kill; glow is active, make sure it's facing the right way

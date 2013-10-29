@@ -55,7 +55,11 @@ public class StatusText : MonoBehaviour {
 	
 	public void showDeathText(int livesLeft){
 		textMesh.color = deathColor;
-		setText("YOU DIED\n"+livesLeft.ToString()+" LIVES LEFT");	
+		if (livesLeft != 1){
+			setText("YOU DIED\n"+livesLeft.ToString()+" LIVES LEFT");	
+		}else{
+			setText("YOU DIED\n"+livesLeft.ToString()+" LIFE LEFT");	
+		}
 	}
 	
 	public void showGhostKill(bool cloneDeadFoever){

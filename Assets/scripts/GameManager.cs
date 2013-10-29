@@ -137,9 +137,13 @@ public class GameManager : MonoBehaviour {
 		ghosts.Clear();
 		
 		//give us a starting pickup
+		/*
 		if (!doingIntro){
-			spawnPickup();
+			spawnPickup(true);
 		}
+		*/
+		
+		
 		pickupTimer = nextPickupTimeMin;
 		
 		cloneKillCountDown = (int) Random.Range(minKillsForCloneKill, maxKillsForCloneKill);
@@ -202,14 +206,24 @@ public class GameManager : MonoBehaviour {
 			Destroy( effects[i] );
 		}
 		
-		//make sure no spawn points have a clone kill
+		//if there are new weapons available, spawn one
 		/*
+		bool noWeapons = true;
 		for (int i=0; i<pickupSpots.Count; i++){
-			if (pickupSpots[i].IsActive && pickupSpots[i].PowerObject==null){
-				pickupSpots[i].deactivate();
+			if (pickupSpots[i].activate){
+				if(pickupSpots[i].PowerObject.GetComponent<Power>().isAnAttack){
+					noWeapons = false;
+					break;
+				}
 			}
 		}
+		if (noWeapons && !doingIntro){
+			spawnPickup(true);
+		}
 		*/
+		if (!doingIntro){
+			spawnPickup(true);
+		}
 		
 		//reset HUD
 		hud.reset();
@@ -277,7 +291,7 @@ public class GameManager : MonoBehaviour {
 			//don't allow any input while title screen is up
 			if (!pauseScreen.ShowingTitle){
 				if (Input.GetKeyDown(KeyCode.V)){
-					spawnPickup();
+					spawnPickup(false);
 				}
 				
 				//makeshift pause
@@ -318,7 +332,7 @@ public class GameManager : MonoBehaviour {
 				//spawn pickups?
 				pickupTimer -= Time.deltaTime;
 				if (pickupTimer <= 0){
-					spawnPickup();
+					spawnPickup(false);
 					pickupTimer = Random.Range(nextPickupTimeMin, nextPickupTimeMax);
 				}
 				
@@ -469,7 +483,7 @@ public class GameManager : MonoBehaviour {
 		
 	}
 	
-	void spawnPickup(){
+	void spawnPickup(bool forceWeapon){
 		//select a power
 		int powerID = 0;
 		//select a point
@@ -484,6 +498,13 @@ public class GameManager : MonoBehaviour {
 			powerID = (int)Random.Range(0, numPowersAvailable);
 			for (int i=0; i<pickupSpots.Count; i++){
 				if (pickupSpots[i].IsActive && pickupSpots[i].PowerObject == powerObjects[powerID]){
+					alreadyUsed = true;
+				}
+			}
+			
+			//if we demand a weapon, treat it as being used already so we get a new one
+			if (forceWeapon){
+				if (!powerObjects[powerID].GetComponent<Power>().isAnAttack){
 					alreadyUsed = true;
 				}
 			}

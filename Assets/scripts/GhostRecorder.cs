@@ -26,15 +26,19 @@ public class GhostRecorder {
 	
 	private int playbackDir;
 	private float playbackSpeed;
+	
+	int groundedFrame;
 
 	public GhostRecorder(){
 		data = new List<GhostDataPoint>();
 		reset(true);
+		groundedFrame = 0;
 	}
 	
 	public GhostRecorder(GhostRecorder orig){
 		data = new List<GhostDataPoint>(orig.Data);
 		reset(false);
+		groundedFrame = orig.groundedFrame;
 	}
 	
 	public void reset(bool clearData){
@@ -100,6 +104,11 @@ public class GhostRecorder {
 		curPos = data[playHead].pos;
 	}
 	
+	public void markGrounded(){
+		groundedFrame = data.Count;
+		Debug.Log("this the frame: "+groundedFrame);
+	}
+	
 	public bool checkAttack(){
 		bool returnVal = attackPressed;
 		attackPressed = false;  //always turn this flag off after checking
@@ -111,7 +120,7 @@ public class GhostRecorder {
 		return playHead >= data.Count-1;
 	}
 	public bool isAtStart(){
-		return playHead <= 0;
+		return (playHead <= 0) || (playHead <= groundedFrame);
 	}
 	
 	public void setPlaybackDir(int newDir){

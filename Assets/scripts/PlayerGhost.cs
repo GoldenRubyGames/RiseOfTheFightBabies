@@ -22,6 +22,8 @@ public class PlayerGhost : Player {
 	
 	public float returningNoiseDist, returningNoiseSpeed;
 	
+	
+	
 	public void ghostSetup(Color oldColor, GhostRecorder record, List<Power> oldPowers, StarHelm _starHelm, GameManager _gm, AudioManager _audioController){
 		
 		isGhost = true;
@@ -38,7 +40,6 @@ public class PlayerGhost : Player {
 			thisPower.GetComponent<Power>().assignToPlayer(this);
 			
 		}
-		
 		
 	}
 	
@@ -89,8 +90,13 @@ public class PlayerGhost : Player {
 			curVel = recorder.CurVel;
 			facingDir = recorder.CurFacingDir;
 			
+			if (recorder.PlaybackDir == -1){
+				facingDir *= -1;
+			}
+			
 			bool attackPressed = recorder.checkAttack();
-			if (attackPressed && recorder.PlaybackDir == 1){
+			//if (attackPressed && recorder.PlaybackDir == 1){
+			if (attackPressed){
 				for (int i=0; i<powers.Count; i++){
 					powers[i].use();
 				}
@@ -98,6 +104,7 @@ public class PlayerGhost : Player {
 			
 			//if we hit the end, rewind
 			if (recorder.PlaybackDir == 1 && recorder.isAtEnd()){
+				/*
 				avatarAnimation.Play("melting");
 				IsGhostMelting = true;
 				returnTimer = -pauseBeforeReturning;
@@ -106,15 +113,17 @@ public class PlayerGhost : Player {
 				recorder.play(false);
 				gunSpriteWasOn = gunSprite.gameObject.active;
 				gunSprite.gameObject.SetActive(false);
-				//recorder.setPlaybackDir(-1);
+				*/
+				recorder.setPlaybackDir(-1);
 				//recorder.setPlaybackSpeed(rewindSpeed);
 			}
-			/*
+			
 			if (recorder.PlaybackDir == -1 && recorder.isAtStart()){
 				recorder.setPlaybackDir(1);
 				recorder.setPlaybackSpeed(1);
 			}
-			*/
+			
+			
 		}
 		
 		if (!avatarAnimation.Playing && IsGhostMelting){
