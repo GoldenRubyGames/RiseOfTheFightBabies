@@ -22,8 +22,17 @@ public class HUD : MonoBehaviour {
 	
 	public int maxNumIconsPerRow;
 	public float iconSpacingVert;
-		
-
+	
+	//showing clone kills
+	public float cloneKillX;
+	public float cloneKillYStart;
+	public float cloneKillYSpacing;
+	private tk2dSprite cloneKillIcon;
+	private int cloneKillIconID;
+	
+	public Color cloneKillIconColA, cloneKillIconColB;
+	public float cloneKillIconFlashSpeed;
+	
 	// Use this for initialization
 	void Awake () {
 	
@@ -55,6 +64,8 @@ public class HUD : MonoBehaviour {
 		iconIds.Add("Mines", sampleSprite.GetSpriteIdByName("pickupIconMine"));
 		
 		
+		cloneKillIconID = sampleSprite.GetSpriteIdByName("cloneKillIcon");
+		
 	}
 	
 	public void reset(){
@@ -76,8 +87,45 @@ public class HUD : MonoBehaviour {
 		newIconSprite.spriteId = iconIds[newPower.powerName];
 		
 		newIconSprite.transform.position = newPos;
+		
+		//turn if off if the clone kill is active
+		if (player.NextAttackIsCloneKill){
+			newIconObj.SetActive(false);
+		}
+		
 		pickupIcons.Add(newIconObj);
 	}
+	
+	public void addCloneKillIcon(){
+		/*
+		Vector3 newPos = new Vector3(0,0,0);
+		newPos.x = anchor.transform.position.x + cloneKillX;
+		newPos.y = anchor.transform.position.y + cloneKillYStart + cloneKillIcons.Count*cloneKillYSpacing;
+		*/
+		
+		Vector3 newPos = new Vector3( anchor.transform.position.x+ iconStartOffset.x , anchor.transform.position.y+iconStartOffset.y, 0);
+		
+		
+		GameObject newCloneKillObj = Instantiate(iconPrefab, newPos, new Quaternion(0,0,0,0)) as GameObject;
+		cloneKillIcon = newCloneKillObj.GetComponent<tk2dSprite>();
+		
+		cloneKillIcon.spriteId = cloneKillIconID;
+		cloneKillIcon.color = cloneKillIconColA;
+		
+		//make all other icons invisible
+		for (int i=0; i<pickupIcons.Count; i++){
+			pickupIcons[i].SetActive(false);
+		}
+	}
+	
+	public void removeCloneKillIcon(){
+		Destroy( cloneKillIcon.gameObject );
+		//bring the other icons back
+		for (int i=0; i<pickupIcons.Count; i++){
+			pickupIcons[i].SetActive(true);
+		}
+	}
+	
 	
 	void OnGUI(){
 		
@@ -110,6 +158,17 @@ public class HUD : MonoBehaviour {
 		if (!gm.DoingIntro){
 			GUI.Label(textPos, topText, textStyle);
 		}
+	}
+	
+	void Update(){
+		//if the player is about to use the clone kill, make it flash
+		if (player.NextAttackIsCloneKill){
+			
+			float prc = Mathf.Abs(Mathf.Sin(Time.time * cloneKillIconFlashSpeed)) ;
+			Color curCol = prc*cloneKillIconColA + (1-prc)*cloneKillIconColB;
+			cloneKillIcon.color = curCol;
+		}
+		
 	}
 	
 	

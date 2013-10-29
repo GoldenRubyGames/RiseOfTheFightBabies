@@ -20,9 +20,13 @@ public class PlayerController : Player {
 	public int numLives;
 	private int livesLeft;
 	
-	//killing clones forever and ever amen
+	//using clone kills
 	bool nextAttackIsCloneKill;
-	private int cloneKillsAvailable;
+	public tk2dSprite cloneKillGlow;
+	public HUD hud;
+	public GameObject cloneKilLExplosionPrefab;
+	
+	
 	
 	public override void customStart(){
 		
@@ -84,7 +88,12 @@ public class PlayerController : Player {
 		isGrounded = false;
 		notGroundedTimer = timeBeforeNotGrounded;
 		
-		nextAttackIsCloneKill = false;
+		//make sure they are not doing clone kill
+		if (nextAttackIsCloneKill){
+			hud.removeCloneKillIcon();
+			nextAttackIsCloneKill = false;
+			cloneKillGlow.gameObject.SetActive(false);
+		}
 	}
 	
 	public override void customUpdate(){
@@ -172,20 +181,32 @@ public class PlayerController : Player {
 		bool attackPressed = false;
 		if (Input.GetButtonDown(attack1Button)){
 			attackPressed = true;
-			for (int i=0; i<powers.Count; i++){
-				powers[i].use(nextAttackIsCloneKill);
-			}
 			
-			nextAttackIsCloneKill = false;
-		}
-		
-		if (Input.GetButtonDown("useCloneKill")){
-			useCloneKill();
+			//if they have a clone kill, use that
+			if (nextAttackIsCloneKill){
+				nextAttackIsCloneKill = false;
+				cloneKillGlow.gameObject.SetActive(false);
+				hud.removeCloneKillIcon();
+				//spawn the explosion
+				GameObject newExplosion = Instantiate(cloneKilLExplosionPrefab, transform.position, new Quaternion(0,0,0,0)) as GameObject;
+				newExplosion.GetComponent<Explosion>().setOwner(this);
+			}
+			//otherwise do normal attack
+			else{
+				for (int i=0; i<powers.Count; i++){
+					powers[i].use(nextAttackIsCloneKill);
+				}
+			}
 		}
 		
 		//record for ghosts
 		recorder.record(curVel, facingDir, transform.position, attackPressed);
 		
+		
+		//if the clone kill; glow is active, make sure it's facing the right way
+		if (nextAttackIsCloneKill){
+			cloneKillGlow.FlipX = facingDir==-1;
+		}
 		
 		//testing
 		if (Input.GetKeyDown(KeyCode.K) && controllerNum==0){
@@ -234,16 +255,11 @@ public class PlayerController : Player {
 		}
 	}
 	
-	void useCloneKill(){
-		if (cloneKillsAvailable > 0){
-			nextAttackIsCloneKill = true;
-			Debug.Log("get ready to kill");
-			cloneKillsAvailable--;
-		}
-	}
 	
-	public void addCloneKill(){
-		cloneKillsAvailable++;
+	public override void activateCloneKill(){
+		nextAttackIsCloneKill = true;
+		Debug.Log("get ready to kill");
+		cloneKillGlow.gameObject.SetActive(true);
 	}
 	
 	
@@ -259,14 +275,14 @@ public class PlayerController : Player {
 		}
 	}
 	
-	
-	public int CloneKillsAvailable {
+	public bool NextAttackIsCloneKill {
 		get {
-			return this.cloneKillsAvailable;
+			return this.nextAttackIsCloneKill;
 		}
 		set {
-			cloneKillsAvailable = value;
+			nextAttackIsCloneKill = value;
 		}
 	}
+	
 	
 }

@@ -11,12 +11,16 @@ public class Explosion : MonoBehaviour {
 	private float timer;
 	
 	private Player owner;
-	private bool isCloneKiller;
+	public bool isCloneKiller;
 	
 	public float rotationSpeed;
 	
 	//sound
 	public AudioClip soundEffect;
+	
+	//tetsing clone kill
+	private int dir;
+	public float moveSpeed;
 
 	// Use this for initialization
 	void Start () {
@@ -28,7 +32,14 @@ public class Explosion : MonoBehaviour {
 		owner = _owner;
 		owner.AudioController.Play(soundEffect);
 		
-		isCloneKiller = _isCloneKiller;
+		//isCloneKiller = _isCloneKiller;
+	}
+	
+	public void setOwner(Player _owner){
+		owner = _owner;
+		owner.AudioController.Play(soundEffect);
+		
+		dir = owner.facingDir;
 	}
 	
 	// Update is called once per frame
@@ -42,6 +53,10 @@ public class Explosion : MonoBehaviour {
 		transform.localScale = new Vector3(thisScale, thisScale, thisScale);
 		
 		transform.localEulerAngles += new Vector3(0,0,rotationSpeed)*Time.deltaTime;
+		
+		if (isCloneKiller){
+			transform.position += new Vector3(moveSpeed*Time.deltaTime*dir, 0,0);
+		}
 	}
 	
 	
@@ -49,11 +64,12 @@ public class Explosion : MonoBehaviour {
 		if (other.gameObject.layer == LayerMask.NameToLayer("playerHitBox") ){
 			//get the player
 			//THIS CAN HIT THE OWNER BECAUSE IT'S A GODDAMN EXPLOSION
+			//Ok, but the clone kill explosion cannot harm the player
+			
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
-			
-			thisPlayer.takeDamage(owner, isCloneKiller);
-			
+			if ( !isCloneKiller || !thisPlayer.isPlayerControlled){
+				thisPlayer.takeDamage(owner, isCloneKiller);
+			}
 		}
-		
 	}
 }

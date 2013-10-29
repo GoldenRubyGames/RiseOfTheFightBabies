@@ -31,6 +31,7 @@ public class Player : MonoBehaviour {
 	public List<Power> powers = new List<Power>();
 	public GameObject startingPowerObject;
 	
+	//score
 	private int score;
 	
 	//general status things that items may need to affect
@@ -364,6 +365,9 @@ public class Player : MonoBehaviour {
 		GameObject.FindGameObjectWithTag("statusText").SendMessage("showScoreText", score);
 	}
 	
+	public virtual void activateCloneKill(){}
+	
+	
 	public bool getPower(Power newPower){
 		//do not add this if the player already has it
 		for (int i=0; i<powers.Count; i++){
@@ -521,4 +525,6 @@ public class Player : MonoBehaviour {
 			audioController = value;
 		}
 	}
+	
+	
 }

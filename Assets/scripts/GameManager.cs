@@ -36,6 +36,11 @@ public class GameManager : MonoBehaviour {
 	public float nextPickupTimeMin, nextPickupTimeMax;
 	float pickupTimer;
 	
+	//clone kill
+	public int minKillsForCloneKill, maxKillsForCloneKill;
+	private int cloneKillCountDown;
+	//private bool cloneKillHasBeenSpawned;
+	
 	//goons
 	public bool useGoons;
 	public GameObject goonPrefab;
@@ -137,13 +142,14 @@ public class GameManager : MonoBehaviour {
 		}
 		pickupTimer = nextPickupTimeMin;
 		
+		cloneKillCountDown = (int) Random.Range(minKillsForCloneKill, maxKillsForCloneKill);
+		
 		//reset the players
 		for (int i=0; i<players.Length; i++){
 			players[i].gameObject.SetActive(true);
 			players[i].clearPowers();
 			players[i].Score = 0;
 			players[i].LivesLeft = players[i].numLives;
-			players[i].CloneKillsAvailable = 0;
 			if (doingIntro){
 				Debug.Log("set the lives for intro");
 				players[i].LivesLeft = 2;
@@ -195,6 +201,15 @@ public class GameManager : MonoBehaviour {
 		for (int i=0; i<effects.Length; i++){
 			Destroy( effects[i] );
 		}
+		
+		//make sure no spawn points have a clone kill
+		/*
+		for (int i=0; i<pickupSpots.Count; i++){
+			if (pickupSpots[i].IsActive && pickupSpots[i].PowerObject==null){
+				pickupSpots[i].deactivate();
+			}
+		}
+		*/
 		
 		//reset HUD
 		hud.reset();
@@ -290,15 +305,8 @@ public class GameManager : MonoBehaviour {
 				if (Input.GetKeyDown(KeyCode.T)){
 					spawnGoon();
 				}
-				//switching levels
-				if (Input.GetKeyDown(KeyCode.Alpha1)){
-					setLevel(0);
-				}
-				if (Input.GetKeyDown(KeyCode.Alpha2)){
-					setLevel(1);
-				}
-				if (Input.GetKeyDown(KeyCode.Alpha3)){
-					setLevel(2);
+				if (Input.GetKeyDown(KeyCode.C)){
+					spawnCloneKill();
 				}
 				if (Input.GetKeyDown(KeyCode.R)){
 					resetGame();
@@ -367,6 +375,15 @@ public class GameManager : MonoBehaviour {
 			pauseScreen.deactivate();
 		}
 		Time.timeScale = paused ? 0 : 1;
+	}
+	
+	public void addKill(){
+		dataHolder.addCloneKill();
+		cloneKillCountDown--;
+		Debug.Log("kills left: "+cloneKillCountDown);
+		if (cloneKillCountDown <= 0){
+			spawnCloneKill();
+		}
 	}
 	
 	public void startKillEffect(Player freshlyKilled, Player killer, bool _killEffectIsCloneKiller){
@@ -484,6 +501,30 @@ public class GameManager : MonoBehaviour {
 		
 	}
 	
+	void spawnCloneKill(){
+		//select a power
+		int powerID = 0;
+		//select a point
+		int posNum = (int)Random.Range(0, pickupSpots.Count);
+		
+		//if it's taken, move through the list until we find one that isn't
+		int numTries = 0;
+		while (pickupSpots[posNum].IsActive && numTries<pickupSpots.Count){
+			posNum++;
+			if (posNum >= pickupSpots.Count){
+				posNum -= pickupSpots.Count;
+			}
+			numTries++;
+		}
+		
+		pickupSpots[posNum].activateCloneKill();	
+		
+		//set up the next one
+		cloneKillCountDown = (int) Random.Range(minKillsForCloneKill, maxKillsForCloneKill);
+		
+		Debug.Log("SPAWN IT BUSTER");
+	}
+	
 	public void spawnGoon(){
 		GameObject goonSpawnObj = Instantiate(goonPrefab, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
 		PlayerGoon goonSpawn = goonSpawnObj.GetComponent<PlayerGoon>();
@@ -493,11 +534,11 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	public void removeGhost(PlayerGhost ghost){
-		Debug.Log("num ghosts before: "+ghosts.Count);
+		//Debug.Log("num ghosts before: "+ghosts.Count);
 		ghosts.Remove(ghost);
 		ghost.clearPowers();
 		Destroy(ghost.gameObject);
-		Debug.Log("num ghosts after: "+ghosts.Count);
+		//Debug.Log("num ghosts after: "+ghosts.Count);
 	}
 	
 	public void endGame(int score){

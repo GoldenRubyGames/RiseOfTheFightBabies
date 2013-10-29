@@ -153,7 +153,8 @@ public class PlayerGhost : Player {
 		}
 		
 		//store the kill
-		gm.dataHolder.addCloneKill();
+		gm.addKill();
+		//gm.dataHolder.addCloneKill();
 		
 		//move the ghost away and turn them off until the next round
 		transform.position = new Vector3(0, -100, 0); //move it off screen

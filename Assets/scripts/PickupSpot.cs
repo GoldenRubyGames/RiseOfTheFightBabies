@@ -8,6 +8,9 @@ public class PickupSpot : MonoBehaviour {
 	
 	private bool isActive;
 	
+	//giving the cloneKillPower
+	private bool cloneKillActive;
+	
 	
 	//timing
 	public float time;
@@ -19,6 +22,9 @@ public class PickupSpot : MonoBehaviour {
 	public tk2dSpriteAnimator doorSprite;
 	private tk2dSpriteAnimationClip openClip, closeClip;
 	public tk2dSprite pickupSprite;
+	
+	int pickupSpriteNormalID, pickupSpriteCloneKillID;
+	
 	
 	//text
 	public TextMesh textObject;
@@ -34,17 +40,22 @@ public class PickupSpot : MonoBehaviour {
 		openClip = doorSprite.GetClipByName("pickupDoorOpen");
 		closeClip = doorSprite.GetClipByName("pickupDoorClose");
 		
+		pickupSpriteNormalID = pickupSprite.GetSpriteIdByName("pickup");
+		pickupSpriteCloneKillID = pickupSprite.GetSpriteIdByName("pickupCloneKill");
+		
 		//find the HUd
 		//hud = GameObject.Find("HUD").GetComponent<HUD>();
 	}
 	
 	public void activate(GameObject _powerObject){
 		isActive = true;
+		cloneKillActive = false;
 		
 		timer = time;
 		
 		powerObject = _powerObject;
 		pickupSprite.gameObject.SetActive(true);
+		pickupSprite.spriteId = pickupSpriteNormalID;
 		
 		//set the text
 		textObject.gameObject.SetActive(true);
@@ -54,7 +65,22 @@ public class PickupSpot : MonoBehaviour {
 		doorSprite.Play(openClip);
 	}
 	
-	
+	public void activateCloneKill(){
+		isActive = true;
+		cloneKillActive = true;
+		
+		timer = time;
+		powerObject = null;
+		pickupSprite.gameObject.SetActive(true);
+		pickupSprite.spriteId = pickupSpriteCloneKillID;
+		
+		//set the text
+		textObject.gameObject.SetActive(true);
+		textObject.text = "CLONE KILL";
+		
+		//open the door
+		doorSprite.Play(openClip);
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -96,10 +122,17 @@ public class PickupSpot : MonoBehaviour {
 				
 				if (thisPlayer.canPickupPowers){
 					//give them a power up!
-					GameObject thisPower = Instantiate(powerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
-					Power powerToAssign = thisPower.GetComponent<Power>();
-					if (powerToAssign.assignToPlayer(thisPlayer)){
-						hud.addIcon(powerToAssign);
+					if (powerObject != null){
+						GameObject thisPower = Instantiate(powerObject, new Vector3(0,0,0), new Quaternion(0,0,0,0)) as GameObject;
+						Power powerToAssign = thisPower.GetComponent<Power>();
+						if (powerToAssign.assignToPlayer(thisPlayer)){
+							hud.addIcon(powerToAssign);
+						}
+					}
+					//or give them the gift of a clone kill
+					else{
+						thisPlayer.activateCloneKill();
+						hud.addCloneKillIcon();
 					}
 					
 					//close the doors
