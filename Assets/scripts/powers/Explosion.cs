@@ -18,7 +18,7 @@ public class Explosion : MonoBehaviour {
 	//sound
 	public AudioClip soundEffect;
 	
-	//tetsing clone kill
+	//clone kill explosions move
 	private int dir;
 	public float moveSpeed;
 
@@ -26,13 +26,6 @@ public class Explosion : MonoBehaviour {
 	void Start () {
 		timer = explosionTime;
 		
-	}
-	
-	public void setOwner(Player _owner, bool _isCloneKiller){
-		owner = _owner;
-		owner.AudioController.Play(soundEffect);
-		
-		//isCloneKiller = _isCloneKiller;
 	}
 	
 	public void setOwner(Player _owner){

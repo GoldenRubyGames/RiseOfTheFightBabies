@@ -45,7 +45,7 @@ public class KnifeEffect : PowerEffect {
 		if (collision.gameObject.layer == LayerMask.NameToLayer("playerHitBox")){
 			Player thisPlayer = collision.gameObject.transform.parent.gameObject.GetComponent<Player>();
 			if (thisPlayer != Owner){
-				thisPlayer.takeDamage(Owner, IsCloneKiller);
+				thisPlayer.takeDamage(Owner);
 			}else{
 				return;
 			}

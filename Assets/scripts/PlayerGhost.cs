@@ -92,7 +92,7 @@ public class PlayerGhost : Player {
 			bool attackPressed = recorder.checkAttack();
 			if (attackPressed && recorder.PlaybackDir == 1){
 				for (int i=0; i<powers.Count; i++){
-					powers[i].use(false);
+					powers[i].use();
 				}
 			}
 			

@@ -50,7 +50,7 @@ public class tenTonDropEffect : PowerEffect {
 			if( collision.gameObject.transform.position.y < transform.position.y){
 				Player thisPlayer = collision.gameObject.transform.parent.gameObject.GetComponent<Player>();
 				if (thisPlayer != Owner){
-					thisPlayer.takeDamage(Owner, IsCloneKiller);
+					thisPlayer.takeDamage(Owner);
 				}
 			}
 		}

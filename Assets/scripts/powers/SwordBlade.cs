@@ -12,7 +12,7 @@ public class SwordBlade : MonoBehaviour {
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
 			if (thisPlayer != parent.Owner){
-				thisPlayer.takeDamage(parent.Owner, parent.IsCloneKiller);
+				thisPlayer.takeDamage(parent.Owner);
 			}
 		}
 		

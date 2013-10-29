@@ -4,17 +4,14 @@ using System.Collections;
 public class PowerEffect : MonoBehaviour {
 	
 	Player owner;
-	bool isCloneKiller;
 	
-	public void setup(Player _owner, bool _isCloneKiller){
+	public void setup(Player _owner){
 		owner = _owner;
-		isCloneKiller = _isCloneKiller;
 		setupCustom();
 	}
 	
-	public void setup(Player _owner, bool _isCloneKiller, bool extraVal){
+	public void setup(Player _owner, bool extraVal){
 		owner = _owner;
-		isCloneKiller = _isCloneKiller;
 		setupCustom(extraVal);
 	}
 	
@@ -31,12 +28,4 @@ public class PowerEffect : MonoBehaviour {
 		}
 	}
 
-	public bool IsCloneKiller {
-		get {
-			return this.isCloneKiller;
-		}
-		set {
-			isCloneKiller = value;
-		}
-	}
 }

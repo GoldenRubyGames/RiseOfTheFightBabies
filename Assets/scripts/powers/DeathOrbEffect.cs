@@ -37,7 +37,7 @@ public class DeathOrbEffect : PowerEffect {
 			//get the player
 			Player thisPlayer = other.gameObject.transform.parent.gameObject.GetComponent<Player>();
 			if (thisPlayer != Owner){
-				thisPlayer.takeDamage(Owner, IsCloneKiller);
+				thisPlayer.takeDamage(Owner);
 			}
 		}
 	}

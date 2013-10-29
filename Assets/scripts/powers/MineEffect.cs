@@ -45,7 +45,7 @@ public class MineEffect : PowerEffect {
 			if (thisPlayer != Owner){
 				//explode!
 				GameObject newExplosion = Instantiate(explosionPrefab, transform.position, new Quaternion(0,0,0,0)) as GameObject;
-				newExplosion.GetComponent<Explosion>().setOwner(Owner, IsCloneKiller);
+				newExplosion.GetComponent<Explosion>().setOwner(Owner);
 				Destroy(gameObject);
 			}
 		}

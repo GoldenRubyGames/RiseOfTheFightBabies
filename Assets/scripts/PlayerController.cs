@@ -194,7 +194,7 @@ public class PlayerController : Player {
 			//otherwise do normal attack
 			else{
 				for (int i=0; i<powers.Count; i++){
-					powers[i].use(nextAttackIsCloneKill);
+					powers[i].use();
 				}
 			}
 		}

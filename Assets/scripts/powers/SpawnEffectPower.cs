@@ -7,12 +7,12 @@ public class SpawnEffectPower : Power {
 	
 	public bool requirePlayerToBeInAir;
 
-	public override void customUse(bool isCloneKiller){
+	public override void customUse(){
 		
 		if (!owner.controller.isGrounded || !requirePlayerToBeInAir){
 			//spawn an effect
 			GameObject thisObj = Instantiate( effectObject, owner.transform.position, new Quaternion(0,0,0,0)) as GameObject;
-			thisObj.GetComponent<PowerEffect>().setup(owner, isCloneKiller);
+			thisObj.GetComponent<PowerEffect>().setup(owner);
 			
 			//recoil!
 			owner.push( new Vector3(recoilForce.x*owner.facingDir*-1, recoilForce.y, 0) );

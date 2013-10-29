@@ -43,7 +43,7 @@ public class GrenadeEffect : PowerEffect {
 	
 	void explode(){
 		GameObject newExplosion = Instantiate(explosionPrefab, transform.position, new Quaternion(0,0,0,0)) as GameObject;
-		newExplosion.GetComponent<Explosion>().setOwner(Owner, IsCloneKiller);
+		newExplosion.GetComponent<Explosion>().setOwner(Owner);
 		Destroy(gameObject);
 		
 	}

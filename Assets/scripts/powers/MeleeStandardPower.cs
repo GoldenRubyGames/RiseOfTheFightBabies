@@ -7,10 +7,10 @@ public class MeleeStandardPower : Power {
 	
 	private GameObject curObject;
 	
-	public override void customUse(bool isCloneKiller){
+	public override void customUse(){
 		//spawn an effect
 		curObject = Instantiate( effectObject, owner.transform.position, new Quaternion(0,0,0,0)) as GameObject;
-		curObject.GetComponent<PowerEffect>().setup(owner, isCloneKiller);
+		curObject.GetComponent<PowerEffect>().setup(owner);
 		
 		//push the user forward
 		owner.push( new Vector3(dashForce.x*owner.facingDir, dashForce.y, 0) );

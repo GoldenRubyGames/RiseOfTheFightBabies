@@ -277,6 +277,9 @@ public class Player : MonoBehaviour {
 	}
 	*/
 	
+	public void takeDamage(Player source){
+		takeDamage(source, false);
+	}
 	
 	public void takeDamage(Player source, bool cloneKiller){
 		//ghosts can't hurt ghosts!
