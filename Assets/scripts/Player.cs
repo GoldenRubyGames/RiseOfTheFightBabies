@@ -316,7 +316,7 @@ public class Player : MonoBehaviour {
 		//instantiate a dead player object to take the fall
 		GameObject deadPlayerObj = Instantiate(deadPlayerPrefab, transform.position, new Quaternion(0,0,0,0)) as GameObject;
 		DeadPlayer deadPlayer = deadPlayerObj.GetComponent<DeadPlayer>();
-		deadPlayer.setup( avatarAnimation.Library, killer, gunSprite.active );
+		deadPlayer.setup( avatarAnimation.Library, killer, gunSprite.active, cloneKiller);
 		
 		//if this had the star helm, have the player spawn a new one
 		if (killer != null && starHelm.ChosenOne == this){

@@ -18,12 +18,17 @@ public class DeadPlayer : MonoBehaviour {
 	
 	public float friction;
 	
+	//when clones are banished, it needs ot look different
+	private bool cloneKiller;
+	public float cloneKillGrow;
+	
 	//delaing with the gun if they had one
 	public DeadGun gun;
 	
-	public void setup(tk2dSpriteAnimation animationLibrary, Player killer, bool showGun){
+	public void setup(tk2dSpriteAnimation animationLibrary, Player killer, bool showGun, bool _cloneKiller){
 		anim.Library = animationLibrary;
 		
+		cloneKiller = _cloneKiller;
 		deathTimer = deathTime;
 		
 		//set the vel based on the angle to the killer
@@ -41,7 +46,11 @@ public class DeadPlayer : MonoBehaviour {
 			curAngle = -startAngle;
 		}
 		
-		anim.Play("dying");
+		if (!cloneKiller){
+			anim.Play("dying");
+		}else{
+			anim.Play("disintegrating");
+		}
 		
 		if (showGun){
 			gun.gameObject.SetActive(true);
@@ -56,14 +65,21 @@ public class DeadPlayer : MonoBehaviour {
 		
 		transform.position += vel * Time.deltaTime;
 		
-		curAngle += angleSpeed * Time.deltaTime;
-		transform.localEulerAngles = new Vector3(0,0, curAngle);
+		if (!cloneKiller){
+			curAngle += angleSpeed * Time.deltaTime;
+			transform.localEulerAngles = new Vector3(0,0, curAngle);
+		}else{
+			transform.localScale += new Vector3(1,1,1) * cloneKillGrow * Time.deltaTime;
+		}
 		
 		//friction
 		vel *= Mathf.Pow(friction, Time.deltaTime);
 		angleSpeed *= Mathf.Pow(friction, Time.deltaTime);
 		
-		if (deathTimer<=0){
+		if (deathTimer<=0 && !cloneKiller){
+			Destroy(gameObject);
+		}
+		if (cloneKiller && !anim.Playing){
 			Destroy(gameObject);
 		}
 	}

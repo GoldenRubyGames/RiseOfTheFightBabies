@@ -207,7 +207,6 @@ public class PlayerController : Player {
 		
 		if (isGrounded && neverBeenGrounded){
 			neverBeenGrounded = false;
-			Debug.Log("suck my shit");
 			recorder.markGrounded();
 		}
 		
