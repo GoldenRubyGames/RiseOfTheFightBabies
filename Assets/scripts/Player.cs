@@ -250,32 +250,6 @@ public class Player : MonoBehaviour {
 		pushVel += power;
 	}
 	
-	/*
-	public void changeHealth(int amount, Player source){
-		//ghosts can't hurt ghosts!
-		if (!isPlayerControlled && !source.isPlayerControlled){
-			return;
-		}
-		
-		//don't take damage while invicible
-		if (amount < 0 && invincibilityTimer > 0){
-			return;
-		}
-		
-		health += amount;
-		hudShakeTimer = hudShakeTime;
-		
-		//if they took damage make them invicible
-		if (amount < 0){
-			invincibilityTimer = invincibilityTime;
-		}
-		
-		//is this fucker dead?
-		if (health == 0){
-			killPlayer(source);
-		}
-	}
-	*/
 	
 	public void takeDamage(Player source){
 		takeDamage(source, false);

@@ -31,8 +31,9 @@ public class MineEffect : PowerEffect {
 	// Update is called once per frame
 	void Update () {
 		
-		rigidbody.AddForce(pushForce);
-	
+		if (Time.timeScale != 0){
+			rigidbody.AddForce(pushForce);
+		}
 		
 	}
 	

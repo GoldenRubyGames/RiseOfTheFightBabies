@@ -23,9 +23,9 @@ public class RocketEffect : PowerEffect {
 	
 	// Update is called once per frame
 	void Update () {
-		
-		rigidbody.AddForce(moveForce);
-		
+		if (Time.timeScale != 0){
+			rigidbody.AddForce(moveForce);
+		}
 	}
 	
 	void explode(){

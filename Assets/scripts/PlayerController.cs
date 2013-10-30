@@ -28,6 +28,9 @@ public class PlayerController : Player {
 	public HUD hud;
 	public GameObject cloneKilLExplosionPrefab;
 	
+	//showing the tutorial info for clone kill
+	public bool showCloneKillPopUp;
+	public GameObject cloneKillPopUpPrefab;
 	
 	
 	public override void customStart(){
@@ -182,7 +185,7 @@ public class PlayerController : Player {
 		
 		//using powers
 		bool attackPressed = false;
-		if (Input.GetButtonDown(attack1Button)){
+		if (Input.GetButtonDown(attack1Button) && !gm.Paused){
 			attackPressed = true;
 			
 			//if they have a clone kill, use that
@@ -266,8 +269,18 @@ public class PlayerController : Player {
 	
 	public override void activateCloneKill(){
 		nextAttackIsCloneKill = true;
-		Debug.Log("get ready to kill");
 		cloneKillGlow.gameObject.SetActive(true);
+		
+		//if this is the first one, show the pop up
+		if (showCloneKillPopUp){
+			showCloneKillPopUp = false;
+			
+			GameObject popUpObj = Instantiate(cloneKillPopUpPrefab, new Vector3(0,0,-2.5f), new Quaternion(0,0,0,0)) as GameObject;
+			popUpObj.GetComponent<IntroPopUp>().showCloneKill(gm);
+			
+			gm.setPause(true, false);
+			gm.pauseScreen.gameObject.SetActive(false);
+		}
 	}
 	
 	

@@ -27,9 +27,9 @@ public class BarrelEffect : PowerEffect {
 	
 	// Update is called once per frame
 	void Update () {
-		//Debug.Log(Vector3.right * speed - rigidbody.velocity);
-		//rigidbody.AddForce ( Vector3.right * speed * facingDir - rigidbody.velocity);
-		rigidbody.AddForce ( Vector3.right * speed * facingDir);
+		if (Time.timeScale != 0){
+			rigidbody.AddForce( Vector3.right * speed * facingDir);
+		}
 		
 		//is time time to die?
 		timer -= Time.deltaTime;

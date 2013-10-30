@@ -5,7 +5,7 @@ public class IntroPopUp : MonoBehaviour {
 	
 	public tk2dTextMesh mainText;
 	
-	public GameObject crownSprite, cloneSprite;
+	public GameObject crownSprite, cloneSprite, cloneKillSprite;
 	
 	public int minFramesOnScreen;  //usign frames because time scale is 0 when paused
 	private int frameTimer;
@@ -15,10 +15,13 @@ public class IntroPopUp : MonoBehaviour {
 	
 	private bool isActive;
 	
+	private bool killOnDismissal;
+	
 	
 	public void setup(GameManager _gm){
 		gm = _gm;
 		isActive = false;
+		killOnDismissal = false;
 	}
 	
 	// Update is called once per frame
@@ -49,13 +52,25 @@ public class IntroPopUp : MonoBehaviour {
 		//assume everything is off
 		crownSprite.SetActive(false);
 		cloneSprite.SetActive(false);
+		cloneKillSprite.SetActive(false);
 	}
 	
 	public void dismiss(){
 		isActive = false;
 		gameObject.SetActive(false);
+		
+		if (killOnDismissal){
+			Destroy(gameObject);
+		}
 	}
 	
+	
+	public void showCloneKill(GameManager _gm){
+		gm = _gm;
+		setText("When you use the clone kill, the clones you hit will be gone forever. But you only get one shot!");
+		cloneKillSprite.SetActive(true);
+		killOnDismissal = true;
+	}
 	
 	
 	public bool CanBeKilled {

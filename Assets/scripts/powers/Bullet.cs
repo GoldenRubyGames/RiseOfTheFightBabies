@@ -33,7 +33,6 @@ public class Bullet : PowerEffect {
 		
 		ricochetsLeft = numRicochets;
 		
-		//rigidbody.AddForce(vel);
 	}
 	
 	// Update is called once per frame

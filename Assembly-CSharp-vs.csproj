@@ -120,6 +120,7 @@
      <Compile Include="Assets\TK2DROOT\tk2d_demo\tk2dDemoCameraController.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d_demo\tk2dDemoReloadController.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d_demo\tk2dDemoRuntimeSpriteController.cs" />
+     <Compile Include="Assets\notUsing\DefenseBotEffect.cs" />
      <Compile Include="Assets\notUsing\FireFeetPower.cs" />
      <Compile Include="Assets\notUsing\HealthPackPower.cs" />
      <Compile Include="Assets\notUsing\ShieldEffect.cs" />
@@ -166,7 +167,6 @@
      <Compile Include="Assets\scripts\powers\BoomerangEffect.cs" />
      <Compile Include="Assets\scripts\powers\Bullet.cs" />
      <Compile Include="Assets\scripts\powers\DeathOrbEffect.cs" />
-     <Compile Include="Assets\scripts\powers\DefenseBotEffect.cs" />
      <Compile Include="Assets\scripts\powers\DiveKickEffect.cs" />
      <Compile Include="Assets\scripts\powers\DoubleJumpPower.cs" />
      <Compile Include="Assets\scripts\powers\EffectSpawnOnPickupPower.cs" />

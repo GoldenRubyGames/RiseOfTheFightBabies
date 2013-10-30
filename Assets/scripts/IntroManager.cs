@@ -40,6 +40,8 @@ public class IntroManager : MonoBehaviour {
 		
 		GameObject.Find("HUD").GetComponent<HUD>().hudBox.SetActive(false);
 		
+		gm.players[0].showCloneKillPopUp = true;
+		
 		
 		//speakerText.setNewText("Hello. How are you today?\nI'm good!");
 	
