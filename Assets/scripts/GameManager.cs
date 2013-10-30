@@ -228,9 +228,6 @@ public class GameManager : MonoBehaviour {
 		//reset HUD
 		hud.reset();
 		
-		//put the camera back
-		camera.reset();
-		
 	}
 	
 	
@@ -352,30 +349,7 @@ public class GameManager : MonoBehaviour {
 				
 				//end the kill effect
 				if (killEffectTimer <= 0){
-					bool reasignStarHelm = starHelm.ChosenOne == killEffectFoe;
-					
-					//make a ghost unless the player died during the intro
-					if (!doingIntro || reasignStarHelm){
-						PlayerGhost newGhost = players[0].makeGhost();
-						ghosts.Add(newGhost);
-						
-						if (reasignStarHelm){
-							starHelm.setChosenOne(newGhost);
-							//increase the round number
-							roundNum++;
-						}
-					}
-					
-					//in the intro, make sure the player has a weapon
-					if(doingIntro && killEffectFoe == players[0]){
-						levelObject.SendMessage("playerDied");
-					}
-					
-					killEffectFoe.killPlayerCustom(null, killEffectIsCloneKiller);
-					
-					resetRound();
-					
-					doingKillEffect = false;
+					endKillEffect();
 				}
 			}
 		}
@@ -437,6 +411,41 @@ public class GameManager : MonoBehaviour {
 				freshlyKilled.Powers[i].customCleanUp();
 			}
 		}
+	}
+	
+	public void endKillEffect(){
+		bool reasignStarHelm = starHelm.ChosenOne == killEffectFoe;
+					
+		//make a ghost unless the player died during the intro
+		if (!doingIntro || reasignStarHelm){
+			PlayerGhost newGhost = players[0].makeGhost();
+			ghosts.Add(newGhost);
+			
+			if (reasignStarHelm){
+				starHelm.setChosenOne(newGhost);
+				//increase the round number
+				roundNum++;
+			}
+		}
+		
+		//in the intro, make sure the player has a weapon
+		if(doingIntro && killEffectFoe == players[0]){
+			levelObject.SendMessage("playerDied");
+		}
+		
+		killEffectFoe.killPlayerCustom(null, killEffectIsCloneKiller);
+		
+		//put the camera back
+		camera.reset();
+		
+		//no effect if the player was killed
+		if (!reasignStarHelm){
+			resetRound();
+		}
+		//otherwise rewind them!
+		
+		
+		doingKillEffect = false;
 	}
 	
 	public void setLevel(int num){
