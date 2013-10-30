@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Standard Assets\Kongregate.js" />
+     <None Include="Assets\fonts\spriteFotnsUni\uni60.fnt" />
      <None Include="Assets\fonts\spriteFonts\vdj24.fnt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitSolidVertexColor.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Goodies\TexturePacker\Exporter\2dtoolkit\exporter.xml" />
@@ -57,10 +58,14 @@
      <None Include="Assets\TK2DROOT\tk2d\Shaders\Blend2TexVertexColor.shader" />
      <None Include="Assets\TK2DROOT\tk2dUI\Shaders\DepthMaskSolid.shader" />
      <None Include="Assets\fonts\spriteFonts\vdj64.fnt" />
+     <None Include="Assets\fonts\spriteFotnsUni\uni24.fnt" />
      <None Include="Assets\TK2DROOT\tk2dUI_demo\Assets\Dark\Fonts\Nunito24.fnt" />
      <None Include="Assets\fonts\spriteFonts\vdj18.fnt" />
+     <None Include="Assets\fonts\spriteFotnsUni\uni15.fnt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\resources\BlendVertexColor.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitCutoutVertexColor.shader" />
+     <None Include="Assets\fonts\spriteFotnsUni\uni30.fnt" />
+     <None Include="Assets\fonts\spriteFotnsUni\uni20.fnt" />
      <None Include="Assets\fonts\spriteFonts\vdj9.fnt" />
      <None Include="Assets\TK2DROOT\tk2d\Editor\EditorUtility.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\CutoutVertexColor.shader" />

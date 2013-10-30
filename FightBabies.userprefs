@@ -1,14 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/DeadPlayer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/displays/HUD.cs">
     <Files>
-      <File FileName="Assets/scripts/GameManager.cs" Line="208" Column="3" />
-      <File FileName="Assets/scripts/Player.cs" Line="319" Column="83" />
-      <File FileName="Assets/scripts/PlayerController.cs" Line="209" Column="30" />
-      <File FileName="Assets/scripts/PlayerGhost.cs" Line="108" Column="37" />
-      <File FileName="Assets/scripts/GhostRecorder.cs" Line="83" Column="6" />
-      <File FileName="Assets/scripts/Power.cs" Line="10" Column="24" />
-      <File FileName="Assets/scripts/DeadPlayer.cs" Line="82" Column="35" />
+      <File FileName="Assets/scripts/GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/Player.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/DeadPlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/displays/LevelSelectScreen.cs" Line="114" Column="3" />
+      <File FileName="Assets/scripts/displays/HUD.cs" Line="67" Column="3" />
+      <File FileName="Assets/scripts/IntroManager.cs" Line="310" Column="31" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

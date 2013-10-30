@@ -99,7 +99,7 @@ public class LevelSelectScreen : MonoBehaviour {
 		}
 		timer += Time.deltaTime;
 		
-		/*
+		
 		for (int i=0; i<levelNames.Length; i++){
 		
 			int row = (int)Mathf.Floor( (float)i/(float)iconRowSize);
@@ -111,7 +111,7 @@ public class LevelSelectScreen : MonoBehaviour {
 			
 			levelIcons[i].gameObject.transform.position = newPos;
 		}
-		*/
+		
 		
 		//check for joystick input
 		float xAxisInput = Input.GetAxis("Horizontal");

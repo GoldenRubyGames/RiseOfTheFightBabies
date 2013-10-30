@@ -38,6 +38,9 @@ public class IntroManager : MonoBehaviour {
 		curPowerNum = 0;
 		advancePhase();
 		
+		GameObject.Find("HUD").GetComponent<HUD>().hudBox.SetActive(false);
+		
+		
 		//speakerText.setNewText("Hello. How are you today?\nI'm good!");
 	
 	}
@@ -310,6 +313,7 @@ public class IntroManager : MonoBehaviour {
 		if (phase == 22){
 			//we're done!
 			gm.DoingIntro = false;
+			GameObject.Find("HUD").GetComponent<HUD>().hudBox.SetActive(true);
 			Destroy(speakerText.gameObject);
 			Destroy(popUp.gameObject);
 			//Destroy(gameObject);

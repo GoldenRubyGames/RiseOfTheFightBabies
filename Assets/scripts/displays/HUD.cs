@@ -8,10 +8,8 @@ public class HUD : MonoBehaviour {
 	
 	public GameManager gm;
 	
-	public Vector2 boxPos;
-	public Vector2 boxSize;
-	
-	public GUIStyle textStyle;
+	public tk2dTextMesh textSprite;
+	public GameObject hudBox;
 	
 	public GameObject iconPrefab;
 	public GameObject anchor;
@@ -24,12 +22,8 @@ public class HUD : MonoBehaviour {
 	public float iconSpacingVert;
 	
 	//showing clone kills
-	public float cloneKillX;
-	public float cloneKillYStart;
-	public float cloneKillYSpacing;
 	private tk2dSprite cloneKillIcon;
 	private int cloneKillIconID;
-	
 	public Color cloneKillIconColA, cloneKillIconColB;
 	public float cloneKillIconFlashSpeed;
 	
@@ -69,6 +63,8 @@ public class HUD : MonoBehaviour {
 	}
 	
 	public void reset(){
+		hudBox.SetActive(true);
+		
 		//get rid of the icons
 		for (int i=0; i<pickupIcons.Count; i++){
 			Destroy(pickupIcons[i]);
@@ -126,7 +122,7 @@ public class HUD : MonoBehaviour {
 		}
 	}
 	
-	
+	/*
 	void OnGUI(){
 		
 		//don't do anything when paused
@@ -159,11 +155,26 @@ public class HUD : MonoBehaviour {
 			GUI.Label(textPos, topText, textStyle);
 		}
 	}
+	*/
 	
 	void Update(){
+		
+		//set the text
+		string curText = "";
+		//lives
+		curText += "Lives: "+player.LivesLeft;
+		//round
+		curText += "\nRound: "+gm.RoundNum;
+		//score
+		curText += "\nScore: "+player.Score;
+		
+		if (curText != textSprite.text){
+			textSprite.text = curText;
+			textSprite.Commit();
+		}
+		
 		//if the player is about to use the clone kill, make it flash
 		if (player.NextAttackIsCloneKill){
-			
 			float prc = Mathf.Abs(Mathf.Sin(Time.time * cloneKillIconFlashSpeed)) ;
 			Color curCol = prc*cloneKillIconColA + (1-prc)*cloneKillIconColB;
 			cloneKillIcon.color = curCol;
@@ -178,10 +189,11 @@ public class HUD : MonoBehaviour {
 	/*
 	void LateUpdate(){
 		for (int i=0; i<pickupIcons.Count; i++){
-			int row = i <= maxNumIconsPerRow ? 0 : 1;
+			int row = i < maxNumIconsPerRow ? 0 : 1;
 			int col = i % maxNumIconsPerRow;
-			Vector3 newPos = new Vector3( anchor.transform.position.x+iconStartOffset.x + iconSpacing*col, anchor.transform.position.y+iconStartOffset.y - row*iconSpacing, 0);
-			pickupIcons[i].transform.position = newPos;
+			Vector3 newPos = new Vector3( anchor.transform.position.x+ iconStartOffset.x + iconSpacing*col, anchor.transform.position.y+iconStartOffset.y - row*iconSpacingVert, 0);
+			
+			pickupIcons[i].gameObject.transform.position = newPos;
 		}
 	}
 	*/

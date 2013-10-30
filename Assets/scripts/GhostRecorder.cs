@@ -106,7 +106,6 @@ public class GhostRecorder {
 	
 	public void markGrounded(){
 		groundedFrame = data.Count;
-		Debug.Log("this the frame: "+groundedFrame);
 	}
 	
 	public bool checkAttack(){

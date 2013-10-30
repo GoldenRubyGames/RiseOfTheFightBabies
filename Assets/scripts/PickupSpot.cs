@@ -27,7 +27,7 @@ public class PickupSpot : MonoBehaviour {
 	
 	
 	//text
-	public TextMesh textObject;
+	public tk2dTextMesh textObject;
 	
 	private HUD hud;
 
@@ -60,6 +60,7 @@ public class PickupSpot : MonoBehaviour {
 		//set the text
 		textObject.gameObject.SetActive(true);
 		textObject.text = powerObject.GetComponent<Power>().powerName;
+		textObject.Commit();
 		
 		//open the door
 		doorSprite.Play(openClip);
@@ -77,6 +78,7 @@ public class PickupSpot : MonoBehaviour {
 		//set the text
 		textObject.gameObject.SetActive(true);
 		textObject.text = "CLONE KILL";
+		textObject.Commit();
 		
 		//open the door
 		doorSprite.Play(openClip);
