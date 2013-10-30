@@ -27,7 +27,7 @@ public class GhostRecorder {
 	private int playbackDir;
 	private float playbackSpeed;
 	
-	int groundedFrame;
+	private int groundedFrame;
 
 	public GhostRecorder(){
 		data = new List<GhostDataPoint>();
@@ -170,6 +170,24 @@ public class GhostRecorder {
 	public int PlaybackDir {
 		get {
 			return this.playbackDir;
+		}
+	}
+	
+	public int PlayHead {
+		get {
+			return this.playHead;
+		}
+		set {
+			playHead = value;
+		}
+	}
+	
+	public int GroundedFrame {
+		get {
+			return this.groundedFrame;
+		}
+		set {
+			groundedFrame = value;
 		}
 	}
 }

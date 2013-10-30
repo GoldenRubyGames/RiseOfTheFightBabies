@@ -101,6 +101,7 @@ public class Player : MonoBehaviour {
 	public GunSprite gunSprite;
 	private bool isKicking;
 	private bool isGhostMelting;
+	private bool overrideAnimation;
 	
 	//sound
 	AudioManager audioController;
@@ -132,6 +133,8 @@ public class Player : MonoBehaviour {
 		//make some assumptions!
 		isPlayerControlled = false;
 		isGhost = false;
+		
+		overrideAnimation = false;
 		
 		customStart();
 		
@@ -212,7 +215,7 @@ public class Player : MonoBehaviour {
 		
 		
 		//set the animation
-		if (!isGhostMelting){
+		if (!isGhostMelting && !overrideAnimation){
 			if (Mathf.Abs(curVel.x) > velForWalkAnim){
 				if (avatarAnimation.CurrentClip != animWalkingClip){
 					avatarAnimation.Play(animWalkingClip);
@@ -500,6 +503,21 @@ public class Player : MonoBehaviour {
 		}
 		set {
 			audioController = value;
+		}
+	}
+	
+	public bool OverrideAnimation {
+		get {
+			return this.overrideAnimation;
+		}
+		set {
+			overrideAnimation = value;
+		}
+	}
+	
+	public tk2dSpriteAnimationClip AnimStandingClip {
+		get {
+			return this.animStandingClip;
 		}
 	}
 	

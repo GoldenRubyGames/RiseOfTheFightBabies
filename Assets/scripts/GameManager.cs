@@ -75,6 +75,9 @@ public class GameManager : MonoBehaviour {
 	private Player killEffectFoe;
 	private bool killEffectIsCloneKiller;
 	
+	//rewind effect after kill effect
+	private bool doingRewind;
+	
 	//other screens
 	public LevelSelectScreen levelSelectScreen;
 	public DataHolder dataHolder;
@@ -179,13 +182,12 @@ public class GameManager : MonoBehaviour {
 		resetRound();
 	}
 	
-	void resetRound(){
+	public void resetRound(){
 		//reset players
 		for (int i=0; i<players.Length; i++){
 			players[i].reset();
 			//if we're in the intro, put them on the far left
 			if (doingIntro){
-				Debug.Log("piss and blood party");
 				players[i].transform.position = new Vector3(players[i].spawnLeft.transform.position.x, players[i].spawnLeft.transform.position.y, 0);
 			}
 		}
@@ -206,21 +208,7 @@ public class GameManager : MonoBehaviour {
 			Destroy( effects[i] );
 		}
 		
-		//if there are new weapons available, spawn one
-		/*
-		bool noWeapons = true;
-		for (int i=0; i<pickupSpots.Count; i++){
-			if (pickupSpots[i].activate){
-				if(pickupSpots[i].PowerObject.GetComponent<Power>().isAnAttack){
-					noWeapons = false;
-					break;
-				}
-			}
-		}
-		if (noWeapons && !doingIntro){
-			spawnPickup(true);
-		}
-		*/
+		//make sure there is a weapon by spawning one
 		if (!doingIntro){
 			spawnPickup(true);
 		}
@@ -420,9 +408,10 @@ public class GameManager : MonoBehaviour {
 		if (!doingIntro || reasignStarHelm){
 			PlayerGhost newGhost = players[0].makeGhost();
 			ghosts.Add(newGhost);
+			newGhost.gameObject.SetActive(false);
 			
 			if (reasignStarHelm){
-				starHelm.setChosenOne(newGhost);
+				starHelm.setChosenOne(players[0]);
 				//increase the round number
 				roundNum++;
 			}
@@ -443,9 +432,39 @@ public class GameManager : MonoBehaviour {
 			resetRound();
 		}
 		//otherwise rewind them!
+		else{
+			doingRewind = true;
+			players[0].startRewind();
+			
+			//destroy all effect objects
+			GameObject[] effects = GameObject.FindGameObjectsWithTag("powerEffect");
+			for (int i=0; i<effects.Length; i++){
+				Destroy( effects[i] );
+			}
+			//turn off ghosts for now
+			for (int i=0; i<ghosts.Count; i++){
+				ghosts[i].gameObject.SetActive(false);
+			}
+		}
 		
 		
 		doingKillEffect = false;
+	}
+	
+	public void endRewind(){
+		ghosts[ ghosts.Count-1 ].gameObject.SetActive(true);
+		starHelm.setChosenOne (ghosts[ ghosts.Count-1 ]);
+		
+		//turn ghosts back on
+		for (int i=0; i<ghosts.Count; i++){
+			ghosts[i].gameObject.SetActive(true);
+		}
+		
+		
+		doingRewind = false;
+		resetRound();
+		
+		ghosts[ ghosts.Count-1 ].recorder.PlayHead = ghosts[ ghosts.Count-1 ].recorder.GroundedFrame;
 	}
 	
 	public void setLevel(int num){

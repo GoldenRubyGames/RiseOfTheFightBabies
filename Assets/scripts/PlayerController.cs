@@ -22,6 +22,10 @@ public class PlayerController : Player {
 	public int numLives;
 	private int livesLeft;
 	
+	//spawning in different places
+	private float lastSpawnX;
+	public float minSpawnDistance;
+	
 	//using clone kills
 	bool nextAttackIsCloneKill;
 	public tk2dSprite cloneKillGlow;
@@ -32,6 +36,14 @@ public class PlayerController : Player {
 	public bool showCloneKillPopUp;
 	public GameObject cloneKillPopUpPrefab;
 	
+	//rewidning at the end of a round
+	private bool doingRewind;
+	private tk2dSpriteAnimationClip cloneRewindClip;
+	
+	private float rewindTimer;
+	public float rewindTimeBeforeChange,rewindTimeBeforeMoving, rewindFlashTime;
+	public float rewindFlashSpeed;
+	private bool rewindMadeChange;
 	
 	public override void customStart(){
 		
@@ -66,11 +78,18 @@ public class PlayerController : Player {
 			recorder = new GhostRecorder();
 		}
 		
+		doingRewind = false;
+		cloneRewindClip = avatarAnimation.GetClipByName("clone");
+		
+		lastSpawnX = -1000;//we don't want this to mess with the first spawn
 	}
 	
 	public override void customReset(){
 		//set the pos
-		float spawnX = Random.Range(spawnLeft.transform.position.x, spawnRight.transform.position.x);
+		float spawnX = lastSpawnX;
+		while ( Mathf.Abs( spawnX - lastSpawnX) < minSpawnDistance){
+			spawnX = Random.Range(spawnLeft.transform.position.x, spawnRight.transform.position.x);
+		}
 		transform.position = new Vector3(spawnX, spawnLeft.transform.position.y, 0);
 		
 		//clear velocity
@@ -89,7 +108,7 @@ public class PlayerController : Player {
 			recorder = new GhostRecorder();
 		}
 		recorder.reset(true);
-		
+				
 		isGrounded = false;
 		neverBeenGrounded = true;
 		notGroundedTimer = timeBeforeNotGrounded;
@@ -103,6 +122,43 @@ public class PlayerController : Player {
 	}
 	
 	public override void customUpdate(){
+		//if they are rewidnignafter a round, just do that
+		if (doingRewind){
+			rewindTimer += Time.deltaTime;
+			
+			if (!rewindMadeChange && rewindTimer >= rewindTimeBeforeChange){
+				OverrideAnimation = true;
+				avatarAnimation.Play(cloneRewindClip);
+				rewindTimer = 0;
+				rewindMadeChange = true;
+			}
+			
+			if (rewindMadeChange && rewindTimer < rewindFlashTime){
+				
+				if (rewindTimer%rewindFlashSpeed > rewindFlashSpeed/2){
+					avatarAnimation.Play(cloneRewindClip);
+				}else{
+					avatarAnimation.Play(AnimStandingClip);
+				}
+				
+			}
+			
+			if (rewindMadeChange && rewindTimer >= rewindTimeBeforeMoving){
+				recorder.play(true);
+				
+				transform.position = recorder.CurPos;
+				curVel = recorder.CurVel;
+				facingDir = recorder.CurFacingDir;
+				
+				//when we hit the start, end it
+				if (recorder.isAtStart()){
+					endRewind();
+				}
+			}
+			
+			return;
+		}
+		
 		//figure out if we count as grounded
 		if (!controller.isGrounded){
 			notGroundedTimer += Time.deltaTime;
@@ -284,6 +340,27 @@ public class PlayerController : Player {
 	}
 	
 	
+	public void startRewind(){
+		doingRewind = true;
+		recorder.PlayHead = recorder.Data.Count-1;
+		//recorder.GroundedFrame = 0;
+		recorder.setPlaybackDir(-1);
+		recorder.setPlaybackSpeed(7000);
+		
+		rewindMadeChange = false;
+		rewindTimer = 0;
+	}
+	
+	public void endRewind(){
+		recorder.setPlaybackDir(1);
+		recorder.setPlaybackSpeed(1);
+		
+		OverrideAnimation = false;
+		
+		doingRewind = false;
+		
+		gm.endRewind();
+	}
 	
 	//setters getters
 	
