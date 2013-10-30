@@ -75,6 +75,8 @@ public class GameManager : MonoBehaviour {
 	private Player killEffectFoe;
 	private bool killEffectIsCloneKiller;
 	
+	public RoundFlash roundFlash;
+	
 	//rewind effect after kill effect
 	private bool doingRewind;
 	
@@ -215,6 +217,8 @@ public class GameManager : MonoBehaviour {
 		
 		//reset HUD
 		hud.reset();
+		
+		roundFlash.activate();
 		
 	}
 	
@@ -464,7 +468,7 @@ public class GameManager : MonoBehaviour {
 		doingRewind = false;
 		resetRound();
 		
-		ghosts[ ghosts.Count-1 ].recorder.PlayHead = ghosts[ ghosts.Count-1 ].recorder.GroundedFrame;
+		//ghosts[ ghosts.Count-1 ].recorder.PlayHead = ghosts[ ghosts.Count-1 ].recorder.GroundedFrame;
 	}
 	
 	public void setLevel(int num){

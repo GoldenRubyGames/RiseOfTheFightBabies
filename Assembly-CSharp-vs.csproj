@@ -159,6 +159,7 @@
      <Compile Include="Assets\scripts\displays\LevelSelectIcon.cs" />
      <Compile Include="Assets\scripts\displays\LevelSelectScreen.cs" />
      <Compile Include="Assets\scripts\displays\PauseScreen.cs" />
+     <Compile Include="Assets\scripts\displays\RoundFlash.cs" />
      <Compile Include="Assets\scripts\displays\StatusText.cs" />
      <Compile Include="Assets\scripts\displays\TitleScene.cs" />
      <Compile Include="Assets\scripts\displays\UnlockPopUp.cs" />

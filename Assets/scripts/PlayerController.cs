@@ -90,6 +90,7 @@ public class PlayerController : Player {
 		while ( Mathf.Abs( spawnX - lastSpawnX) < minSpawnDistance){
 			spawnX = Random.Range(spawnLeft.transform.position.x, spawnRight.transform.position.x);
 		}
+		lastSpawnX = spawnX;
 		transform.position = new Vector3(spawnX, spawnLeft.transform.position.y, 0);
 		
 		//clear velocity
@@ -133,14 +134,16 @@ public class PlayerController : Player {
 				rewindMadeChange = true;
 			}
 			
-			if (rewindMadeChange && rewindTimer < rewindFlashTime){
-				
-				if (rewindTimer%rewindFlashSpeed > rewindFlashSpeed/2){
-					avatarAnimation.Play(cloneRewindClip);
+			if (rewindMadeChange){
+				if(rewindTimer < rewindFlashTime){
+					if (rewindTimer%rewindFlashSpeed > rewindFlashSpeed/2){
+						avatarAnimation.Play(cloneRewindClip);
+					}else{
+						avatarAnimation.Play(AnimStandingClip);
+					}
 				}else{
-					avatarAnimation.Play(AnimStandingClip);
+					avatarAnimation.Play(cloneRewindClip);
 				}
-				
 			}
 			
 			if (rewindMadeChange && rewindTimer >= rewindTimeBeforeMoving){

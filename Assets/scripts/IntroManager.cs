@@ -34,7 +34,7 @@ public class IntroManager : MonoBehaviour {
 		popUp.setup(gm);
 		popUpObj.SetActive(false);
 		
-		phase = 6;//-1;
+		phase = -1;
 		curPowerNum = 0;
 		advancePhase();
 		
