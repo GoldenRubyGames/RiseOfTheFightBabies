@@ -34,7 +34,7 @@ public class IntroManager : MonoBehaviour {
 		popUp.setup(gm);
 		popUpObj.SetActive(false);
 		
-		phase = -1;
+		phase = 6;//-1;
 		curPowerNum = 0;
 		advancePhase();
 		
@@ -59,7 +59,6 @@ public class IntroManager : MonoBehaviour {
 	}
 	
 	public void playerDied(){
-		Debug.Log("dead mother fucker");
 		pickupSpot.activate(powerObjects[curPowerNum]);
 		pickupSpot.Timer = 9999;
 	}
@@ -73,12 +72,12 @@ public class IntroManager : MonoBehaviour {
 			return;
 		}
 		
-		if (phase == 1 && timer > 10){
+		if (phase == 1 && timer > 8){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 2 && timer > 4){
+		if (phase == 2 && timer > 3){
 			advancePhase();
 			return;
 		}
@@ -108,7 +107,7 @@ public class IntroManager : MonoBehaviour {
 			return;
 		}
 		
-		if (phase == 8 && timer > 9){
+		if (phase == 8 && timer > 4){
 			advancePhase();
 			return;
 		}
@@ -123,12 +122,12 @@ public class IntroManager : MonoBehaviour {
 			return;
 		}
 		
-		if (phase == 11 && timer > 5){
+		if (phase == 11 && timer > 3){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 12 && timer > 3){
+		if (phase == 12 && timer > 0){
 			advancePhase();
 			return;
 		}
@@ -143,12 +142,12 @@ public class IntroManager : MonoBehaviour {
 			return;
 		}
 		
-		if (phase == 15 && timer > 4){
+		if (phase == 15 && timer > 1){
 			advancePhase();
 			return;
 		}
 		
-		if (phase == 16 && timer > 12){
+		if (phase == 16 && timer > 8){
 			advancePhase();
 			return;
 		}
@@ -173,7 +172,7 @@ public class IntroManager : MonoBehaviour {
 			return;
 		}
 		
-		if (phase == 21 && timer > 8){
+		if (phase == 21 && timer > 6){
 			advancePhase();
 			return;
 		}
@@ -185,11 +184,11 @@ public class IntroManager : MonoBehaviour {
 		timer = 0;
 		
 		if (phase == 1){
-			speakerText.setNewText("Thanks for coming in.\nWe've got a bit of an issue with\nthe clones.");
+			speakerText.setNewText("Thanks for coming in.\nWe've got an issue with the clones.");
 		}
 		
 		if (phase == 2){
-			speakerText.setNewText("Better get you armed.\nWould you mind grabbing that\npower up?");
+			speakerText.setNewText("Would you mind grabbing that power up?");
 		}
 		
 		if (phase == 3){
@@ -200,7 +199,7 @@ public class IntroManager : MonoBehaviour {
 		
 		if (phase == 4){
 			if (Input.GetJoystickNames().Length == 0){
-				speakerText.setNewText("Press Z to fire.");
+				speakerText.setNewText("Press Z or M to fire.");
 			}else{
 				speakerText.setNewText("Press X to fire.");
 			}
@@ -223,11 +222,11 @@ public class IntroManager : MonoBehaviour {
 		}
 		
 		if (phase == 8){
-			speakerText.setNewText("You seem like a strong person.\nI bet you can handle another\npower up.");
+			speakerText.setNewText("You seem strong.\nI bet you can handle another power up.");
 		}
 		
 		if (phase == 9){
-			speakerText.setNewText("");
+			//speakerText.setNewText("");
 			curPowerNum = 1;
 			pickupSpot2.activate(powerObjects[1]);
 			pickupSpot2.Timer = 9999;
@@ -235,7 +234,7 @@ public class IntroManager : MonoBehaviour {
 		
 		if (phase == 10){
 			if (Input.GetJoystickNames().Length == 0){
-				speakerText.setNewText("When you press Z they will both\nfire.");
+				speakerText.setNewText("When you press Z or M they will both\nfire.");
 			}else{
 				speakerText.setNewText("When you press X they will both\nfire.");
 			}
@@ -253,12 +252,13 @@ public class IntroManager : MonoBehaviour {
 		}
 		
 		if (phase == 13){
-			speakerText.setNewText("Would you mind destroying it?");
+			//THIS PAHSE WAS DUMB!
+			//speakerText.setNewText("Would you mind destroying it?");
 		}
 		
 		if (phase == 14){
 			//pop up about ending rounds
-			setPopUp("Each round ends when\nyou kill the King\n(wearing the crown).\n\nThe King is worth\n10 points");
+			setPopUp("Each round ends when you kill the King\n(wearing the crown).\n\nThe King is worth 10 points");
 			popUp.crownSprite.SetActive(true);
 		}
 		
@@ -270,7 +270,7 @@ public class IntroManager : MonoBehaviour {
 		}
 		
 		if (phase == 16){
-			speakerText.setNewText("Good Work, but Here's the issue:\nThe facility just cloned you.\nCould you deal with that too?");
+			speakerText.setNewText("Good Work, but Here's the issue:\nThe facility just cloned you.\nPlease destroy that too.");
 		}
 		
 		if (phase == 17){
@@ -280,12 +280,13 @@ public class IntroManager : MonoBehaviour {
 			//actually start the next round
 			gm.Ghosts[0].StunTimer = 0;
 			gm.Ghosts[0].InvincibilityTimer = 0;
-			speakerText.setNewText("");
+			//speakerText.setNewText("");
 		}
 		
 		if (phase == 18){
+			speakerText.setNewText("");
 			//pop up about clones
-			setPopUp("When a round ends,\na clone will be made\nthat does exactly\nwhat you did (with\nyour powers).\n\nThis new clone will\nbe the King.");
+			setPopUp("When a round ends, a clone will be made that does exactly what you did (with your powers).\n\nThis new clone will be the King.");
 		}
 		
 		if (phase == 19){
@@ -298,7 +299,7 @@ public class IntroManager : MonoBehaviour {
 		if (phase == 20){
 			speakerText.setNewText("");
 			//pop up about clones
-			setPopUp("Only killing the King\nwill end the round.\n\nKilling other clones\nis worth 1 point.\n");
+			setPopUp("Only killing the King will end the round.\n\nKilling other clones is worth 1 point.\n");
 			popUp.cloneSprite.SetActive(true);
 			
 			curPowerNum = 4;

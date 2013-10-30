@@ -63,7 +63,9 @@ public class HUD : MonoBehaviour {
 	}
 	
 	public void reset(){
-		hudBox.SetActive(true);
+		if (!gm.DoingIntro){
+			hudBox.SetActive(true);
+		}
 		
 		//get rid of the icons
 		for (int i=0; i<pickupIcons.Count; i++){

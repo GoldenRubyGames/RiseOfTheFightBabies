@@ -252,7 +252,7 @@ public class GameManager : MonoBehaviour {
 		//do things acording to game state
 		if (gameState == "gameOver"){
 			if (Input.GetKeyDown(KeyCode.R) || Input.GetButton("player0Jump") || Input.GetButton("player0Fire1") || Input.GetButton("pauseButton")){
-				if (!levelJustUnlocked){
+				if (!levelJustUnlocked && curLevelNum!=0){
 					resetGame();
 				}else{
 					levelJustUnlocked = false;
