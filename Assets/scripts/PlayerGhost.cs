@@ -66,13 +66,12 @@ public class PlayerGhost : Player {
 		stunTimer = startingStunTime + Random.Range(0,startingStunTimeBonusRange);
 		
 		
-		//give it pause time
-		InvincibilityTimer = stunTimer;
-		
 	}
 	
 	public override void customUpdate(){
 		stunTimer -= Time.deltaTime;
+		
+		InvincibilityTimer = stunTimer;
 		
 		if (!IsGhostMelting){
 		

@@ -31,6 +31,12 @@ public class IntroPopUp : MonoBehaviour {
 			canBeKilled = true;
 		}
 		
+		//do not let the game unpause
+		if (!gm.Paused){
+			gm.setPause(true, false);
+			gm.pauseScreen.gameObject.SetActive(false);
+		}
+		
 		//check for it being dismissed
 		if (Input.anyKey && canBeKilled){
 			gm.setPause(false,false);
