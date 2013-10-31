@@ -50,17 +50,19 @@ public class GameOverScreen : MonoBehaviour {
 		
 		setUnlockText(gm);
 		
+		bottomText.text = "Press R to try again\nPress Q for level select";
 		//check for xBox controls
 		if (Input.GetJoystickNames().Length > 0){
-			bottomText.text = "Press A to try again\nPress BACK to quit";
-			bottomText.Commit();
+			bottomText.text = "Press A to try again\nPress BACK for level select";
 		}
+		bottomText.Commit();
 		
 		timer = 0;
 	}
 	
 	public void setUnlockText(GameManager gm){
 		//unlock text
+		Debug.Log("hey fuck face, "+gm.dataHolder.CloneKills.ToString() );
 		cloneKillsText.text = "Total Clone Kills: "+gm.dataHolder.CloneKills.ToString();
 		cloneKillsText.Commit();
 		if (!gm.unlockManager.DoneWithUnlocks){

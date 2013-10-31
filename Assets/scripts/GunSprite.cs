@@ -8,6 +8,9 @@ public class GunSprite : MonoBehaviour {
 	public Vector3 offset;
 	
 	public tk2dSprite sprite;
+	public tk2dSpriteAnimator anim;
+	
+	
 
 	// Use this for initialization
 	void Start () {
@@ -21,5 +24,9 @@ public class GunSprite : MonoBehaviour {
 		
 		sprite.FlipX = owner.facingDir == -1;
 	
+	}
+	
+	public void fire(){
+		anim.Play();
 	}
 }

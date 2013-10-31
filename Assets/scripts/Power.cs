@@ -58,13 +58,14 @@ public class Power : MonoBehaviour {
 		canUse = coolDownTimer <= 0;
 	}
 	
-	public void use(){
+	public bool use(){
 		if (canUse){
 			customUse();
 			playSound();
 			coolDownTimer = coolDownTime;
+			return true;
 		}else{
-			//Debug.Log("fuckin wait "+owner.controllerNum);
+			return false;
 		}
 	}
 	

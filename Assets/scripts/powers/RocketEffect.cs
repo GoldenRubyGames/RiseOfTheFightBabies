@@ -19,6 +19,8 @@ public class RocketEffect : PowerEffect {
 			sprite.FlipX = true;
 		}
 		
+		//sprite.color = new Color(Owner.myColor.r, Owner.myColor.g, Owner.myColor.b, 1);
+		
 	}
 	
 	// Update is called once per frame

@@ -99,6 +99,7 @@ public class PlayerGhost : Player {
 				for (int i=0; i<powers.Count; i++){
 					powers[i].use();
 				}
+				gunSprite.fire();
 			}
 			
 			//if we hit the end, rewind
