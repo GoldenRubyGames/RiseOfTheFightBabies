@@ -279,6 +279,7 @@ public class GameManager : MonoBehaviour {
 				//and if not, wake up the game over screen
 				if (!moreUnlocks){
 					gameOverScreen.turnOn();
+					gameOverScreen.setUnlockText(this);
 				}
 			}
 		}
@@ -645,7 +646,6 @@ public class GameManager : MonoBehaviour {
 		//was anything unlocked?
 		bool stuffWasUnlocked = unlockManager.checkUnlocks(dataHolder.CloneKills, true);
 		
-		
 		//try sending the score to Kongregate
 		Kongregate.SubmitHighScore(curLevelNum, score);
 		
@@ -674,9 +674,7 @@ public class GameManager : MonoBehaviour {
 		gameState = "unlockPopUp";
 		unlockScreenPopUp = _unlockScreenPopUp;
 		
-		//set game over screen unlock text after checking unlocks
-		//and turn it off
-		gameOverScreen.setUnlockText(this);
+		//turn off game over
 		gameOverScreen.turnOff();
 	}
 	

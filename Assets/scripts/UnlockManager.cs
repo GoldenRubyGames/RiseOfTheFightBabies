@@ -54,6 +54,7 @@ public class UnlockManager : MonoBehaviour {
 	}
 	
 	public bool checkUnlocks(int cloneKills, bool showPopUp){
+		Debug.Log("chekc unlock");
 		
 		for (int i=0; i<numWeaponUnlocks; i++){
 			if ( cloneKills >= unlockVals[i] && weaponsUnlocked <= i ){
@@ -68,6 +69,7 @@ public class UnlockManager : MonoBehaviour {
 		}
 		
 		if (nextUnlock >= numWeaponUnlocks){
+			Debug.Log("we're done with this party!");
 			doneWithUnlocks = true;
 			nextUnlock = 0;
 		}
@@ -95,7 +97,7 @@ public class UnlockManager : MonoBehaviour {
 		float fNum = num+1;
 		
 		if (debugQuickUnlocks){
-			return 2+ 2*num;
+			return 1 + 1*num;
 		}
 		
 		int returnVal = (int)( 20.0f*Mathf.Pow( fNum, 1.4f) );
