@@ -186,7 +186,7 @@ public class IntroManager : MonoBehaviour {
 		timer = 0;
 		
 		if (phase == 1){
-			speakerText.setNewText("Thanks for coming in.\nWe've got an issue with the clones.");
+			speakerText.setNewText("Thanks for coming in.\nWe've got a deadly haunting on our hands.");//an issue with the clones.");
 		}
 		
 		if (phase == 2){
@@ -272,7 +272,8 @@ public class IntroManager : MonoBehaviour {
 		}
 		
 		if (phase == 16){
-			speakerText.setNewText("Good Work, but Here's the issue:\nThe facility just cloned you.\nPlease destroy that too.");
+			//speakerText.setNewText("Good Work, but Here's the issue:\nThe facility just cloned you.\nPlease destroy that too.");
+			speakerText.setNewText("Good Work, but Here's the issue:\nThere is a ghost of you now.\nPlease destroy that too.");
 		}
 		
 		if (phase == 17){
@@ -288,7 +289,7 @@ public class IntroManager : MonoBehaviour {
 		if (phase == 18){
 			speakerText.setNewText("");
 			//pop up about clones
-			setPopUp("When a round ends, a clone will be made that does exactly what you did (with your powers).\n\nThis new clone will be the King.");
+			setPopUp("When a round ends, a ghost will be made that does exactly what you did (with your powers).\n\nThis new ghost will be the King.");
 		}
 		
 		if (phase == 19){
@@ -301,7 +302,7 @@ public class IntroManager : MonoBehaviour {
 		if (phase == 20){
 			speakerText.setNewText("");
 			//pop up about clones
-			setPopUp("Only killing the King will end the round.\n\nKilling other clones is worth 1 point.\n");
+			setPopUp("Only killing the King will end the round.\n\nKilling other ghosts is worth 1 point.\n");
 			popUp.cloneSprite.SetActive(true);
 			
 			curPowerNum = 4;

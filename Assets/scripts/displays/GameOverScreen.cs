@@ -62,8 +62,7 @@ public class GameOverScreen : MonoBehaviour {
 	
 	public void setUnlockText(GameManager gm){
 		//unlock text
-		Debug.Log("hey fuck face, "+gm.dataHolder.CloneKills.ToString() );
-		cloneKillsText.text = "Total Clone Kills: "+gm.dataHolder.CloneKills.ToString();
+		cloneKillsText.text = "Total Ghost Kills: "+gm.dataHolder.CloneKills.ToString();
 		cloneKillsText.Commit();
 		if (!gm.unlockManager.DoneWithUnlocks){
 			nextUnlockText.text = "Next Unlock: "+gm.unlockManager.UnlockVals[ gm.unlockManager.NextUnlock ];

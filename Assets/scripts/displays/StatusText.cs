@@ -70,9 +70,9 @@ public class StatusText : MonoBehaviour {
 		
 		textMesh.color = scoreColor;
 		if (cloneDeadFoever){
-			setText("CLONE\nBANISHED!");
+			setText("GHOST\nBANISHED!");
 		}else{
-			setText("CLONE KILL!");
+			setText("GHOST KILL!");
 		}
 		displayTimer *= 0.5f;
 	}

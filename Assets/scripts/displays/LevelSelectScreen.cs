@@ -69,7 +69,7 @@ public class LevelSelectScreen : MonoBehaviour {
 		
 		
 		//set the bottom text
-		killText.text = "Total Clone Kills: "+dataHolder.CloneKills.ToString();
+		killText.text = "Total Ghost Kills: "+dataHolder.CloneKills.ToString();
 		killText.Commit();
 		if (!unlockManager.DoneWithUnlocks){
 			nextUnlockText.text = "Next Unlock: "+unlockManager.UnlockVals[ unlockManager.NextUnlock ];
