@@ -25,7 +25,7 @@ public class PauseScreen : MonoBehaviour {
 			mainSprite.SetSprite( (Input.GetJoystickNames().Length > 0) ? "pauseBoxXbox" : "pauseBox" );
 		}
 		
-		mainSprite.gameObject.transform.position = new Vector3( centerAnchor.transform.position.x, centerAnchor.transform.position.y, -2);
+		mainSprite.gameObject.transform.position = new Vector3( centerAnchor.transform.position.x, centerAnchor.transform.position.y, -4);
 	}
 	
 	public void deactivate(){

@@ -12,7 +12,6 @@ public class PlayerTarget : Player {
 	
 	public override void customReset(){
 		Health = 1;
-		Debug.Log("start this idiot i[p");
 		//clear velocity
 		pushVel = new Vector3(0,0,0);
 		curVel = new Vector3(0,0,0);

@@ -30,7 +30,7 @@ public class UnlockManager : MonoBehaviour {
 		unlockVals = new int[numWeaponUnlocks];
 		
 		for (int i=0; i<numWeaponUnlocks; i++){
-			//Debug.Log("its "+getUnlockVal(i));
+			Debug.Log("its "+getUnlockVal(i));
 			unlockVals[i] = getUnlockVal(i);
 		}
 		
@@ -98,11 +98,18 @@ public class UnlockManager : MonoBehaviour {
 			return 2+ 2*num;
 		}
 		
-		return  (int)( 20.0f*Mathf.Pow( fNum, 1.25f) );
+		int returnVal = (int)( 20.0f*Mathf.Pow( fNum, 1.4f) );
+		
+		//round this up to a nice round number
+		while (returnVal%10 != 0){
+			returnVal--;
+		}
+		
+		return  returnVal;
 	}
 	
 	void makeWeaponPopUp(int num){
-		GameObject newPopUpObj = Instantiate(popUpPrefab, new Vector3(0,0,-2), new Quaternion(0,0,0,0)) as GameObject;
+		GameObject newPopUpObj = Instantiate(popUpPrefab, new Vector3(0,0,-5), new Quaternion(0,0,0,0)) as GameObject;
 		UnlockPopUp newPopUp = newPopUpObj.GetComponent<UnlockPopUp>();
 		int nextUnlockVal = 0;
 		if (nextUnlock < numWeaponUnlocks){
@@ -113,7 +120,7 @@ public class UnlockManager : MonoBehaviour {
 	}
 	
 	void makeLevelPopUp(int num){
-		GameObject newPopUpObj = Instantiate(popUpPrefab, new Vector3(0,0,-2), new Quaternion(0,0,0,0)) as GameObject;
+		GameObject newPopUpObj = Instantiate(popUpPrefab, new Vector3(0,0,-5), new Quaternion(0,0,0,0)) as GameObject;
 		UnlockPopUp newPopUp = newPopUpObj.GetComponent<UnlockPopUp>();
 		
 		string unlockName = gm.levelSelectScreen.levelNames[num+1];

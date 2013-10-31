@@ -601,8 +601,8 @@ public class GameManager : MonoBehaviour {
 		hud.reset();
 		hud.gameObject.SetActive(false);
 		statusText.turnOff();
-		gameOverScreen.turnOn(players[0].Score, score > dataHolder.HighScores[curLevelNum]);
-		//statusText.showEndGame(score);
+		bool isHighscore = score > dataHolder.HighScores[curLevelNum];
+		
 		
 		//destroy everything!
 		for (int i=0; i<players.Length; i++){
@@ -633,8 +633,13 @@ public class GameManager : MonoBehaviour {
 			dataHolder.setHighScore(curLevelNum, score);
 		}
 		
+		//turn this thing on
+		gameOverScreen.turnOn(players[0].Score, roundNum, isHighscore, this);
+		
 		//was anything unlocked?
 		unlockManager.checkUnlocks(dataHolder.CloneKills, true);
+		
+		//set game over screen unlock text here!
 		
 		//try sending the score to Kongregate
 		Kongregate.SubmitHighScore(curLevelNum, score);
@@ -740,6 +745,15 @@ public class GameManager : MonoBehaviour {
 		}
 		set {
 			doingIntro = value;
+		}
+	}
+	
+	public int CurLevelNum {
+		get {
+			return this.curLevelNum;
+		}
+		set {
+			curLevelNum = value;
 		}
 	}
 }

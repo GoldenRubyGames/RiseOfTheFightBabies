@@ -94,7 +94,7 @@ public class IntroManager : MonoBehaviour {
 			return;
 		}
 		
-		if (phase == 5 && timer > 2){
+		if (phase == 5 && timer > 1){
 			advancePhase();
 			return;
 		}
@@ -104,7 +104,7 @@ public class IntroManager : MonoBehaviour {
 			return;
 		}
 		
-		if (phase == 7 && timer > 3){
+		if (phase == 7 && timer > 2){
 			advancePhase();
 			return;
 		}
@@ -119,7 +119,7 @@ public class IntroManager : MonoBehaviour {
 			return;
 		}
 		
-		if (phase == 10 && timer > 7){
+		if (phase == 10 && timer > 5){
 			advancePhase();
 			return;
 		}
