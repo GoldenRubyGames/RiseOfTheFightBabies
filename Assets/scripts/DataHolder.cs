@@ -18,7 +18,6 @@ public class DataHolder : MonoBehaviour {
 	}
 	
 	public void save(){
-		Debug.Log("pave my save");
 		PlayerPrefs.Save();
 	}
 	

@@ -240,16 +240,18 @@ public class GameManager : MonoBehaviour {
 		
 		//do things acording to game state
 		if (gameState == "gameOver"){
-			if (Input.GetKeyDown(KeyCode.R) || Input.GetButton("player0Jump") || Input.GetButton("player0Fire1") || Input.GetButton("pauseButton")){
-				if (!levelJustUnlocked && curLevelNum!=0){
-					resetGame();
-				}else{
-					levelJustUnlocked = false;
+			if (gameOverScreen.CanKill){
+				if (Input.GetKeyDown(KeyCode.R) || Input.GetButton("player0Jump") || Input.GetButton("player0Fire1") || Input.GetButton("pauseButton")){
+					if (!levelJustUnlocked && curLevelNum!=0){
+						resetGame();
+					}else{
+						levelJustUnlocked = false;
+						goToLevelSelect();
+					}
+				}
+				if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown("joystick button 6")){
 					goToLevelSelect();
 				}
-			}
-			if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown("joystick button 6")){
-				goToLevelSelect();
 			}
 		}
 		else if (gameState == "title"){
@@ -273,7 +275,11 @@ public class GameManager : MonoBehaviour {
 				Destroy(unlockScreenPopUp.gameObject);
 				unlockScreenPopUp = null;
 				//see if there are any more
-				unlockManager.checkUnlocks(dataHolder.CloneKills, true);
+				bool moreUnlocks = unlockManager.checkUnlocks(dataHolder.CloneKills, true);
+				//and if not, wake up the game over screen
+				if (!moreUnlocks){
+					gameOverScreen.turnOn();
+				}
 			}
 		}
 		else if (gameState == "game"){
@@ -637,9 +643,8 @@ public class GameManager : MonoBehaviour {
 		gameOverScreen.turnOn(players[0].Score, roundNum, isHighscore, this);
 		
 		//was anything unlocked?
-		unlockManager.checkUnlocks(dataHolder.CloneKills, true);
+		bool stuffWasUnlocked = unlockManager.checkUnlocks(dataHolder.CloneKills, true);
 		
-		//set game over screen unlock text here!
 		
 		//try sending the score to Kongregate
 		Kongregate.SubmitHighScore(curLevelNum, score);
@@ -668,6 +673,11 @@ public class GameManager : MonoBehaviour {
 	public void setUnlockPopUpShowing(UnlockPopUp _unlockScreenPopUp){
 		gameState = "unlockPopUp";
 		unlockScreenPopUp = _unlockScreenPopUp;
+		
+		//set game over screen unlock text after checking unlocks
+		//and turn it off
+		gameOverScreen.setUnlockText(this);
+		gameOverScreen.turnOff();
 	}
 	
 	

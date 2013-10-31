@@ -53,7 +53,7 @@ public class UnlockManager : MonoBehaviour {
 		}
 	}
 	
-	public void checkUnlocks(int cloneKills, bool showPopUp){
+	public bool checkUnlocks(int cloneKills, bool showPopUp){
 		
 		for (int i=0; i<numWeaponUnlocks; i++){
 			if ( cloneKills >= unlockVals[i] && weaponsUnlocked <= i ){
@@ -62,7 +62,7 @@ public class UnlockManager : MonoBehaviour {
 				if (showPopUp){
 					makeWeaponPopUp(i);
 					gm.PowerJustUnlocked = gm.powerUnlockCutoff + i;
-					return;
+					return true;
 				}
 			}
 		}
@@ -81,13 +81,13 @@ public class UnlockManager : MonoBehaviour {
 						makeLevelPopUp(i);
 						gm.PowerJustUnlocked = gm.powerUnlockCutoff + i;
 						gm.LevelJustUnlocked = true;
-						return;
+						return true;
 					}
 				}
 			}
 		}
 		
-		
+		return false;
 	}
 	
 	int getUnlockVal(int num){

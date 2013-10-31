@@ -78,13 +78,10 @@ public class LevelSelectScreen : MonoBehaviour {
 		}
 		nextUnlockText.Commit();
 		
-		//for mouse control, select nothing
-		curSelection = -1;
+		//set the level as the most recently unlocked
+		setIconSelected( unlockManager.LevelUnlocks[0] ? 1 : 0 );
 		
-		//for controller, start with intro or level one
-		if (Input.GetJoystickNames().Length > 0){
-			setIconSelected( unlockManager.LevelUnlocks[0] ? 1 : 0 );
-		}
+		prevMousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 		
 		usingMouse = Input.GetJoystickNames().Length == 0;
 		
