@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour {
 	
 	//sound
 	public AudioManager audioController;
+	public MuteButton muteButton;
 	public AudioClip gameStartSound;
 	public AudioClip finishRoundSound;
 	public AudioClip gameOverSound;
@@ -185,6 +186,8 @@ public class GameManager : MonoBehaviour {
 		
 		doingKillEffect = false;
 		
+		muteButton.turnOff();
+		
 		resetRound();
 	}
 	
@@ -269,9 +272,8 @@ public class GameManager : MonoBehaviour {
 		else if (gameState == "title"){
 			if (Input.GetMouseButtonUp(0) || Input.GetButton("player0Jump") || Input.GetButton("player0Fire1") || Input.GetButton("pauseButton") ){
 				titleScreen.SetActive(false);
-				gameState = "levelSelect";
+				goToLevelSelect();
 				audioController.Play(menuBeep);
-				levelSelectScreen.reset();
 			}
 		}
 		else if (gameState == "levelSelect"){
@@ -373,8 +375,10 @@ public class GameManager : MonoBehaviour {
 		paused = pauseGame;
 		if (paused){
 			pauseScreen.activate( showHowTo );
+			muteButton.turnOn();
 		}else{
 			pauseScreen.deactivate();
+			muteButton.turnOff();
 		}
 		Time.timeScale = paused ? 0 : 1;
 		
@@ -673,6 +677,8 @@ public class GameManager : MonoBehaviour {
 			audioController.Play(gameOverSound);
 		}
 		
+		muteButton.turnOn();
+		
 		//save
 		dataHolder.save();
 	}
@@ -691,6 +697,7 @@ public class GameManager : MonoBehaviour {
 		//make sure the pause screen is gone
 		setPause(false, false);
 		
+		muteButton.turnOn();
 	}
 	
 	
