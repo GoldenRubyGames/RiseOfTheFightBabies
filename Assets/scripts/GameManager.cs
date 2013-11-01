@@ -188,6 +188,8 @@ public class GameManager : MonoBehaviour {
 		
 		muteButton.turnOff();
 		
+		audioController.playMusic(false);
+		
 		resetRound();
 	}
 	
@@ -384,6 +386,11 @@ public class GameManager : MonoBehaviour {
 		
 		if (playSound){
 			audioController.Play(menuBeep);
+			if (paused){
+				audioController.stopMusic();
+			}else{
+				audioController.playMusic(false);
+			}
 		}
 	}
 	
@@ -677,6 +684,8 @@ public class GameManager : MonoBehaviour {
 			audioController.Play(gameOverSound);
 		}
 		
+		audioController.stopMusic();
+		
 		muteButton.turnOn();
 		
 		//save
@@ -695,7 +704,7 @@ public class GameManager : MonoBehaviour {
 		levelSelectScreen.reset();
 		
 		//make sure the pause screen is gone
-		setPause(false, false);
+		setPause(false, false, false);
 		
 		muteButton.turnOn();
 	}

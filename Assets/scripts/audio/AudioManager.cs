@@ -17,12 +17,43 @@ public class AudioManager : MonoBehaviour
 	
 	public bool muted;
 	
+	public AudioSource music;
+	public AudioSource menuMusic;
+	
 	
 	void Update(){
 		if (Input.GetKeyDown(KeyCode.O)){
 			muted = !muted;
 		}
+		
+		music.pitch = Time.timeScale;
+		
+		//Debug.Log("tim "+music.time);
 	}
+	
+	
+	public void playMusic(bool randomPos){
+		
+		music.Play();
+		
+		if(randomPos){
+			float startPos = Random.Range(0, music.clip.length);
+			music.time = startPos;
+		}else{
+			music.time = menuMusic.time;
+		}
+		
+		menuMusic.Stop();
+		
+	}
+	
+	public void stopMusic(){
+		menuMusic.Play();
+		menuMusic.time = music.time;
+		
+		music.Stop();
+	}
+	
 	
 	public AudioSource Play(AudioClip clip){
 		if (muted){

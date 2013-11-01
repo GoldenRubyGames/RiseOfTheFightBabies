@@ -60,11 +60,9 @@ public class MuteButton : MonoBehaviour {
 	}
 	
 	public void turnOn(){
-		Debug.Log("turn me on og too sexy");
 		renderer.enabled = true;
 	}
 	public void turnOff(){
-		Debug.Log("my lust has gone away again");
 		renderer.enabled = false;
 	}
 }
