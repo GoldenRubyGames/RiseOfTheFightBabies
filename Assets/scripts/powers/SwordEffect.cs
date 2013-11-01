@@ -15,6 +15,7 @@ public class SwordEffect : PowerEffect {
 	
 	public tk2dSprite sprite;
 	
+	
 	public override void setupCustom(){
 		
 		angleDir = Owner.facingDir; //swip from front to back
@@ -27,7 +28,6 @@ public class SwordEffect : PowerEffect {
 		if (angleDir == 1){
 			sprite.FlipX = true;
 		}
-		
 		//transform.localScale = new Vector3(size, transform.localScale.y, transform.localScale.z);
 		
 	}
