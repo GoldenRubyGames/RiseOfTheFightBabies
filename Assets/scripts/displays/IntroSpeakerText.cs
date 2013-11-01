@@ -11,12 +11,19 @@ public class IntroSpeakerText : MonoBehaviour {
 	
 	private string targetString;
 	private int curLetter;
-
+	
+	private AudioManager audioController;
+	public AudioClip chatterSound;
+	
+	
+	
 	// Use this for initialization
 	void Start () {
 		targetString = "";
 		textSprite.text = "";
 		textSprite.Commit();
+		
+		audioController = GameObject.Find("audioManager").GetComponent<AudioManager>();
 	}
 	
 	// Update is called once per frame
@@ -59,5 +66,9 @@ public class IntroSpeakerText : MonoBehaviour {
 		
 		textSprite.text = "";
 		textSprite.Commit();
+		
+		if (newText != ""){
+			audioController.Play(chatterSound);
+		}
 	}
 }
