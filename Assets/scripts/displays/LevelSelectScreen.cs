@@ -164,8 +164,9 @@ public class LevelSelectScreen : MonoBehaviour {
 						}
 					}
 				}
-				
-				setIconSelected(thisSelection);
+				if (curSelection != thisSelection){
+					setIconSelected(thisSelection);
+				}
 			}
 			//save the mouse position for next frame
 			prevMousePos = curMousePos;
@@ -208,5 +209,7 @@ public class LevelSelectScreen : MonoBehaviour {
 		}
 		
 		curSelection = num;
+		
+		gm.audioController.Play(gm.menuBeep);
 	}
 }

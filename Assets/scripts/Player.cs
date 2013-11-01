@@ -107,6 +107,7 @@ public class Player : MonoBehaviour {
 	AudioManager audioController;
 	public AudioClip deathSound;
 	public AudioClip jumpSound;
+	public AudioClip pickupSound;
 	
 	//dying
 	public GameObject deadPlayerPrefab;
@@ -371,6 +372,8 @@ public class Player : MonoBehaviour {
 			powers.RemoveAt(0);
 		}
 		
+		//play the sound
+		audioController.Play(pickupSound);
 		
 		return true;
 	}

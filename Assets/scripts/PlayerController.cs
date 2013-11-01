@@ -32,6 +32,8 @@ public class PlayerController : Player {
 	public HUD hud;
 	public GameObject cloneKilLExplosionPrefab;
 	
+	public AudioClip cloneKillFireSound, cloneKillChargeSound;
+	
 	//showing the tutorial info for clone kill
 	public bool showCloneKillPopUp;
 	public GameObject cloneKillPopUpPrefab;
@@ -255,6 +257,8 @@ public class PlayerController : Player {
 				//spawn the explosion
 				GameObject newExplosion = Instantiate(cloneKilLExplosionPrefab, transform.position, new Quaternion(0,0,0,0)) as GameObject;
 				newExplosion.GetComponent<Explosion>().setOwner(this);
+				//make a sound
+				AudioController.Play(cloneKillFireSound);
 			}
 			//otherwise do normal attack
 			else{
@@ -343,6 +347,8 @@ public class PlayerController : Player {
 			gm.setPause(true, false);
 			gm.pauseScreen.gameObject.SetActive(false);
 		}
+		
+		AudioController.Play(cloneKillChargeSound);
 	}
 	
 	

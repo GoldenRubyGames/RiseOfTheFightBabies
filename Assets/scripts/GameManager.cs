@@ -52,7 +52,10 @@ public class GameManager : MonoBehaviour {
 	
 	//sound
 	public AudioManager audioController;
+	public AudioClip gameStartSound;
 	public AudioClip finishRoundSound;
+	public AudioClip gameOverSound;
+	public AudioClip menuBeep;
 	
 	//game status
 	private bool gameOver;
@@ -76,6 +79,7 @@ public class GameManager : MonoBehaviour {
 	private bool killEffectIsCloneKiller;
 	
 	public RoundFlash roundFlash;
+	public AudioClip roundFlashSound;
 	
 	//rewind effect after kill effect
 	private bool doingRewind;
@@ -220,6 +224,12 @@ public class GameManager : MonoBehaviour {
 		
 		roundFlash.activate();
 		
+		if (roundNum != 1){
+			audioController.Play(roundFlashSound);
+		}else{
+			audioController.Play(gameStartSound);
+		}
+		
 	}
 	
 	
@@ -247,10 +257,12 @@ public class GameManager : MonoBehaviour {
 					}else{
 						levelJustUnlocked = false;
 						goToLevelSelect();
+						audioController.Play(menuBeep);
 					}
 				}
 				if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown("joystick button 6")){
 					goToLevelSelect();
+					audioController.Play(menuBeep);
 				}
 			}
 		}
@@ -258,15 +270,17 @@ public class GameManager : MonoBehaviour {
 			if (Input.GetMouseButtonUp(0) || Input.GetButton("player0Jump") || Input.GetButton("player0Fire1") || Input.GetButton("pauseButton") ){
 				titleScreen.SetActive(false);
 				gameState = "levelSelect";
+				audioController.Play(menuBeep);
 				levelSelectScreen.reset();
 			}
 		}
 		else if (gameState == "levelSelect"){
-			//most level seletc input is handled in the level select class
+			//most level select input is handled in the level select class
 			if (Input.GetKeyDown(KeyCode.Q)){
 				gameState = "title";
 				levelSelectScreen.cleanUp();
 				titleScreen.SetActive(true);
+				audioController.Play(menuBeep);
 			}
 		}
 		else if (gameState == "unlockPopUp"){
@@ -278,6 +292,7 @@ public class GameManager : MonoBehaviour {
 				bool moreUnlocks = unlockManager.checkUnlocks(dataHolder.CloneKills, true);
 				//and if not, wake up the game over screen
 				if (!moreUnlocks){
+					audioController.Play(menuBeep);
 					gameOverScreen.turnOn();
 					gameOverScreen.setUnlockText(this);
 				}
@@ -304,7 +319,7 @@ public class GameManager : MonoBehaviour {
 				}
 				//Q ends the game (back on xbox)
 				if (paused && (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown("joystick button 6")) ){
-					setPause(false, false);
+					setPause(false, false, false);
 					endGame(players[0].Score);
 				}
 				
@@ -354,7 +369,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 	
-	public void setPause(bool pauseGame, bool showHowTo){
+	public void setPause(bool pauseGame, bool showHowTo, bool playSound = true){
 		paused = pauseGame;
 		if (paused){
 			pauseScreen.activate( showHowTo );
@@ -362,6 +377,10 @@ public class GameManager : MonoBehaviour {
 			pauseScreen.deactivate();
 		}
 		Time.timeScale = paused ? 0 : 1;
+		
+		if (playSound){
+			audioController.Play(menuBeep);
+		}
 	}
 	
 	public void addKill(){
@@ -648,6 +667,11 @@ public class GameManager : MonoBehaviour {
 		
 		//try sending the score to Kongregate
 		Kongregate.SubmitHighScore(curLevelNum, score);
+		
+		//play the sound
+		if (!stuffWasUnlocked){
+			audioController.Play(gameOverSound);
+		}
 		
 		//save
 		dataHolder.save();

@@ -24,6 +24,8 @@ public class UnlockManager : MonoBehaviour {
 	
 	private bool doneWithUnlocks;
 	
+	public AudioClip unlockSound;
+	
 	public void setup(){
 		numWeaponUnlocks = gm.powerObjects.Length - gm.powerUnlockCutoff;
 		
@@ -118,6 +120,10 @@ public class UnlockManager : MonoBehaviour {
 		}
 		string unlockName = gm.powerObjects[gm.powerUnlockCutoff + num].GetComponent<Power>().powerName;
 		newPopUp.setup(unlockName, true, nextUnlockVal, num==numWeaponUnlocks-1, gm);
+		
+		//play the sound
+		Debug.Log("an ugly baby dreams twice");
+		gm.audioController.Play(unlockSound);
 	}
 	
 	void makeLevelPopUp(int num){
@@ -126,6 +132,10 @@ public class UnlockManager : MonoBehaviour {
 		
 		string unlockName = gm.levelSelectScreen.levelNames[num+1];
 		newPopUp.setup(unlockName, false, 0, num==numWeaponUnlocks-1, gm);
+		
+		//play the sound
+		Debug.Log("an ugly baby dreams");
+		gm.audioController.Play(unlockSound);
 	}
 	
 	
