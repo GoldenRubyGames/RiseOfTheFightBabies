@@ -54,7 +54,7 @@ public class MuteButton : MonoBehaviour {
 	
 	public void toggleMute(){
 	
-		audioController.muted = !audioController.muted;
+		audioController.toggleMute();
 		
 		sprite.spriteId = audioController.muted ? muteOnID : muteOffID;
 	}

@@ -34,6 +34,8 @@ public class LevelSelectScreen : MonoBehaviour {
 	public float joystickThreshold;
 	private bool canPressUp, canPressDown, canPressLeft, canPressRight;
 	
+	public float beepVolume;
+	
 	public void reset(){
 		gameObject.SetActive(true);
 		
@@ -210,6 +212,6 @@ public class LevelSelectScreen : MonoBehaviour {
 		
 		curSelection = num;
 		
-		gm.audioController.Play(gm.menuBeep);
+		gm.audioController.Play(gm.menuBeep, beepVolume);
 	}
 }

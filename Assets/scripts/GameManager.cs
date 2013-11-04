@@ -327,6 +327,7 @@ public class GameManager : MonoBehaviour {
 					endGame(players[0].Score);
 				}
 				
+				/*
 				//dbeug stuff
 				if (Input.GetKeyDown(KeyCode.G)){
 					useGoons = !useGoons;
@@ -340,6 +341,7 @@ public class GameManager : MonoBehaviour {
 				if (Input.GetKeyDown(KeyCode.R)){
 					resetGame();
 				}
+				*/
 			}
 			
 			

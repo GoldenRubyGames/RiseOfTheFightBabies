@@ -15,11 +15,16 @@ using System.Collections;
 public class AudioManager : MonoBehaviour
 {
 	
+	public float soundEffectVolume;
 	public bool muted;
 	
 	public AudioSource music;
 	public AudioSource menuMusic;
+	private bool playingGameMusic;
 	
+	void Start(){
+		playingGameMusic = false;
+	}
 	
 	void Update(){
 		if (Input.GetKeyDown(KeyCode.O)){
@@ -33,6 +38,10 @@ public class AudioManager : MonoBehaviour
 	
 	
 	public void playMusic(bool randomPos){
+		playingGameMusic = true;
+		if (muted){
+			return;
+		}
 		
 		music.Play();
 		
@@ -44,14 +53,36 @@ public class AudioManager : MonoBehaviour
 		}
 		
 		menuMusic.Stop();
-		
 	}
 	
 	public void stopMusic(){
+		playingGameMusic = false;
+		if (muted){
+			return;
+		}
+		
 		menuMusic.Play();
 		menuMusic.time = music.time;
 		
 		music.Stop();
+	}
+	
+	public void toggleMute(){
+		muted = !muted;
+		
+		if (muted){
+			music.Stop();
+			menuMusic.Stop();
+		}
+		
+		if (!muted){
+			if (playingGameMusic){
+				playMusic(true);
+			}
+			else{
+				stopMusic();
+			}
+		}
 	}
 	
 	
@@ -61,7 +92,20 @@ public class AudioManager : MonoBehaviour
 		}
 		
 		if (clip != null){
-			return Play(clip, transform, 1f, 1f);
+			return Play(clip, transform, 1f * soundEffectVolume, 1f);
+		}else{
+			Debug.Log("you tried to play a null clip");
+			return null;
+		}
+	}
+	
+	public AudioSource Play(AudioClip clip, float volume){
+		if (muted){
+			return null;
+		}
+		
+		if (clip != null){
+			return Play(clip, transform, volume * soundEffectVolume, 1f);
 		}else{
 			Debug.Log("you tried to play a null clip");
 			return null;

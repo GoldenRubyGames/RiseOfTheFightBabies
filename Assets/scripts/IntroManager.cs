@@ -186,7 +186,7 @@ public class IntroManager : MonoBehaviour {
 		timer = 0;
 		
 		if (phase == 1){
-			speakerText.setNewText("Thanks for coming in.\nWe've got a deadly haunting on our hands.");//an issue with the clones.");
+			speakerText.setNewText("Thanks for coming in.\nWe've got a deadly haunting on our\nhands.");//an issue with the clones.");
 		}
 		
 		if (phase == 2){
