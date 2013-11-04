@@ -82,7 +82,9 @@ public class Power : MonoBehaviour {
 	
 	public void cleanUp(){
 		customCleanUp();
-		Destroy(gameObject);
+		if (gameObject != null){
+			Destroy(gameObject);
+		}
 	}
 	public virtual void customCleanUp(){}
 	
