@@ -73,7 +73,7 @@ public class IntroPopUp : MonoBehaviour {
 	
 	public void showCloneKill(GameManager _gm){
 		gm = _gm;
-		setText("When you use the GHOST KILL, the ghosts you hit will be gone forever. But you only get one shot!\n\n");
+		setText("When you use EXORCISM, the clones you hit will be gone forever. But you only get one shot!\n\n");
 		cloneKillSprite.SetActive(true);
 		killOnDismissal = true;
 	}

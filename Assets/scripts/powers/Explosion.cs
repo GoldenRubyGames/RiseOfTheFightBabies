@@ -43,7 +43,7 @@ public class Explosion : MonoBehaviour {
 		}
 		
 		float thisScale = (1-(timer/explosionTime)) * explosionScale;
-		transform.localScale = new Vector3(thisScale, thisScale, thisScale);
+		transform.localScale = new Vector3(thisScale, thisScale, 1);
 		
 		transform.localEulerAngles += new Vector3(0,0,rotationSpeed)*Time.deltaTime;
 		

@@ -342,6 +342,9 @@ public class GameManager : MonoBehaviour {
 					resetGame();
 				}
 				*/
+				if (Input.GetKeyDown(KeyCode.C)){
+					spawnCloneKill();
+				}
 			}
 			
 			

@@ -77,7 +77,7 @@ public class PickupSpot : MonoBehaviour {
 		
 		//set the text
 		textObject.gameObject.SetActive(true);
-		textObject.text = "GHOST KILL";
+		textObject.text = "EXORCISM";
 		textObject.Commit();
 		
 		//open the door
