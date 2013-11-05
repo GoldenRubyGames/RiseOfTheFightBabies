@@ -560,6 +560,14 @@ public class GameManager : MonoBehaviour {
 			thisIntro.pickupSpot2 = pickupSpots[1];
 		}
 		
+		//if this level has any places we don't want to the player to spawn, mark them down
+		players[0].SpawnAvoidPosXs.Clear();
+		GameObject[] badSpawnPos = GameObject.FindGameObjectsWithTag("badSpawnPos");
+		for (int i=0; i<badSpawnPos.Length; i++){
+			players[0].SpawnAvoidPosXs.Add( badSpawnPos[i].transform.position.x );
+			Debug.Log("ADD "+i+" IS BAD");
+		}
+		
 		//reset the game
 		resetGame();
 		

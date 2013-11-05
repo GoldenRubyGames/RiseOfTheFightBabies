@@ -25,6 +25,8 @@ public class PlayerController : Player {
 	//spawning in different places
 	private float lastSpawnX;
 	public float minSpawnDistance;
+	private List<float> spawnAvoidPosXs = new List<float>();
+	public float spawnAvoidPosDist;
 	
 	//using clone kills
 	bool nextAttackIsCloneKill;
@@ -91,8 +93,24 @@ public class PlayerController : Player {
 	public override void customReset(){
 		//set the pos
 		float spawnX = lastSpawnX;
-		while ( Mathf.Abs( spawnX - lastSpawnX) < minSpawnDistance){
+		bool newPosIsBad = true;
+		while ( newPosIsBad ){
 			spawnX = Random.Range(spawnLeft.transform.position.x, spawnRight.transform.position.x);
+			newPosIsBad = false; //assume this will work
+			
+			//if it is too close to the last one, it is bad
+			if (Mathf.Abs( spawnX - lastSpawnX) < minSpawnDistance){
+				newPosIsBad = true;
+			}
+			
+			//if it is in a place we're trying to avoid, it is bad
+			for (int i=0; i<spawnAvoidPosXs.Count; i++){
+				if( Mathf.Abs( spawnX - spawnAvoidPosXs[i]) < spawnAvoidPosDist ){
+					newPosIsBad = true;
+					Debug.Log("you're a dumb cunt");
+				}
+			}
+			
 		}
 		lastSpawnX = spawnX;
 		transform.position = new Vector3(spawnX, spawnLeft.transform.position.y, 0);
@@ -293,6 +311,9 @@ public class PlayerController : Player {
 		if (Input.GetKeyDown(KeyCode.K) && controllerNum==0){
 			killPlayer(null, false);
 		}
+		if (Input.GetKeyDown(KeyCode.T) && controllerNum==0){
+			customReset();
+		}
 		
 	}
 	
@@ -398,5 +419,12 @@ public class PlayerController : Player {
 		}
 	}
 	
-	
+	public List<float> SpawnAvoidPosXs {
+		get {
+			return this.spawnAvoidPosXs;
+		}
+		set {
+			spawnAvoidPosXs = value;
+		}
+	}
 }
