@@ -1,6 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Standard Assets/Kongregate.js">
+    <Files>
+      <File FileName="Assets/scripts/GameManager.cs" Line="347" Column="6" />
+      <File FileName="Assets/scripts/UnlockManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/IntroManager.cs" Line="189" Column="87" />
+      <File FileName="Assets/Standard Assets/Kongregate.js" Line="52" Column="4" />
+      <File FileName="Assets/scripts/PlayerGhost.cs" Line="165" Column="16" />
+      <File FileName="Assets/scripts/PlayerController.cs" Line="89" Column="23" />
+      <File FileName="Assets/scripts/Player.cs" Line="393" Column="24" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

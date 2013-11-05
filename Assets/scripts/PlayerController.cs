@@ -47,6 +47,8 @@ public class PlayerController : Player {
 	public float rewindFlashSpeed;
 	private bool rewindMadeChange;
 	
+	public GameObject jumpPopPrefab;
+	
 	public override void customStart(){
 		
 		isPlayerControlled = true;
@@ -212,6 +214,8 @@ public class PlayerController : Player {
 			if (!isGrounded){
 				numDoubleJumpsUsed++;
 			}
+			//drop a flash
+			Instantiate(jumpPopPrefab, transform.position, new Quaternion(0,0,0,0));
 		}
 		if (Input.GetButtonUp(jumpButton)){
 			endJump();

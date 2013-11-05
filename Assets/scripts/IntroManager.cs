@@ -244,7 +244,7 @@ public class IntroManager : MonoBehaviour {
 		}
 		
 		if (phase == 11){
-			speakerText.setNewText("Uh oh.\nOne of the robots got loose.");
+			speakerText.setNewText("Uh oh.\nA ghost possessed one of our robots!");
 		}
 		
 		if (phase == 12){
