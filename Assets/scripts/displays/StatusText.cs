@@ -19,6 +19,9 @@ public class StatusText : MonoBehaviour {
 	public Color scoreColor;
 	
 	public float alpha;
+	
+	public tk2dSprite fadeSprite;
+	public float bigFadeAlpha, softFadeAlpha;
 
 	// Use this for initialization
 	void Start () {
@@ -36,11 +39,16 @@ public class StatusText : MonoBehaviour {
 	void Update () {
 	
 		if (displayTimer > 0){
-			displayTimer -= Time.deltaTime/Time.timeScale;  //do not elt time scale affect this
+			displayTimer -= Time.deltaTime/Time.timeScale;  //do not let time scale affect this
 			
 			if (isBlinking){
 				textMesh.gameObject.SetActive( displayTimer%blinkTime > blinkTime/2 );
 			}
+			
+			if (displayTimer <= 0){
+				turnOff();
+			}
+			
 		}else{
 			showingScoreText = false;
 		}
@@ -75,17 +83,21 @@ public class StatusText : MonoBehaviour {
 			setText("GHOST KILL!");
 		}
 		displayTimer *= 0.5f;
+		
+		fadeSprite.color = new Color(1,1,1, softFadeAlpha);
 	}
 	
 	void setText(string curText){
 		textMesh.text = curText;
 		textMesh.Commit();
 		displayTimer = displayTime;
-		
+		fadeSprite.color = new Color(1,1,1, bigFadeAlpha);
+		fadeSprite.gameObject.SetActive(true);
 	}
 	
 	public void turnOff(){
 		textMesh.gameObject.SetActive(false);
+		fadeSprite.gameObject.SetActive(false);
 		DisplayTimer = 0;
 	}
 	
