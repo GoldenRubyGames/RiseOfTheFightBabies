@@ -242,6 +242,7 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		//kongManager.SendMessage("IsConnected");
 		//testing
+		/*
 		if (Input.GetKeyDown(KeyCode.Alpha0)){
 			dataHolder.clearData();
 			if (gameState == "levelSelect"){
@@ -249,6 +250,7 @@ public class GameManager : MonoBehaviour {
 			}
 			goToLevelSelect();
 		}
+		*/
 		if (Input.GetKeyDown(KeyCode.Y)){
 			kongregate.toggleDebug();
 		}
@@ -305,9 +307,6 @@ public class GameManager : MonoBehaviour {
 		else if (gameState == "game"){
 			//don't allow any input while title screen is up
 			if (!pauseScreen.ShowingTitle){
-				if (Input.GetKeyDown(KeyCode.V)){
-					spawnPickup(false);
-				}
 				
 				//makeshift pause
 				if (Input.GetButtonUp("pauseButton")){
@@ -341,10 +340,11 @@ public class GameManager : MonoBehaviour {
 				if (Input.GetKeyDown(KeyCode.R)){
 					resetGame();
 				}
-				*/
+				
 				if (Input.GetKeyDown(KeyCode.C)){
 					spawnCloneKill();
 				}
+				*/
 			}
 			
 			

@@ -308,12 +308,14 @@ public class PlayerController : Player {
 		}
 		
 		//testing
+		/*
 		if (Input.GetKeyDown(KeyCode.K) && controllerNum==0){
 			killPlayer(null, false);
 		}
 		if (Input.GetKeyDown(KeyCode.T) && controllerNum==0){
 			customReset();
 		}
+		*/
 		
 	}
 	

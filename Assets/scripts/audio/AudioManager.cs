@@ -27,9 +27,6 @@ public class AudioManager : MonoBehaviour
 	}
 	
 	void Update(){
-		if (Input.GetKeyDown(KeyCode.O)){
-			muted = !muted;
-		}
 		
 		music.pitch = Time.timeScale;
 		
