@@ -397,7 +397,15 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	public void addKill(){
+		//store it localy
 		dataHolder.addCloneKill();
+		
+		//send to kongregate
+		Kongregate.logKill( dataHolder.CloneKills );
+		for (int i=0; i<players[0].Powers.Count; i++){
+			Kongregate.logWepKill( players[0].Powers[i].powerName );
+		}
+		//shoudl we spawn a clone kill?
 		cloneKillCountDown--;
 		Debug.Log("kills left: "+cloneKillCountDown);
 		if (cloneKillCountDown <= 0){

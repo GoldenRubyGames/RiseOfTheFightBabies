@@ -14,8 +14,6 @@ public class SpawnEffectPower : Power {
 			GameObject thisObj = Instantiate( effectObject, owner.transform.position, new Quaternion(0,0,0,0)) as GameObject;
 			thisObj.GetComponent<PowerEffect>().setup(owner);
 			
-			Debug.Log("do it dog shit");
-			
 			//recoil!
 			owner.push( new Vector3(recoilForce.x*owner.facingDir*-1, recoilForce.y, 0) );
 		}

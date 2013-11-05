@@ -56,3 +56,19 @@ static function SubmitHighScore(levelNum : int, score : int){
 	}
 }
 
+static function logKill(totalKills : int){
+	Debug.Log("I killed total: "+totalKills);
+	if(isKongregate){
+		Application.ExternalCall("kongregate.stats.submit", "total_kills", totalKills);
+	}
+}
+
+static function logWepKill(wepName : String){
+	Debug.Log("I killed with "+wepName);
+	if(isKongregate){
+		var wepStatName = "weapon_"+wepName;
+		Application.ExternalCall("kongregate.stats.submit",wepStatName, 1);
+		
+	}
+}
+

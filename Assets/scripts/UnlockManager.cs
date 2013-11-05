@@ -32,7 +32,7 @@ public class UnlockManager : MonoBehaviour {
 		unlockVals = new int[numWeaponUnlocks];
 		
 		for (int i=0; i<numWeaponUnlocks; i++){
-			Debug.Log("unlock: "+getUnlockVal(i));
+			//Debug.Log("unlock: "+getUnlockVal(i));
 			unlockVals[i] = getUnlockVal(i);
 		}
 		
