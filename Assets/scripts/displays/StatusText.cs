@@ -39,8 +39,11 @@ public class StatusText : MonoBehaviour {
 	void Update () {
 	
 		if (displayTimer > 0){
-			displayTimer -= Time.deltaTime/Time.timeScale;  //do not let time scale affect this
-			
+			if (Time.timeScale > 0){
+				displayTimer -= Time.deltaTime/Time.timeScale;  //do not let time scale affect this
+			}else{
+				displayTimer = 0;
+			}
 			if (isBlinking){
 				textMesh.gameObject.SetActive( displayTimer%blinkTime > blinkTime/2 );
 			}
@@ -78,9 +81,9 @@ public class StatusText : MonoBehaviour {
 		
 		textMesh.color = scoreColor;
 		if (cloneDeadFoever){
-			setText("GHOST\nBANISHED!");
+			setText("GHOST\nEXORCISED!");
 		}else{
-			setText("GHOST KILL!");
+			setText("GHOST SCORE!");
 		}
 		displayTimer *= 0.5f;
 		
@@ -96,6 +99,7 @@ public class StatusText : MonoBehaviour {
 	}
 	
 	public void turnOff(){
+		Debug.Log("turn moff");
 		textMesh.gameObject.SetActive(false);
 		fadeSprite.gameObject.SetActive(false);
 		DisplayTimer = 0;

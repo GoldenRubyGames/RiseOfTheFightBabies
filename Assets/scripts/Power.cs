@@ -6,6 +6,7 @@ public class Power : MonoBehaviour {
 	public GameObject effectObject;
 	
 	public string powerName;
+	public string statName;
 	
 	public bool isAnAttack;
 	public bool canStack;

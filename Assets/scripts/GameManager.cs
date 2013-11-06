@@ -406,7 +406,7 @@ public class GameManager : MonoBehaviour {
 		//send to kongregate
 		Kongregate.logKill( dataHolder.CloneKills );
 		for (int i=0; i<players[0].Powers.Count; i++){
-			Kongregate.logWepKill( players[0].Powers[i].powerName );
+			Kongregate.logWepKill( players[0].Powers[i].statName );
 		}
 		//shoudl we spawn a clone kill?
 		cloneKillCountDown--;

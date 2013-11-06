@@ -131,6 +131,8 @@ public class PlayerController : Player {
 			recorder = new GhostRecorder();
 		}
 		recorder.reset(true);
+		
+		doingRewind = false;
 				
 		isGrounded = false;
 		neverBeenGrounded = true;

@@ -66,7 +66,7 @@ static function logKill(totalKills : int){
 static function logWepKill(wepName : String){
 	//Debug.Log("I killed with "+wepName);
 	if(isKongregate){
-		var wepStatName = "weapon_"+wepName;
+		var wepStatName = "wep_"+wepName;
 		Application.ExternalCall("kongregate.stats.submit",wepStatName, 1);
 		
 	}
