@@ -200,7 +200,7 @@ public class IntroManager : MonoBehaviour {
 		}
 		
 		if (phase == 4){
-			if (Input.GetJoystickNames().Length == 0){
+			if (Input.GetJoystickNames().Length == 0 || gm.forceKeyboardControlImages){
 				speakerText.setNewText("Press Z or M to fire.");
 			}else{
 				speakerText.setNewText("Press X to fire.");
@@ -235,7 +235,7 @@ public class IntroManager : MonoBehaviour {
 		}
 		
 		if (phase == 10){
-			if (Input.GetJoystickNames().Length == 0){
+			if (Input.GetJoystickNames().Length == 0 || gm.forceKeyboardControlImages){
 				speakerText.setNewText("When you press Z or M they will both\nfire.");
 			}else{
 				speakerText.setNewText("When you press X they will both\nfire.");

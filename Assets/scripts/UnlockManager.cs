@@ -70,7 +70,7 @@ public class UnlockManager : MonoBehaviour {
 		}
 		
 		if (nextUnlock >= numWeaponUnlocks){
-			Debug.Log("we're done with this party!");
+			//Debug.Log("we're done with this party!");
 			doneWithUnlocks = true;
 			nextUnlock = 0;
 		}
@@ -122,7 +122,7 @@ public class UnlockManager : MonoBehaviour {
 		newPopUp.setup(unlockName, true, nextUnlockVal, num==numWeaponUnlocks-1, gm);
 		
 		//play the sound
-		Debug.Log("an ugly baby dreams twice");
+		//Debug.Log("an ugly baby dreams twice");
 		gm.audioController.Play(unlockSound);
 	}
 	
@@ -134,7 +134,7 @@ public class UnlockManager : MonoBehaviour {
 		newPopUp.setup(unlockName, false, 0, num==numWeaponUnlocks-1, gm);
 		
 		//play the sound
-		Debug.Log("an ugly baby dreams");
+		//Debug.Log("an ugly baby dreams");
 		gm.audioController.Play(unlockSound);
 	}
 	

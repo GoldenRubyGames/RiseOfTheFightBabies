@@ -14,7 +14,7 @@ public class AudioFadeInScript : MonoBehaviour {
 		curVol += fadeSpeed * Time.deltaTime;
 		if (curVol > 1) curVol = 1;
 		source.volume = curVol;
-		Debug.Log("slide it up "+curVol);
+		//Debug.Log("slide it up "+curVol);
 		if (curVol == 1){
 			Destroy(this);
 		}

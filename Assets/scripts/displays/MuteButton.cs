@@ -45,9 +45,11 @@ public class MuteButton : MonoBehaviour {
 		}
 		
 		//check for button presses
+		/*
 		if (Input.GetKeyDown(KeyCode.M)){
 			toggleMute();
 		}
+		*/
 	
 		//transform.position = anchor.transform.position + offset;
 	}

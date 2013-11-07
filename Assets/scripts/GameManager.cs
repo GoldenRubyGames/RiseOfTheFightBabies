@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour {
 	//camera
 	public CamControl camera;
 	
+	public bool forceKeyboardControlImages;
+	
 	
 	//players
 	public PlayerController[] players;
@@ -165,7 +167,7 @@ public class GameManager : MonoBehaviour {
 			players[i].Score = 0;
 			players[i].LivesLeft = players[i].numLives;
 			if (doingIntro){
-				Debug.Log("set the lives for intro");
+				//Debug.Log("set the lives for intro");
 				players[i].LivesLeft = 2;
 			}
 		}
@@ -250,10 +252,11 @@ public class GameManager : MonoBehaviour {
 			}
 			goToLevelSelect();
 		}
-		*/
+		
 		if (Input.GetKeyDown(KeyCode.Y)){
 			kongregate.toggleDebug();
 		}
+		*/
 		
 		//do things acording to game state
 		if (gameState == "gameOver"){
@@ -410,7 +413,7 @@ public class GameManager : MonoBehaviour {
 		}
 		//shoudl we spawn a clone kill?
 		cloneKillCountDown--;
-		Debug.Log("kills left: "+cloneKillCountDown);
+		//Debug.Log("kills left: "+cloneKillCountDown);
 		if (cloneKillCountDown <= 0){
 			spawnCloneKill();
 		}
@@ -565,7 +568,6 @@ public class GameManager : MonoBehaviour {
 		GameObject[] badSpawnPos = GameObject.FindGameObjectsWithTag("badSpawnPos");
 		for (int i=0; i<badSpawnPos.Length; i++){
 			players[0].SpawnAvoidPosXs.Add( badSpawnPos[i].transform.position.x );
-			Debug.Log("ADD "+i+" IS BAD");
 		}
 		
 		//reset the game
@@ -633,7 +635,7 @@ public class GameManager : MonoBehaviour {
 		//set up the next one
 		cloneKillCountDown = (int) Random.Range(minKillsForCloneKill, maxKillsForCloneKill);
 		
-		Debug.Log("SPAWN IT BUSTER");
+		//Debug.Log("SPAWN IT BUSTER");
 	}
 	
 	public void spawnGoon(){

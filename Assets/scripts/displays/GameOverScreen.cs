@@ -52,7 +52,7 @@ public class GameOverScreen : MonoBehaviour {
 		
 		bottomText.text = "Press R to try again\nPress Q for level select";
 		//check for xBox controls
-		if (Input.GetJoystickNames().Length > 0){
+		if (Input.GetJoystickNames().Length > 0 && !gm.forceKeyboardControlImages){
 			bottomText.text = "Press A to try again\nPress BACK for level select";
 		}
 		bottomText.Commit();

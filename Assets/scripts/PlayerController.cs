@@ -107,7 +107,6 @@ public class PlayerController : Player {
 			for (int i=0; i<spawnAvoidPosXs.Count; i++){
 				if( Mathf.Abs( spawnX - spawnAvoidPosXs[i]) < spawnAvoidPosDist ){
 					newPosIsBad = true;
-					Debug.Log("you're a dumb cunt");
 				}
 			}
 			

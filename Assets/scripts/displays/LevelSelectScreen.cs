@@ -81,11 +81,18 @@ public class LevelSelectScreen : MonoBehaviour {
 		nextUnlockText.Commit();
 		
 		//set the level as the most recently unlocked
-		setIconSelected( unlockManager.LevelUnlocks[0] ? 1 : 0 );
+		//setIconSelected( unlockManager.LevelUnlocks[0] ? 1 : 0 );
+		int setToVal = 0;
+		for (int i=0; i<unlockManager.LevelUnlocks.Length; i++){
+			if (unlockManager.LevelUnlocks[i]){
+				setToVal = i+1;
+			}
+		}
+		setIconSelected( setToVal );
 		
 		prevMousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 		
-		usingMouse = Input.GetJoystickNames().Length == 0;
+		usingMouse = Input.GetJoystickNames().Length == 0 || gm.forceKeyboardControlImages;
 		
 		timer = 0;
 	}

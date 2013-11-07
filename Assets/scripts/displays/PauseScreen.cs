@@ -11,6 +11,8 @@ public class PauseScreen : MonoBehaviour {
 	
 	private bool showingTitle;
 	
+	public GameManager gm;
+	
 	void Awake(){
 		showingTitle = false;
 	}
@@ -20,9 +22,9 @@ public class PauseScreen : MonoBehaviour {
 		
 		//set the image base don if we're showing the title card and if there is a controller
 		if (showHowTo){
-			mainSprite.SetSprite(  (Input.GetJoystickNames().Length > 0) ? "howToCardXbox" : "howToCard" );
+			mainSprite.SetSprite(  (Input.GetJoystickNames().Length > 0 && !gm.forceKeyboardControlImages) ? "howToCardXbox" : "howToCard" );
 		}else{
-			mainSprite.SetSprite( (Input.GetJoystickNames().Length > 0) ? "pauseBoxXbox" : "pauseBox" );
+			mainSprite.SetSprite( (Input.GetJoystickNames().Length > 0  && !gm.forceKeyboardControlImages) ? "pauseBoxXbox" : "pauseBox" );
 		}
 		
 		mainSprite.gameObject.transform.position = new Vector3( centerAnchor.transform.position.x, centerAnchor.transform.position.y, -4);

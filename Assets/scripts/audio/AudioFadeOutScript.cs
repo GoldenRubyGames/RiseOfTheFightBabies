@@ -17,7 +17,7 @@ public class AudioFadeOutScript : MonoBehaviour {
 		curVol -= fadeSpeed * Time.deltaTime;
 		if (curVol <0) curVol = 0;
 		source.volume = curVol;
-		Debug.Log("slide it down "+curVol);
+		//Debug.Log("slide it down "+curVol);
 		if (curVol == 0){
 			Destroy(gameObject);
 		}
