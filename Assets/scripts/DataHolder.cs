@@ -9,12 +9,18 @@ public class DataHolder : MonoBehaviour {
 	private int[] highScores;
 	
 	private int cloneKills;
+	
+	public bool clearDataSwitch;
 
 	// Use this for initialization
 	public void setup () {
 		highScores = new int[numLevels];
 		
 		loadData();
+		
+		if (clearDataSwitch){
+			clearData();
+		}
 	}
 	
 	public void save(){

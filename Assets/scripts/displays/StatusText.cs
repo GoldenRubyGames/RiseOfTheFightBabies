@@ -99,7 +99,6 @@ public class StatusText : MonoBehaviour {
 	}
 	
 	public void turnOff(){
-		Debug.Log("turn moff");
 		textMesh.gameObject.SetActive(false);
 		fadeSprite.gameObject.SetActive(false);
 		DisplayTimer = 0;
